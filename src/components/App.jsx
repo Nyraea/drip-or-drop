@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "./Profile";
 import { useState } from "react";
 import { auth } from "./firebase";
+import ImageUpload from "./ImageUpload";
 
 function App() {
   const [user, setUser] = useState();
@@ -39,6 +40,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<SignUp />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/upload" element={<ImageUpload />} />
             </Routes>
             <ToastContainer />
           </div>

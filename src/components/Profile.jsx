@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
@@ -51,6 +52,9 @@ function Profile() {
           </div>
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
+          </button>
+          <button className="btn btn-primary">
+            <Link to="/upload">Go to Image Upload</Link>
           </button>
         </>
       ) : (
