@@ -1,21 +1,50 @@
+import React, { useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "/App.css";
+import "/index.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import Login from "./Login";
+
+import SignUp from "./Register";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Profile from "./Profile";
 import { useState } from "react";
-import Signup from "./Signup";
-import { Container } from "react-bootstrap";
-import { AuthProvider } from "../contexts/AuthContext";
+import { auth } from "./firebase";
 
 function App() {
-  console.log("Rendering App component");
+  const [user, setUser] = useState();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  });
   return (
-    <AuthProvider>
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Signup />
+    <Router>
+      <div className="App">
+        <div className="auth-wrapper">
+          <div className="auth-inner">
+            <Routes>
+              <Route
+                path="/"
+                element={user ? <Navigate to="/profile" /> : <Login />}
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+            <ToastContainer />
+          </div>
         </div>
-      </Container>
-    </AuthProvider>
+      </div>
+    </Router>
   );
 }
 
