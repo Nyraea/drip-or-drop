@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+@import url("https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100..900;1,100..900&family=Rochester&display=swap");
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+
+  font-size: large;
+}
+.forgot-password-text-right {
+  color: black;
+  margin-right: auto;
+}
+.forgot-password-text-right2 {
+  color: black;
+  margin-left: auto;
+}
+
+.forgot-password-text-right2 a {
+  color: black;
+}
+
+.loginregisterbutton {
+  width: 80px;
+  background-color: black;
+  color: white;
+  transition: background-color 0.6s ease; /* Transition for smooth color change */
+}
+
+.loginregisterbutton:hover {
+  color: black;
+  background-color: white; /* Gray background color on hover */
+}
+
+.d-grid {
+  display: flex;
+  justify-content: center;
+}
+
+.form-control {
+  border-radius: 0%;
+  border: none; /* Remove all borders */
+  border-bottom: 1px solid black; /* Add a bottom border */
+  outline: none; /* Remove the default focus outline */
+}
+
+.form-control::placeholder {
+  color: gray;
+}
+
+.form-control:focus {
+  border-color: black !important; /* Ensure black border color on focus */
+}

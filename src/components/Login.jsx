@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { auth } from "./firebase";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "/loginregisterStyle.css";
 // import SignInwithGoogle from "./signInWIthGoogle";
 
 function Login() {
@@ -29,38 +30,38 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Login</h3>
-
+      <div className="header-container">
+        <p className="forgot-password-text-right"> No account yet?</p>
+        <p className="forgot-password-text-right2">
+          <a href="/register">Create your account</a>
+        </p>
+      </div>
       <div className="mb-3">
-        <label>Email address</label>
         <input
           type="email"
           className="form-control"
-          placeholder="Enter email"
+          placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
       <div className="mb-3">
-        <label>Password</label>
         <input
           type="password"
           className="form-control"
-          placeholder="Enter password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
       <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="loginregisterbutton">
+          Login
         </button>
       </div>
-      <p className="forgot-password text-right">
-        New user <a href="/register">Register Here</a>
-      </p>
+
       {/* <SignInwithGoogle /> */}
     </form>
   );

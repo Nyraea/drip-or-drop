@@ -4,6 +4,7 @@ import { auth, db } from "./firebase";
 import { setDoc, doc, collection, where, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { query } from "firebase/firestore";
+import "/loginregisterStyle.css";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -65,10 +66,13 @@ function Register() {
   };
   return (
     <form onSubmit={handleRegister}>
-      <h3>Sign Up</h3>
-
+      <div className="header-container">
+        <p className="forgot-password-text-right"> Already have an account?</p>
+        <p className="forgot-password-text-right2">
+          <a href="/Login">Login here!</a>
+        </p>
+      </div>
       <div className="mb-3">
-        <label>First name</label>
         <input
           type="text"
           className="form-control"
@@ -79,7 +83,6 @@ function Register() {
       </div>
 
       <div className="mb-3">
-        <label>Last name</label>
         <input
           type="text"
           className="form-control"
@@ -89,7 +92,6 @@ function Register() {
       </div>
 
       <div className="mb-3">
-        <label>Username</label>
         <input
           type="text"
           className="form-control"
@@ -100,7 +102,6 @@ function Register() {
       </div>
 
       <div className="mb-3">
-        <label>Email address</label>
         <input
           type="email"
           className="form-control"
@@ -111,7 +112,6 @@ function Register() {
       </div>
 
       <div className="mb-3">
-        <label>Password</label>
         <input
           type="password"
           className="form-control"
@@ -122,7 +122,6 @@ function Register() {
       </div>
 
       <div className="mb-3">
-        <label>Confirm Password</label>
         <input
           type="password"
           className="form-control"
@@ -133,13 +132,10 @@ function Register() {
       </div>
 
       <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="loginregisterbutton">
           Sign Up
         </button>
       </div>
-      <p className="forgot-password text-right">
-        Already registered <a href="/login">Login</a>
-      </p>
     </form>
   );
 }
