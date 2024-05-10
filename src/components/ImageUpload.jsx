@@ -60,7 +60,8 @@ function ImageUpload() {
 
     for (let i = 0; i < images.length; i++) {
       try {
-        const imageRef = ref(storage, `images/${user.uid}/${i}`); // Create a reference for the image
+        const imageId = Date.now(); // Generate a unique timestamp for each image
+        const imageRef = ref(storage, `images/${user.uid}/${imageId}`); // Create a reference for the image
         await uploadString(imageRef, images[i], "data_url"); // Upload the image
 
         // Create a new document in the "images" collection
@@ -68,7 +69,7 @@ function ImageUpload() {
           userId: user.uid,
           description,
           tags,
-          imageUrl: `images/${user.uid}/${i}`,
+          imageUrl: `images/${user.uid}/${imageId}`,
         });
 
         console.log("Image uploaded successfully!", imageDoc.id);

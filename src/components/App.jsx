@@ -20,6 +20,7 @@ import { useState } from "react";
 import { auth } from "./firebase";
 import ImageUpload from "./ImageUpload";
 import Trending from "./Trending";
+import UserImages from "./UserImages";
 
 function App() {
   const [user, setUser] = useState();
@@ -35,26 +36,9 @@ function App() {
         <Routes>
           {user ? (
             <>
-              <Route
-                path="/profile"
-                element={
-                  <div className="auth-wrapper">
-                    <div className="auth-inner">
-                      <Profile />
-                    </div>
-                  </div>
-                }
-              />
-              <Route
-                path="/upload"
-                element={
-                  <div className="auth-wrapper">
-                    <div className="auth-inner">
-                      <ImageUpload />
-                    </div>
-                  </div>
-                }
-              />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/images" element={<UserImages />} />
+              <Route path="/upload" element={<ImageUpload />} />
             </>
           ) : (
             <>
