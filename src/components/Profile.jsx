@@ -1,3 +1,6 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/profile.scss";
+
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -9,8 +12,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/profile.scss";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -75,8 +77,13 @@ function Profile() {
   }
 
   return (
+    //MAIN DIV
     <div className="container">
-      <div className="row temp-margin">
+
+      {/* ACCOUNT INFORMATION*/}
+      <div className="row account-info">
+
+        {/* PROFILE PIC */}
         <div className="col-md-2">
           <div className="profile-pic">
             {userDetails && userDetails.photo ? (
@@ -86,17 +93,19 @@ function Profile() {
                 alt="Profile"
               />
             ) : (
-              <FontAwesomeIcon icon={faUserCircle} size="10x" />
+              <FontAwesomeIcon icon={faUserCircle} style={{color: "#000000",}} size="10x" />
             )}
           </div>
         </div>
+
+        {/* PROFILE INFORMATION & ACTIONS */}
         <div className="col-md-4">
           <div className="profile-info">
             {userDetails ? (
               <>
-                <p>Username: {userDetails.username}</p>
-                <p>Email: {userDetails.email}</p>
-                <p>
+                <p className="">Username: {userDetails.username}</p>
+                <p className="">Email: {userDetails.email}</p>
+                <p className="">
                   {userDetails.firstName} {userDetails.lastName}
                 </p>
               </>
@@ -104,15 +113,19 @@ function Profile() {
               <p>Loading...</p>
             )}
           </div>
+
+          {/* LOGOUT & UPLOAD BUTTONS */}
           <div className="actions">
-            <button className="btn btn-primary" onClick={handleLogout}>
+            <button className="btn btn-dark" onClick={handleLogout}>
               Logout
             </button>
-            <button className="btn btn-primary">
+            <button className="btn btn-dark">
               <Link to="/upload" className="text-decoration-none text-light">Go to Image Upload</Link>
             </button>
           </div>
         </div>
+
+
       </div>
       <div className="user-images">
         {userImages.map((image) => (
