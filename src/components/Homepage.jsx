@@ -1,7 +1,9 @@
+import styles from  "../styles/homepage.module.scss";
+
 function Homepage () {
     
     return (
-        <div className="mt-5 bg-warning">
+        <div className="bg-warning">
             <h1>Main Page</h1>
         </div>
     )

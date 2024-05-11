@@ -62,7 +62,7 @@ function Login() {
         </div>
         <div className="d-grid">
           <button type="submit" className={styles.submit}>
-            Login
+            <b>Login</b>
           </button>
         </div>
         {/* <SignInwithGoogle /> */}

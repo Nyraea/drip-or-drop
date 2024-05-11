@@ -1,3 +1,8 @@
+@import "./util.scss";
+
+//Register Page Styling
+
+//Main Div Styling
 .main {
     display: flex;
     flex-direction: column;
@@ -49,4 +54,9 @@
     background-color: black;
     color: white;
     padding: 0 30px 0 30px;
+
+    &:hover{
+        @include colorTransition(black, white, white, black, "blackToWhite");
+        @include useAnimation("blackToWhite");
+    }
 }

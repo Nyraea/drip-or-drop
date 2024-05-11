@@ -1,3 +1,7 @@
+//Utility Classes
+
+//Mixins for common styles
+
 @mixin colorTransition($bg1, $bg2, $txt1, $txt2, $animationName) {
     @keyframes #{$animationName} {
         from {background-color: $bg1; color: $txt1;}

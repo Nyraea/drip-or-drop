@@ -132,7 +132,7 @@ function Register() {
         </div>
         <div className="d-grid">
           <button type="submit" className={styles.submit}>
-            Sign Up
+            <b>Sign Up</b>
           </button>
         </div>
       </form>

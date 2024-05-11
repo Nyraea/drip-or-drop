@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/global.scss";
+import styles from "../styles/app.module.scss";
 
 import React, { useEffect } from "react";
 import {
@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div className="canvas">
+      <div className={styles.canvas}>
         {user && <Navbar/> }
         <Routes>
           {user ? (
