@@ -1,7 +1,8 @@
 //Utility Classes
 
-//Mixins for common styles
+//Common Transitions
 
+//COLOR
 @mixin colorTransition($bg1, $bg2, $txt1, $txt2, $animationName) {
     @keyframes #{$animationName} {
         from {background-color: $bg1; color: $txt1;}
@@ -9,8 +10,18 @@
     }
 }
 
-@mixin useAnimation($animation) {
+//FONT WEIGHT
+@mixin weightTransition($weight1, $weight2, $animationName) {
+    @keyframes #{$animationName} {
+        from {font-weight: $weight1;}
+        to {font-weight: $weight2;}
+    }
+}
+
+//Class to use the above mixins
+
+@mixin useAnimation($animation, $speed) {
     animation-name: #{$animation};
-    animation-duration: 0.55s;
+    animation-duration: $speed;
     animation-fill-mode: forwards;
 }

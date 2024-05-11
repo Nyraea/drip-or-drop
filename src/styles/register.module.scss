@@ -57,6 +57,6 @@
 
     &:hover{
         @include colorTransition(black, white, white, black, "blackToWhite");
-        @include useAnimation("blackToWhite");
+        @include useAnimation(blackToWhite, 0.5s);
     }
 }
