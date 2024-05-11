@@ -1,5 +1,7 @@
 import styles from "../styles/navbar.module.scss";
 
+import { Link } from "react-router-dom";
+
 import logo from "../assets/logo.svg";
 
 function Navbar() {
@@ -10,7 +12,7 @@ function Navbar() {
                 
                 {/* LINKS */}
                 <div className={`col-1 ${styles.navcol}`}>
-                    <a href="" className={` ${styles.link}`}>home</a>
+                    <Link to = "/homepage" className={` ${styles.link}`}>home</Link>
                 </div>
 
                 <div className={`col-1 ${styles.navcol}`}>
@@ -18,7 +20,7 @@ function Navbar() {
                 </div>
 
                 <div className={`col-1 ${styles.navcol}`}>
-                    <a href="" className={` ${styles.link}`}>trending</a>
+                    <Link to = "/trending"  className={` ${styles.link}`}> trending </Link>
                 </div>
 
                     {/* LOGO */}
@@ -32,7 +34,7 @@ function Navbar() {
                 </div>
 
                 <div className={`col-1 ${styles.navcol}`}>
-                    <a href="" className={` ${styles.link}`}>profile</a>
+                    <Link to = "/profile" className={` ${styles.link}`}>profile</Link>
                 </div>
 
                 <div className={`col-1 ${styles.navcol}`}>

@@ -35,6 +35,8 @@ function App() {
       <div className={styles.canvas}>
         {user && <Navbar/> }
         <Routes>
+
+          {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
           {user ? (
             <>
               <Route path="/homepage" element={<Homepage />} />
@@ -44,6 +46,7 @@ function App() {
             </>
           ) : (
             <>
+            {/*ELSE RESTRICT TO LOGIN OR REGISTER*/}
               <Route
                 path="/login"
                 element={
@@ -58,11 +61,15 @@ function App() {
               />
             </>
           )}
+          
+          {/*UNPROTECTED TRENDING PAGE*/}
           <Route path="/trending" element={<Trending />} />
+
+          {/*REDIRECT TO HOMEPAGE IF USER IS LOGGED IN*/}
           <Route
             path="*"
             element={
-              user ? <Navigate to="/profile" /> : <Navigate to="/login" />
+              user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
             }
           />
         </Routes>

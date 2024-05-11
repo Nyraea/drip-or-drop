@@ -34,7 +34,8 @@ function Register() {
     }
 
     try {
-      // Check if username already exists
+      
+      // CHECKS IF USERNAME ALREADY EXISTS
       const usernameExists = await checkUsernameExists(username);
       if (usernameExists) {
         toast.error("Username already exists. Please choose another.", {
@@ -43,7 +44,7 @@ function Register() {
         return;
       }
 
-      // Proceed with user registration
+      // PROCESS TO REGISTER USER
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
       if (user) {
@@ -59,7 +60,8 @@ function Register() {
       toast.success("User Registered Successfully!!", {
         position: "top-center",
       });
-      // Redirect the user to another page (e.g., login page)
+      
+      // REDIRECT THE USER TO ANOTHER PAGE (e.g., login page)
     } catch (error) {
       console.log(error.message);
       toast.error(error.message, {
@@ -68,15 +70,25 @@ function Register() {
     }
   };
   return (
+
+    //MAIN DIV
     <div className={styles.main}>
+
+      {/* FORM */}
       <form className = {styles.form} onSubmit={handleRegister}>
+
+        {/* LOGO */}
         <img src={logo} alt="logo" className={styles.logo} />
+
+        {/* HEADER */}
         <div className={styles.header}>
           <p className={styles.header_l}> <b>Already have an account?</b></p>
           <p className="">
             <a className={styles.header_r} href="/Login"><b>Login here!</b></a>
           </p>
         </div>
+
+        {/* FIRST NAME */}
         <div className="mb-3">
           <input
             type="text"
@@ -86,6 +98,8 @@ function Register() {
             required
           />
         </div>
+
+        {/* LAST NAME */}
         <div className="mb-3">
           <input
             type="text"
@@ -94,6 +108,8 @@ function Register() {
             onChange={(e) => setLname(e.target.value)}
           />
         </div>
+
+        {/* USERNAME */}
         <div className="mb-3">
           <input
             type="text"
@@ -103,6 +119,8 @@ function Register() {
             required
           />
         </div>
+
+        {/* EMAIL */}
         <div className="mb-3">
           <input
             type="email"
@@ -112,6 +130,8 @@ function Register() {
             required
           />
         </div>
+
+        {/* PASSWORD */}
         <div className="mb-3">
           <input
             type="password"
@@ -121,6 +141,8 @@ function Register() {
             required
           />
         </div>
+
+        {/* CONFIRM PASSWORD */}
         <div className="mb-3">
           <input
             type="password"
@@ -130,12 +152,16 @@ function Register() {
             required
           />
         </div>
+
+        {/* SIGN UP BUTTON */}
         <div className="d-grid">
           <button type="submit" className={styles.submit}>
             <b>Sign Up</b>
           </button>
         </div>
+
       </form>
+
     </div>
   );
 }

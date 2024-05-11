@@ -76,7 +76,7 @@ function Profile() {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="row temp-margin">
         <div className="col-md-2">
           <div className="profile-pic">
             {userDetails && userDetails.photo ? (
@@ -109,7 +109,7 @@ function Profile() {
               Logout
             </button>
             <button className="btn btn-primary">
-              <Link to="/homepage">Go to Image Upload</Link>
+              <Link to="/upload" className="text-decoration-none text-light">Go to Image Upload</Link>
             </button>
           </div>
         </div>

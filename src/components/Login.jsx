@@ -32,16 +32,25 @@ function Login() {
   };
 
   return (
+    
+    //MAIN
     <div className={styles.main}>
+
+      {/* FORM */}
       <form className={styles.form} onSubmit={handleSubmit}>
+
+        {/* LOGO */}
         <img src={logo} alt="logo" className={styles.logo} />
-        <div className={styles.header}>
-          
+
+        {/* HEADER */}
+        <div className={styles.header}>  
           <p className={styles.header_l}><b>No account yet?</b></p>
           <p className="">
             <a className={styles.header_r} href="/register"><b>Create your account</b></a>
           </p>
         </div>
+
+        {/* EMAIL */}
         <div className="mb-3">
           <input
             type="email"
@@ -51,6 +60,8 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
+        {/* PASSWORD */}
         <div className="mb-3">
           <input
             type="password"
@@ -60,12 +71,15 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {/* LOGIN BUTTON */}
         <div className="d-grid">
           <button type="submit" className={styles.submit}>
             <b>Login</b>
           </button>
         </div>
         {/* <SignInwithGoogle /> */}
+        
       </form>
     </div>
   );
