@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "/App.css";
-import "/index.css";
+import "../styles/global.scss";
+
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-
-import Login from "./Login";
-
-import SignUp from "./Register";
-
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Profile from "./Profile";
 import { useState } from "react";
 import { auth } from "./firebase";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Login from "./Login";
+import SignUp from "./Register";
+import Profile from "./Profile";
 import ImageUpload from "./ImageUpload";
 import Trending from "./Trending";
 import UserImages from "./UserImages";
+import Homepage from "./Homepage";
+import Navbar from "./Navbar";
 
 function App() {
   const [user, setUser] = useState();
@@ -32,10 +32,12 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="canvas">
+        {user && <Navbar/> }
         <Routes>
           {user ? (
             <>
+              <Route path="/homepage" element={<Homepage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/images" element={<UserImages />} />
               <Route path="/upload" element={<ImageUpload />} />
@@ -45,21 +47,13 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  <div className="auth-wrapper">
-                    <div className="auth-inner">
                       <Login />
-                    </div>
-                  </div>
                 }
               />
               <Route
                 path="/register"
                 element={
-                  <div className="auth-wrapper">
-                    <div className="auth-inner">
                       <SignUp />
-                    </div>
-                  </div>
                 }
               />
             </>

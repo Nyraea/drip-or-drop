@@ -4,7 +4,7 @@ import { auth, db } from "./firebase";
 import { setDoc, doc, collection, where, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { query } from "firebase/firestore";
-import "/loginregisterStyle.css";
+import "../styles/loginregisterStyle.scss";
 
 function Register() {
   const [email, setEmail] = useState("");

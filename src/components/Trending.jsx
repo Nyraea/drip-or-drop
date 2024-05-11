@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "/trending.css";
+import "../styles/trending.scss";
 import axios from "axios";
 
 const API_URL = "https://api.unsplash.com/search/photos";

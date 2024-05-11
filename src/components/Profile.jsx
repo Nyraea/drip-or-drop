@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "/profile.css";
+import "../styles/profile.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -109,7 +109,7 @@ function Profile() {
               Logout
             </button>
             <button className="btn btn-primary">
-              <Link to="/upload">Go to Image Upload</Link>
+              <Link to="/homepage">Go to Image Upload</Link>
             </button>
           </div>
         </div>
