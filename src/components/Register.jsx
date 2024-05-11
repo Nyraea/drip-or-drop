@@ -1,10 +1,13 @@
+import styles from "../styles/register.module.scss";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth, db } from "./firebase";
 import { setDoc, doc, collection, where, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { query } from "firebase/firestore";
-import "../styles/loginregisterStyle.scss";
+
+import logo from "../assets/logo.svg";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -65,78 +68,75 @@ function Register() {
     }
   };
   return (
-    <form onSubmit={handleRegister}>
-      <div className="header-container">
-        <p className="forgot-password-text-right"> Already have an account?</p>
-        <p className="forgot-password-text-right2">
-          <a href="/Login">Login here!</a>
-        </p>
-      </div>
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="First name"
-          onChange={(e) => setFname(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Last name"
-          onChange={(e) => setLname(e.target.value)}
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="mb-3">
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Confirm password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="d-grid">
-        <button type="submit" className="loginregisterbutton">
-          Sign Up
-        </button>
-      </div>
-    </form>
+    <div className={styles.main}>
+      <form className = {styles.form} onSubmit={handleRegister}>
+        <img src={logo} alt="logo" className={styles.logo} />
+        <div className={styles.header}>
+          <p className={styles.header_l}> <b>Already have an account?</b></p>
+          <p className="">
+            <a className={styles.header_r} href="/Login"><b>Login here!</b></a>
+          </p>
+        </div>
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="First name"
+            onChange={(e) => setFname(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Last name"
+            onChange={(e) => setLname(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Confirm password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="d-grid">
+          <button type="submit" className={styles.submit}>
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 export default Register;

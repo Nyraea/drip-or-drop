@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/login.scss";
+import styles from "../styles/login.module.scss";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
@@ -32,14 +32,14 @@ function Login() {
   };
 
   return (
-    <div className="main">
-      <form className="form" onSubmit={handleSubmit}>
-        <img src={logo} alt="logo" className="logo" />
-        <div className="header">
+    <div className={styles.main}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <img src={logo} alt="logo" className={styles.logo} />
+        <div className={styles.header}>
           
-          <p className="header-l"><b>No account yet?</b></p>
+          <p className={styles.header_l}><b>No account yet?</b></p>
           <p className="">
-            <a className="header-r" href="/register"><b>Create your account</b></a>
+            <a className={styles.header_r} href="/register"><b>Create your account</b></a>
           </p>
         </div>
         <div className="mb-3">
@@ -61,7 +61,7 @@ function Login() {
           />
         </div>
         <div className="d-grid">
-          <button type="submit" className="submit">
+          <button type="submit" className={styles.submit}>
             Login
           </button>
         </div>

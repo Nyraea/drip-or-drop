@@ -1,0 +1,60 @@
+@import "./util.scss";
+
+//Main Div Styling
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 40%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.218);
+}
+
+//Form Styling
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto 0px auto 0px;
+    padding: 5% 15% 5% 15%;
+}
+
+//D||D Logo
+.logo {
+    display: flex;
+    width: 75%;
+    margin: 0px auto 15% auto;
+    justify-content: center;
+
+}
+
+//Login Header
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+//Login Label (Left)
+.header_l {
+    color: black;
+    text-decoration: none;
+}
+
+//Login Label (Right)
+.header_r {
+    color: black;
+}
+
+//Submit Button
+.submit {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 0 30px 0 30px;
+
+    &:hover{
+        @include colorTransition(black, white, white, black, "blackToWhite");
+        @include useAnimation("blackToWhite");
+    }
+}
