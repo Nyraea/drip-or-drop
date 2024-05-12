@@ -16,10 +16,28 @@
   justify-content: center;
 }
 
+.profile_pic {
+
+  &:hover {
+
+  }
+}
+
+.default_pic {
+  &:hover {
+    @include opacityTransition(1, 0.75, opaqueToTranslucent);
+    @include useAnimation(opaqueToTranslucent, 0.5s);
+  }
+}
+
 //PROFILE INFORMATION
 .info {
   color: black;
   font-family: 'Georama';
+}
+
+.icon {
+  margin: auto 0 auto 0;
 }
 
 //ACTION BUTTONS
@@ -76,4 +94,9 @@
   padding: 10px;
   text-align: center;
   font-size: 14px;
+}
+
+.uploads_loading {
+  display: flex;
+  justify-content: center;
 }

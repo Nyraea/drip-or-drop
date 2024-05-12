@@ -40,7 +40,7 @@ function App() {
           {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
           {user ? (
             <>
-            <Route path="/edit" element={<EditProfile />} />
+              <Route path="/edit" element={<EditProfile />} />
               <Route path="/homepage" element={<Homepage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/images" element={<UserImages />} />

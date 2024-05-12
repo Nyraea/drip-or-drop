@@ -10,10 +10,18 @@
     }
 }
 
+//COLOR (TEXT ONLY)
 @mixin colorTransitionLite($txt1, $txt2, $animationName) {
     @keyframes #{$animationName} {
         from {color: $txt1;}
         to {color: $txt2;}
+    }
+}
+
+@mixin opacityTransition($op1, $op2, $animationName) {
+    @keyframes #{$animationName} {
+        from {opacity: $op1;}
+        to {opacity: $op2;}
     }
 }
 

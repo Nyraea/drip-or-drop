@@ -1,6 +1,7 @@
+import styles from "../styles/profile.module.scss";
+
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import "../styles/profile.scss";
 
 function UserImages({ userId }) {
   const [userImages, setUserImages] = useState([]);
@@ -25,8 +26,8 @@ function UserImages({ userId }) {
   }, [userId]);
 
   return (
-    <div className = "temp-margin2">
-      <div className="user-images">
+    <div className = "">
+      <div className={`${styles.user_images}`}>
         {userImages.map((image) => (
           <div key={image.id} className="image-container">
             <img
@@ -34,9 +35,9 @@ function UserImages({ userId }) {
                 image.imageUrl
               )}?alt=media`}
               alt={image.description}
-              className="user-image"
+              className={`${styles.user_image}`}
             />
-            <div className="image-details">
+            <div className={`${styles.image_details}`}>
               <p>Description: {image.description}</p>
               <p>Tags: {image.tags.join(", ")}</p>
             </div>

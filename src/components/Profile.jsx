@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/profile.scss";
+import styles from "../styles/profile.module.scss";
+import "../styles/global.scss";
 
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
@@ -15,6 +16,7 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import loading from "../assets/loading.gif";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
@@ -76,80 +78,111 @@ function Profile() {
     }
   }
 
+  // DELAY UPLOADS RENDER BY 1.75 SECONDS
+  const [delayedRender, setDelayedRender] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDelayedRender(true);
+    }, 1750);
+
+    return () => clearTimeout(timer); // This will clear the timer when the component unmounts
+  }, []);
+
   return (
 
     //MAIN DIV
     <div className="container-fluid">
 
       {/* ACCOUNT INFORMATION*/}
-      <div className="row profile">
+      <div className={`row ${styles.profile}`}>
 
         {/* PROFILE PIC */}
-        <div className="col-2">
+        <div className="col-2 center">
           <div className="">
             {userDetails && userDetails.photo ? (
-              <img
-                src={userDetails.photo}
-                className=""
-                alt="Profile"
-              />
+              
+                <a href = "" onClick={(event) => event.preventDefault()}>
+                  <img
+                    src={userDetails.photo}
+                    className={`${styles.profile_pic}`}
+                    alt="Profile"
+                  />
+                </a>
             ) : (
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                style={{ color: "#000000" }}
-                size="10x"
-              />
+              <a href = "" onClick={(event) => event.preventDefault()}>
+                <FontAwesomeIcon
+                  icon={faUserCircle}
+                  className={`${styles.default_pic}`}
+                  style={{ color: "#000000" }}
+                  size="10x"
+                />
+              </a>
             )}
           </div>
         </div>
+
         {/* PROFILE INFORMATION & ACTIONS */}
-        <div className="col-4">
-          <div className="">
-            {userDetails ? (
-              <>
-                <p className="info">Username: {userDetails.username}</p>
-                <p className="info">Email: {userDetails.email}</p>
-                <p className="info">
+        {userDetails ? (
+          <>
+            <div className="col-4">
+
+              {/* PROFILE INFO */}
+              <div className="">
+
+                <p className={`${styles.info}`}>Username: {userDetails.username}</p>
+                <p className={`${styles.info}`}>Email: {userDetails.email}</p>
+                <p className={`${styles.info}`}>
                   {userDetails.firstName} {userDetails.lastName}
                 </p>
-              </>
-            ) : (
-              <p className="info">Loading...</p>
-            )}
-          </div>
-          {/* LOGOUT & UPLOAD BUTTONS */}
 
-          <div className="">
-            <button className="actions" onClick={handleLogout}>
-              Logout
-            </button>
-            <button className="actions">
-              <Link to="/upload" className="">Go to Image Upload</Link>
-            </button>
-          </div>
-        </div>
+              </div>
+
+              {/* LOGOUT & UPLOAD BUTTONS */}
+              <div className="">
+                <button className={`${styles.actions}`} onClick={handleLogout}>
+                  Logout
+                </button>
+                <button className={`${styles.actions}`}>
+                  <Link to="/upload" className="">Upload </Link>
+                </button>
+              </div>
+
+             </div>
+          </>
+            ) : (
+              <div className="col-4 d-flex">
+                <img src={loading} className={`${styles.icon}`} alt="" />
+                </div>
+            )}
       </div>
 
       {/* USER UPLOADS */}
-      <div className="uploads">
-
+      {userImages && delayedRender ? (
+      <div className={`${styles.uploads}`}>
+        
         {/* USER IMAGES MAP */}
         {userImages.map((image) => (
-          <div key={image.id} className="upload_container">
+          <div key={image.id} className={`${styles.upload_container}`}>
             <img
               src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                 image.imageUrl
               )}?alt=media`}
               alt={image.description}
-              className="upload"
+              className={`${styles.upload}`}
             />
-            <div className="upload_details">
+            <div className={`${styles.upload_details}`}>
               <p>Description: {image.description}</p>
               <p>Tags: {image.tags.join(", ")}</p>
             </div>
           </div>
         ))}
       </div>
+      ) : (
+          <div className={`${styles.uploads_loading}`}>
+            <img src={loading} className={`${styles.icon}`} alt="" />
+          </div>
+        )}
     </div>
   );
 }
