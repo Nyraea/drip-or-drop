@@ -91,6 +91,21 @@ button.log_btn:hover {
   padding: 0.5px;
 }
 
+.icon {
+  margin: auto 0 auto 0;
+}
+
+.uploads_loading {
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Set height to 100% of the viewport height */
+}
+
 .dropdown button {
   background-color: transparent !important;
   border: none;
