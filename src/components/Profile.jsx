@@ -21,6 +21,7 @@ import Skeleton from "react-loading-skeleton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
+import farquad from "../assets/farquad.svg";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
@@ -168,12 +169,9 @@ function Profile() {
                 </a>
             ) : (
               <a href = "" onClick={(event) => {event.preventDefault(); handleShow();}}>
-                <FontAwesomeIcon
-                  icon={faUserCircle}
-                  className={`${styles.default_pic}`}
-                  style={{ color: "#000000" }}
-                  size="10x"
-                />
+                <img src={farquad} alt = "sigma">
+
+                </img>
               </a>
             )}
           </div>
