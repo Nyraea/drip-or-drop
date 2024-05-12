@@ -58,8 +58,8 @@ function Trending() {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">Discover</h1>
+    <div className="trendingcontainer">
+      <h1 className="trendingtitle">See what's drippin'</h1>
       {errorMsg && <p className="error-msg">{errorMsg}</p>}
       <div className="search-section">
         <Form onSubmit={handleSearch}>

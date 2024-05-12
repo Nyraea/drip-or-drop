@@ -1,95 +1,89 @@
+@import "./typography.scss";
+@import "./util.scss";
+$default: "Georama";
+$highlight: "Rochester";
+
+//variables used by zeke's code i just modified and kept it
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   --default-spacing: 10px;
   --default-margin: 1rem;
   --medium-margin: 3rem;
   --larger-margin: 5rem;
-  --primary-color: #7676d7;
+  --primary-color: black;
 }
-
+//idk what this does
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   color: var(--primary-color);
+  font-family: $default;
 }
 
-/* common css starts */
-
-.container {
+//the container of it all
+.trendingcontainer {
+  height: fit-content;
+  width: 1500px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-height: 100vh;
+
+  //see what's drippin text
+  .trendingtitle {
+    margin-top: var(--larger-margin);
+    text-align: center;
+    font-family: $highlight;
+    color: black;
+  }
 }
 
-.title {
-  text-align: center;
-  margin-top: var(--default-margin);
-  color: #7676d7;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--default-margin);
-  margin-top: var(--medium-margin);
-  margin-bottom: var(--larger-margin);
-}
-
-.buttons .btn,
-.buttons .btn:active,
-.buttons .btn:focus {
-  background-color: var(--primary-color);
-  box-shadow: none;
-  outline: none;
-  border: none;
-}
-
+//idk when this pops
 .error-msg {
   color: #ff0000;
   text-align: center;
 }
 
+//loading text
 .loading {
-  color: #6565d4;
+  color: black;
   text-align: center;
   margin-top: 20px;
   font-size: 20px;
 }
 
-/* common css ends */
-
-/* search section starts */
-
+//search section div
 .search-section {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: var(--default-margin);
+
+  //the input box
+  .search-input {
+    min-width: 500px;
+    padding: var(--default-spacing);
+    border-color: rgb(172, 172, 172);
+
+    //focus animation
+    &:focus {
+      border-color: black;
+      box-shadow: none;
+    }
+  }
+
+  //there's supposed to be a button??
+  .search-section .search-btn {
+    margin-left: var(--default-spacing);
+  }
 }
 
-.search-section .search-input {
-  min-width: 500px;
-  padding: var(--default-spacing);
-}
-
-.search-section .search-btn {
-  margin-left: var(--default-spacing);
-}
-
-/* search section ends */
-
-/* filters section starts */
-
+//the filters div
 .filters {
   display: flex;
   justify-content: center;
@@ -97,20 +91,24 @@ body {
   align-items: center;
   gap: 1rem;
   margin-top: var(--default-margin);
+
+  //they aren't buttons they're divs
+  div {
+    padding: 5px 10px;
+    background: black;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+
+    //animation works either way pog
+    &:hover {
+      @include colorTransition(black, white, white, black, "blackToWhite");
+      @include useAnimation(blackToWhite, 0.5s);
+    }
+  }
 }
 
-.filters > * {
-  padding: 5px 10px;
-  background: #7676d7;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* filters section ends */
-
-/* images section starts */
-
+//div for the images
 .images {
   margin-top: var(--medium-margin);
   display: grid;
@@ -118,20 +116,47 @@ body {
   grid-gap: var(--default-spacing);
   justify-content: center;
   align-items: center;
+
+  //per image properties
+  .image {
+    width: 100%;
+    height: auto;
+    justify-self: center;
+    align-self: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+    transition: transform 0.5s;
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
 }
 
-.images .image {
-  width: 200px;
-  height: 200px;
-  justify-self: center;
-  align-self: center;
-  margin-left: 2rem;
-  border-radius: 10px;
-  transition: transform 0.5s;
+//next and previous buttons container style
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.images .image:hover {
-  transform: translateY(-3px);
+//the NEXT and PREVIOUS buttons mismo
+.buttons .btn,
+.buttons .btn:active,
+.buttons .btn:focus {
+  margin-top: var(--medium-margin);
+  margin-bottom: var(--default-margin);
+  background-color: black;
+  color: white;
+  box-shadow: none;
+  outline: none;
+  border: none;
+
+  //animation
+  &:hover {
+    @include colorTransition(black, white, white, black, "blackToWhite");
+    @include useAnimation(blackToWhite, 0.5s);
+  }
 }
 
 /* images section ends */
