@@ -9,8 +9,6 @@
   background-color: #fff;
   padding: 20px;
   margin-top: 60px;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
 //USER PROFILE PICTURE
@@ -64,9 +62,13 @@
   }
 }
 
+  .uploads_title {
+    font-family: 'Georama';
+    font-weight: 600;
+  }
   //USER UPLOADS SECTION
   .uploads {
-    margin: 5% 5% 0 5%;
+    margin: 1% 5% 0 5%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 10px;
