@@ -4,18 +4,16 @@
 //PROFILE INFORMATION DIV
 .profile {
   display: flex;
-  position: fixed;
-  z-index: 1;
-  top: 0;
+
   width: 100%;
   background-color: #fff;
   padding: 20px;
   margin-top: 60px;
   border-bottom: 1px solid #ddd;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
-  justify-content: center;
 }
 
+//USER PROFILE PICTURE
 .profile_pic {
 
   &:hover {
@@ -23,6 +21,7 @@
   }
 }
 
+//DEFAULT PROFILE PICTURE
 .default_pic {
   &:hover {
     @include opacityTransition(1, 0.75, opaqueToTranslucent);
@@ -40,63 +39,104 @@
   margin: auto 0 auto 0;
 }
 
+.actions_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
 //ACTION BUTTONS
 .actions {
-  margin: 0px 5% 0px 0;
-  padding: 1% 5% 1% 5%;
-  background-color: black;
-  color: white;
-  text-decoration: none;
+  width: 75%;
 
-  a {
-    text-decoration: none;
+  .button {
+    background-color: black;
     color: white;
+    text-decoration: none;
+    width: 100%;
 
       &:hover {
-        @include colorTransitionLite(white, black, whiteToBlack);
-        @include useAnimation(whiteToBlack, 0.5s);
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
       }
   }
+}
 
-  &:hover {
-    @include colorTransition(black, white, white, black, blackToWhite);
-    @include useAnimation(blackToWhite, 0.5s);
+  //USER UPLOADS SECTION
+  .uploads {
+    margin: 5% 5% 0 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
   }
-}
 
-//USER UPLOADS SECTION
-.uploads {
-  margin-top: 55%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 10px;
-}
+  //UPLOAD CONTAINER
+  .upload_container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
 
-//UPLOAD CONTAINER
-.upload_container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
+  //UPLOAD IMAGE
+  .upload {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
 
-//UPLOAD IMAGE
-.upload {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
+  //UPLOAD DETAILS
+  .upload_details {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
 
-//UPLOAD DETAILS
-.upload_details {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
 
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-}
+  .uploads_loading {
+    display: flex;
+    justify-content: center;
+  }
 
-.uploads_loading {
-  display: flex;
-  justify-content: center;
-}
+    //SKELETONS
+
+    //TOTAL DRIP
+    .sk_total {
+      height: 45px;
+    }
+
+    //AVERAGE DRIP
+    .sk_average {
+      height: 45px;
+    }
+    
+    //DRIP SCORE
+    .sk_score {
+      height: 45px;
+    }
+
+    //USERNAME
+    .sk_username {
+      max-width: 85%;
+      height: 35px;
+    }
+
+    //BIO
+    .sk_bio {
+
+    }
+
+    //UPLOAD BUTTON
+    .sk_upload {
+      max-width: 50%;
+      height: 25px;
+    }
+
+    //EDIT PROFILE BUTTON
+    .sk_edit {
+      max-width: 50%;
+      height: 25px;
+    }
