@@ -1,70 +1,78 @@
-.temp-margin2 {
-  margin-top: 160px;
-}
+@import "./typography.scss";
+@import "./util.scss";
 
-.account-info {
+//PROFILE INFORMATION DIV
+.profile {
+  display: flex;
   position: fixed;
+  z-index: 1;
   top: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 1;
   padding: 20px;
   margin-top: 60px;
   border-bottom: 1px solid #ddd;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
+  justify-content: center;
 }
 
-.profile-pic {
-  width: 50%;
-  height: 50%;
-  margin: 20px;
+//PROFILE INFORMATION
+.info {
+  color: black;
+  font-family: 'Georama';
 }
 
-.profile-pic img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+//ACTION BUTTONS
+.actions {
+  margin: 0px 5% 0px 0;
+  padding: 1% 5% 1% 5%;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+
+  a {
+    text-decoration: none;
+    color: white;
+
+      &:hover {
+        @include colorTransitionLite(white, black, whiteToBlack);
+        @include useAnimation(whiteToBlack, 0.5s);
+      }
+  }
+
+  &:hover {
+    @include colorTransition(black, white, white, black, blackToWhite);
+    @include useAnimation(blackToWhite, 0.5s);
+  }
 }
 
-.profile-info {
-  padding: 20px;
-}
-
-.btn {
-  margin-right: 10px;
-}
-
-
-.container {
-  padding-top: 750px;
-}
-
-.user-images {
+//USER UPLOADS SECTION
+.uploads {
+  margin-top: 55%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 10px;
 }
 
-.user-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.image-container {
+//UPLOAD CONTAINER
+.upload_container {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
 }
 
-.image-details {
+//UPLOAD IMAGE
+.upload {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+//UPLOAD DETAILS
+.upload_details {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+
   padding: 10px;
   text-align: center;
   font-size: 14px;

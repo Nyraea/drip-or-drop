@@ -2,11 +2,18 @@
 
 //Common Transitions
 
-//COLOR
+//COLOR (BG & TEXT)
 @mixin colorTransition($bg1, $bg2, $txt1, $txt2, $animationName) {
     @keyframes #{$animationName} {
         from {background-color: $bg1; color: $txt1;}
         to {background-color: $bg2; color: $txt2;}
+    }
+}
+
+@mixin colorTransitionLite($txt1, $txt2, $animationName) {
+    @keyframes #{$animationName} {
+        from {color: $txt1;}
+        to {color: $txt2;}
     }
 }
 

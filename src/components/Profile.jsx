@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/profile.scss";
 
+
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -78,18 +79,18 @@ function Profile() {
 
   return (
     //MAIN DIV
-    <div className="container">
+    <div className="container-fluid">
 
       {/* ACCOUNT INFORMATION*/}
-      <div className="row account-info">
+      <div className="row profile">
 
         {/* PROFILE PIC */}
-        <div className="col-md-2">
-          <div className="profile-pic">
+        <div className="col-2">
+          <div className="">
             {userDetails && userDetails.photo ? (
               <img
                 src={userDetails.photo}
-                className="profile-image"
+                className=""
                 alt="Profile"
               />
             ) : (
@@ -99,45 +100,49 @@ function Profile() {
         </div>
 
         {/* PROFILE INFORMATION & ACTIONS */}
-        <div className="col-md-4">
-          <div className="profile-info">
+        <div className="col-4">
+          <div className="">
             {userDetails ? (
               <>
-                <p className="">Username: {userDetails.username}</p>
-                <p className="">Email: {userDetails.email}</p>
-                <p className="">
+                <p className="info">Username: {userDetails.username}</p>
+                <p className="info">Email: {userDetails.email}</p>
+                <p className="info">
                   {userDetails.firstName} {userDetails.lastName}
                 </p>
               </>
             ) : (
-              <p>Loading...</p>
+              <p className="info">Loading...</p>
             )}
           </div>
 
           {/* LOGOUT & UPLOAD BUTTONS */}
-          <div className="actions">
-            <button className="btn btn-dark" onClick={handleLogout}>
+          <div className="">
+            <button className="actions" onClick={handleLogout}>
               Logout
             </button>
-            <button className="btn btn-dark">
-              <Link to="/upload" className="text-decoration-none text-light">Go to Image Upload</Link>
+            <button className="actions">
+              <Link to="/upload" className="">Go to Image Upload</Link>
             </button>
           </div>
         </div>
 
 
       </div>
-      <div className="user-images">
+
+      {/* USER UPLOADS */}
+      <div className="uploads">
+
+        {/* USER IMAGES MAP */}
         {userImages.map((image) => (
-          <div key={image.id} className="image-container">
+          <div key={image.id} className="upload_container">
             <img
               src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                 image.imageUrl
               )}?alt=media`}
               alt={image.description}
-              className="user-image"
+              className="upload"
             />
-            <div className="image-details">
+            <div className="upload_details">
               <p>Description: {image.description}</p>
               <p>Tags: {image.tags.join(", ")}</p>
             </div>
