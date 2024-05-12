@@ -129,7 +129,10 @@ function Discover() {
                   <div className="icons">
                     <div className="icon_left d-flex">
                       <div className="like" onClick={toggleLike}>
-                        <img src="/images/heart.png" alt="Heart" />
+                        <img src="/images/drip.png" alt="drip" />
+                      </div>
+                      <div className="like" onClick={toggleLike}>
+                        <img src="/images/trashbag.png" alt="trashbag" />
                       </div>
                     </div>
 
