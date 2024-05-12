@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Skeleton from "react-loading-skeleton";
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -259,9 +259,11 @@ function Profile() {
 
       {/* USER UPLOADS */}
       {userImages && delayedRender ? (
-        
+      <>
+        <div className="d-flex justify-content-center mt-3">
+          <h2 className={`${styles.uploads_title}`}>my drips</h2>  
+        </div>
       <div className={`${styles.uploads}`}>
-        
         {/* USER IMAGES MAP */}
         {userImages.map((image) => (
           <div key={image.id} className={`${styles.upload_container}`}>
@@ -279,10 +281,59 @@ function Profile() {
           </div>
         ))}
       </div>
+      </>
       ) : (
-          <div className={`${styles.uploads_loading}`}>
-            <img src={loading} className={`${styles.icon}`} alt="" />
+        <>
+        <SkeletonTheme height={350} width={250}>
+          <div className="d-flex row justify-content-center w-100 px-5 mt-4 g-2">
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
+            <div className="d-flex justify-content-center col">
+              <Skeleton containerClassName="flex-1" />
+            </div>
           </div>
+        </SkeletonTheme>
+      </>
         )}
 
         {/* CHANGE DP MODAL */}

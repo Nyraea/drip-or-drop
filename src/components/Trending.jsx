@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/trending.scss";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const API_URL = "https://api.unsplash.com/search/photos";
 const IMAGES_PER_PAGE = 20;
@@ -85,8 +87,58 @@ function Trending() {
           Pants
         </div>
       </div>
-      {loading ? (
-        <p className="loading">Loading...</p>
+      { loading ? (
+        <>
+          <SkeletonTheme height={350} width={250}>
+            <div className="d-flex row justify-content-center w-100 px-5 mt-4 g-2">
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+              <div className="d-flex justify-content-center col">
+                <Skeleton containerClassName="flex-1" />
+              </div>
+            </div>
+          </SkeletonTheme>
+        </>
       ) : (
         <>
           <div className="images">
