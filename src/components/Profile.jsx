@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/profile.scss";
 
-
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -78,6 +77,7 @@ function Profile() {
   }
 
   return (
+
     //MAIN DIV
     <div className="container-fluid">
 
@@ -94,11 +94,14 @@ function Profile() {
                 alt="Profile"
               />
             ) : (
-              <FontAwesomeIcon icon={faUserCircle} style={{color: "#000000",}} size="10x" />
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                style={{ color: "#000000" }}
+                size="10x"
+              />
             )}
           </div>
         </div>
-
         {/* PROFILE INFORMATION & ACTIONS */}
         <div className="col-4">
           <div className="">
@@ -114,8 +117,8 @@ function Profile() {
               <p className="info">Loading...</p>
             )}
           </div>
-
           {/* LOGOUT & UPLOAD BUTTONS */}
+
           <div className="">
             <button className="actions" onClick={handleLogout}>
               Logout
@@ -125,8 +128,6 @@ function Profile() {
             </button>
           </div>
         </div>
-
-
       </div>
 
       {/* USER UPLOADS */}

@@ -41,6 +41,7 @@ function Navbar() {
                     <a href="" className={` ${styles.link}`}>logout</a>
                 </div>
             </div>
+            
         </nav>
     )
 }
