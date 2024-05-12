@@ -50,7 +50,10 @@ function Discover() {
                 username: userData.username || "Unknown User",
                 profileImageUrl:
                   userData.profileImageUrl || "/images/images1.jpg",
-                imageUrl: imageData.imageUrl || "/images/images1.jpg",
+                imageUrl:
+                  `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+                    imageData.imageUrl
+                  )}?alt=media` || "/images/default_profile.jpg",
                 isNSFW: imageData.isNSFW || false,
               };
 
