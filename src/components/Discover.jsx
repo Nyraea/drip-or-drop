@@ -18,6 +18,13 @@ function Discover() {
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [posts, setPosts] = useState([]);
+  const toggleLike = () => {
+    setLiked(!liked);
+  };
+
+  const toggleFavorite = () => {
+    setFavorited(!favorited);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -49,12 +56,14 @@ function Discover() {
               const post = {
                 username: userData.username || "Unknown User",
                 profileImageUrl:
-                  userData.profileImageUrl || "/images/images1.jpg",
+                  userData.profileImageUrl || "/images/default_profile.jpg",
                 imageUrl:
                   `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                     imageData.imageUrl
                   )}?alt=media` || "/images/default_profile.jpg",
                 isNSFW: imageData.isNSFW || false,
+                caption: imageData.description || "",
+                tags: imageData.tags || [],
               };
 
               fetchedPosts.push(post);
@@ -70,14 +79,6 @@ function Discover() {
 
     fetchPosts();
   }, []);
-
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
-
-  const toggleFavorite = () => {
-    setFavorited(!favorited);
-  };
 
   return (
     <div className="main_section">
@@ -131,10 +132,17 @@ function Discover() {
                 </div>
 
                 <div className="liked">
+                  <a className="">
+                    {post.tags.map((tag) => `#${tag}`).join(", ")}
+                  </a>
+                </div>
+
+                <div className="liked">
                   <a className="bold" href="">
                     {post.likes} likes
                   </a>
                 </div>
+
                 <div className="post_desc">
                   <p>
                     <a className="bold" href="">
