@@ -34,7 +34,6 @@ function Register() {
     }
 
     try {
-      
       // CHECKS IF USERNAME ALREADY EXISTS
       const usernameExists = await checkUsernameExists(username);
       if (usernameExists) {
@@ -56,11 +55,11 @@ function Register() {
           photo: "",
         });
       }
-      console.log("User Registered Successfully!!");
-      toast.success("User Registered Successfully!!", {
+      console.log("User Registered Successfully!");
+      toast.success("User Registered Successfully!", {
         position: "top-center",
       });
-      
+
       // REDIRECT THE USER TO ANOTHER PAGE (e.g., login page)
     } catch (error) {
       console.log(error.message);
@@ -70,21 +69,23 @@ function Register() {
     }
   };
   return (
-
     //MAIN DIV
     <div className={styles.main}>
-
       {/* FORM */}
-      <form className = {styles.form} onSubmit={handleRegister}>
-
+      <form className={styles.form} onSubmit={handleRegister}>
         {/* LOGO */}
         <img src={logo} alt="logo" className={styles.logo} />
 
         {/* HEADER */}
         <div className={styles.header}>
-          <p className={styles.header_l}> <b>Already have an account?</b></p>
+          <p className={styles.header_l}>
+            {" "}
+            <b>Already have an account?</b>
+          </p>
           <p className="">
-            <a className={styles.header_r} href="/Login"><b>Login here!</b></a>
+            <a className={styles.header_r} href="/Login">
+              <b>Login here!</b>
+            </a>
           </p>
         </div>
 
@@ -159,9 +160,7 @@ function Register() {
             <b>Sign Up</b>
           </button>
         </div>
-
       </form>
-
     </div>
   );
 }
