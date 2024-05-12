@@ -1,5 +1,6 @@
 import "../styles/discover.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -11,6 +12,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 
 import loading from "../assets/loading.gif";
 
@@ -80,10 +82,24 @@ function Discover() {
     fetchPosts();
   }, []);
 
+    // DELAY UPLOADS RENDER BY 1.75 SECONDS
+    const [delayedRender, setDelayedRender] = useState(false);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDelayedRender(true);
+      }, 1750);
+  
+      return () => clearTimeout(timer); // This will clear the timer when the component unmounts
+    }, []);
+
   return (
+    
     <div className="main_section">
+      {posts ? (
       <div className="posts_container">
         {/*Top part*/}
+
         <div className="posts">
           {posts.map((post, index) => (
             <div key={index} className="post">
@@ -126,7 +142,7 @@ function Discover() {
                     </div>
                   </div>
 
-                  <div className="save not_saved" onClick={toggleFavorite}>
+                  <div className="" onClick={toggleFavorite}>
                     <img src="/images/save-instagram.png" alt="Not Saved" />
                   </div>
                 </div>
@@ -162,6 +178,12 @@ function Discover() {
           ))}
         </div>
       </div>
+              ) : (
+                <div className="w-100">
+                  <Skeleton containerClassName="flex-1"/>
+                  eggs
+                </div>
+              )}
     </div>
   );
 }
