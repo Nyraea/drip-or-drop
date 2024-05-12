@@ -14,6 +14,8 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Skeleton from "react-loading-skeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +25,10 @@ import loading from "../assets/loading.gif";
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
   const [userImages, setUserImages] = useState([]);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -161,7 +167,7 @@ function Profile() {
                   />
                 </a>
             ) : (
-              <a href = "" onClick={(event) => event.preventDefault()}>
+              <a href = "" onClick={(event) => {event.preventDefault(); handleShow();}}>
                 <FontAwesomeIcon
                   icon={faUserCircle}
                   className={`${styles.default_pic}`}
@@ -255,6 +261,7 @@ function Profile() {
 
       {/* USER UPLOADS */}
       {userImages && delayedRender ? (
+        
       <div className={`${styles.uploads}`}>
         
         {/* USER IMAGES MAP */}
@@ -279,7 +286,33 @@ function Profile() {
             <img src={loading} className={`${styles.icon}`} alt="" />
           </div>
         )}
+
+        {/* CHANGE DP MODAL */}
+        <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title><b>Change Profile Picture</b></Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center">
+              <FontAwesomeIcon
+                  icon={faUserCircle}
+                  style={{ color: "#000000" }}
+                  size="10x"
+              />
+            </Modal.Body>
+            <Modal.Footer className={`${styles.actions}`}>
+            <button className={`${styles.button}`}>
+                Upload 
+              </button>
+              <button className={`${styles.button}`} onClick={handleClose}>
+                Cancel 
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </>
     </div>
+
+    
   );
 }
 
