@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
 import "../styles/global.scss";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
@@ -13,6 +14,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -92,10 +94,59 @@ function Profile() {
   return (
 
     //MAIN DIV
-    <div className="container-fluid">
+    <div className="w-100">
 
       {/* ACCOUNT INFORMATION*/}
-      <div className={`row ${styles.profile}`}>
+      <div className={` ${styles.profile}`}>
+
+        {userDetails ? (
+          <>
+            {/* TOTAL DRIP */}
+            <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
+              <h6>total drip</h6>
+              <br/>
+              <h4>455</h4>
+            </div>
+
+            {/* AVERAGE DRIP*/}
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+              <h6>average drip</h6>
+              <br/>
+              <h4>69420</h4>
+            </div>
+
+            {/* DRIP SCORE */}
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+              <h6>drip score</h6>
+              <br/>
+              <h4>80085</h4>
+            </div>
+          </>
+        ): (
+          <>
+            {/* TOTAL DRIP SKELETON */}
+            <div className="d-flex flex-column col-1 px-2">
+              <Skeleton containerClassName="flex-1"/>
+              <br/>
+              <Skeleton containerClassName="flex-1" className={`${styles.sk_total}`}/>
+            </div>
+
+            {/* AVERAGE DRIP SCORE SKELETON*/}
+            <div className="d-flex flex-column col-2 px-2">
+              <Skeleton containerClassName="flex-1"/>
+              <br/>
+              <Skeleton containerClassName="flex-1" className={`${styles.sk_average}`}/>
+            </div>
+
+            {/* DRIP SCORE SKELETON*/}
+            <div className="d-flex flex-column col-2 px-2">
+              <Skeleton containerClassName="flex-1"/>
+              <br/>
+              <Skeleton containerClassName="flex-1" className={`${styles.sk_score}`}/>
+            </div>
+          </>
+        )}
+
 
         {/* PROFILE PIC */}
         <div className="col-2 center">
@@ -125,36 +176,81 @@ function Profile() {
         {/* PROFILE INFORMATION & ACTIONS */}
         {userDetails ? (
           <>
-            <div className="col-4">
+            <div className="d-flex flex-column justify-content-center col-2">
 
               {/* PROFILE INFO */}
               <div className="">
 
-                <p className={`${styles.info}`}>Username: {userDetails.username}</p>
-                <p className={`${styles.info}`}>Email: {userDetails.email}</p>
-                <p className={`${styles.info}`}>
-                  {userDetails.firstName} {userDetails.lastName}
-                </p>
+                <h2 className={`${styles.info}`}>{userDetails.username}</h2>
 
               </div>
 
-              {/* LOGOUT & UPLOAD BUTTONS */}
               <div className="">
-                <button className={`${styles.actions}`} onClick={handleLogout}>
-                  Logout
-                </button>
-                <button className={`${styles.actions}`}>
-                  <Link to="/upload" className="">Upload </Link>
-                </button>
+
+                <p className={`${styles.info}`}>Lorem ipsum solanum toberosum</p>
+
               </div>
 
-             </div>
+            </div>
           </>
             ) : (
-              <div className="col-4 d-flex">
-                <img src={loading} className={`${styles.icon}`} alt="" />
-                </div>
+          <>
+            <div className="col-2">
+
+              {/* PROFILE INFO SKELETON */}
+              <div className="">
+
+                <Skeleton containerClassName="flex-1" className={`${styles.sk_username}`}/>
+
+              </div>
+
+              <br/>
+
+              <div className="">
+
+                <Skeleton count={4} containerClassName="flex-1" className={`${styles.sk_bio}`}/>
+
+              </div>
+
+            </div>
+          </>
             )}
+
+        {userDetails ? (
+          <>
+            {/* UPLOAD & EDIT PROFILE BUTTONS */}
+            <div className="d-flex flex-column justify-content-around align-items-center col-2 ">
+
+              {/* UPLOAD */}
+              <Link to="/upload" className={`${styles.actions}`}>
+                  <button className={`${styles.button}`}>
+                    Upload 
+                  </button>
+                </Link>
+
+              {/* EDIT PROFILE */}
+              <Link to="/edit" className={`${styles.actions}`}>
+                <button className={`${styles.button}`}>
+                  Edit Profile
+                </button>
+              </Link>
+              
+            </div>
+          </>
+        ): (
+          <>
+            {/* UPLOAD & EDIT PROFILE SKELETON */}
+            <div className={`d-flex flex-column justify-content-around offset-1 col-2`}>
+
+              {/* UPLOAD SKELETON */}
+              <Skeleton containerClassName="flex-1" className={`${styles.sk_upload}`}/>
+
+              {/* EDIT PROFILE SKELETON */}
+              <Skeleton containerClassName="flex-1" className={`${styles.sk_edit}`}/>
+            
+            </div>
+          </>
+        )}
       </div>
 
       {/* USER UPLOADS */}
