@@ -255,19 +255,6 @@ function Profile() {
             {/* UPLOAD & EDIT PROFILE BUTTONS */}
             <div className="d-flex flex-column justify-content-around align-items-center col-2 ">
 
-              {/* UPLOAD */}
-              <Link to="/upload" className={`${styles.actions}`}>
-                  <button className={`${styles.button}`}>
-                    Upload 
-                  </button>
-                </Link>
-
-              {/* EDIT PROFILE */}
-              <Link to="/edit" className={`${styles.actions}`}>
-            <button className={`${styles.button}`}>
-              Edit Profile
-            </button>
-          </Link>
           {/* Settings (gear icon) button */}
           <Button variant="outline-secondary" onClick={handleSettings}>
             <FontAwesomeIcon
@@ -282,9 +269,6 @@ function Profile() {
           <>
             {/* UPLOAD & EDIT PROFILE SKELETON */}
             <div className={`d-flex flex-column justify-content-around offset-1 col-2`}>
-
-              {/* UPLOAD SKELETON */}
-              <Skeleton containerClassName="flex-1" className={`${styles.sk_upload}`}/>
 
               {/* EDIT PROFILE SKELETON */}
               <Skeleton containerClassName="flex-1" className={`${styles.sk_edit}`}/>
@@ -398,39 +382,40 @@ function Profile() {
             </Modal.Footer>
           </Modal>
         </>
-         {/* Settings Popup */}
-      <Modal show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
-        
-        <Modal.Body className="d-flex flex-column align-items-center">
-          <Button variant="primary" onClick={handleAction1}>
-            Settings
-          </Button><br></br><br></br>
-          <Button variant="secondary" onClick={handleAction2}>
-            Log Out
-          </Button>
+
+         {/* ACCOUNT SETTINGS MODAL */}
+        <Modal show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
+          <Modal.Body className="d-flex flex-column align-items-center">
+            <Button variant="primary" onClick={handleAction1}>
+              Settings
+            </Button><br></br><br></br>
+            <Button variant="secondary" onClick={handleAction2}>
+              Log Out
+            </Button>
           {/* Add more buttons or content as needed */}
-        </Modal.Body>
-        <Modal.Footer className="d-flex flex-column align-items-center">
-          <Button variant="secondary" onClick={handleCloseSettingsPopup}>
+          </Modal.Body>
+          <Modal.Footer className="d-flex flex-column align-items-center">
+            <Button variant="secondary" onClick={handleCloseSettingsPopup}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+      <Modal show={showLogoutConfirmation} onHide={handleCloseLogoutConfirmation}>
+        <Modal.Header closeButton>
+          <Modal.Title>Logout Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to log out?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseLogoutConfirmation}>
             Cancel
+          </Button>
+          <Button variant="primary" onClick={handleLogoutConfirmation}>
+            Logout
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <Modal show={showLogoutConfirmation} onHide={handleCloseLogoutConfirmation}>
-  <Modal.Header closeButton>
-    <Modal.Title>Logout Confirmation</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>Are you sure you want to log out?</Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={handleCloseLogoutConfirmation}>
-      Cancel
-    </Button>
-    <Button variant="primary" onClick={handleLogoutConfirmation}>
-      Logout
-    </Button>
-  </Modal.Footer>
-</Modal>
+      
     </div>
 
     
