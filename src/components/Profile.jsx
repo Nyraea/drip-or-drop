@@ -254,7 +254,9 @@ function Profile() {
           <>
             {/* UPLOAD & EDIT PROFILE BUTTONS */}
             <div className="d-flex flex-column justify-content-around align-items-center col-2 ">
-
+              <div className={`${styles.actions}`}>
+                <Link to="/upload" className={`${styles.button}`}> Upload Image </Link>
+              </div>
           {/* Settings (gear icon) button */}
           <Button variant="outline-secondary" onClick={handleSettings}>
             <FontAwesomeIcon

@@ -1,7 +1,35 @@
 .main {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
-  margin-top: 120px;
+  background-color: #DFDFDF;
+  margin-top: 60px;
+  
+}
+
+.header {
+  display: flex;
+  text-align: center;
+  width: 60%;
+
+  .text {
+    font-family: 'Georama';
+    font-weight: 700;
+    font-size:65px;
+  }
+}
+
+.subheader {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 75%;
+
+  .text {
+    font-family: 'Georama';
+    font-weight: 400;
+    font-size: 30px;
+  }
 }
