@@ -1,29 +1,34 @@
 @import "./util.scss";
 
 .upload_section {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 80px 0 auto 0;
-    
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+  margin: 80px 0 auto 0;
 }
 
-  
 .actions {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 
-    &:hover {
-        @include colorTransition(black, white, white, black, blackToWhite);
-        @include useAnimation(blackToWhite, 0.5s);
-    }
+  &:hover {
+    @include colorTransition(black, white, white, black, blackToWhite);
+    @include useAnimation(blackToWhite, 0.5s);
+  }
 }
 
 .tags {
-    width: 50%;
+  width: 50%;
 }
 
 .upload {
-    width: 25%;
-    height:100%;
+  width: 25%;
+  height: 100%;
+}
+
+.uploadpreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

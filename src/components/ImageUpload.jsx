@@ -86,7 +86,7 @@ function ImageUpload() {
   return (
     // MAIN DIV
     <div className={`${styles.upload_section}`}>
-      <h2>Upload Images</h2>
+      <h2>Upload a drip</h2>
 
       {/* UPLOAD FILE */}
       <div className="mb-3">
@@ -141,9 +141,18 @@ function ImageUpload() {
       </div>
 
       {/* UPLOAD PREVIEWS */}
-      <div className="d-flex flex-wrap">
+      <div className={`${styles.uploadpreview}`}>
         {images.map((image, index) => (
-          <div key={index} className="p-2" style={{ width: "200px" }}>
+          <div
+            key={index}
+            className="p-2"
+            style={{
+              width: "200px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <img
               src={image}
               alt={`image-${index}`}
@@ -155,12 +164,12 @@ function ImageUpload() {
       </div>
 
       {/* UPLOAD BUTTON */}
-      <div className="mt-3">
+      <div className={`${styles.uploadpreview}`}>
         <button
           className={`${styles.actions} ${styles.upload}`}
           onClick={handleUpload}
         >
-          Upload Image
+          Upload Drip
         </button>
       </div>
     </div>
