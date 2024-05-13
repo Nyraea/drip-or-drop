@@ -47,7 +47,7 @@ function Navbar() {
           </div>
           {dropdownOpen && (
             <div className={`${styles.dropdownMenu} p-2`} onMouseLeave={() => setDropdownOpen(false)}>
-              <p className={styles.dropdownText}>you have no notifications, you should kill yourself NOW</p>
+              <p className={styles.dropdownText}>you have no notifications, you should kill yourself <b>NOW</b></p>
             </div>
           )}
         </div>
