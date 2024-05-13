@@ -40,6 +40,32 @@
     }
 }
 
+.dropdown {
+    position: relative;
+  }
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+  }
+  
+  .dropdownItem {
+    color: black;
+    padding: 8.5% 15% 8.5% 15%;
+    text-decoration: none;
+    display: block;
+
+    &:hover {
+        @include colorTransition(white, black, black, white, whiteToBlack);
+        @include useAnimation(whiteToBlack, 0.5s);
+    }
+  }
+
 //D||D Logo Styling
 .logo {
     display: flex;
