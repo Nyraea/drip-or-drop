@@ -299,8 +299,9 @@ function Discover() {
 
                       <div className="save not_saved" onClick="">
                         Score:{" "}
-                        {post.upvote &&
-                          (post.upvote / (post.upvote + post.downvote)) * 5}
+                        {((post.upvote - post.downvote) /
+                          (post.upvote + post.downvote)) *
+                          5}
                         <img src="/images/totaldrips.png" alt="?" />
                       </div>
                     </div>
