@@ -41,6 +41,14 @@
     }
 }
 
+//BORDER RADIUS
+@mixin radiusTransition($r1, $r2, $animationName) {
+    @keyframes #{$animationName} {
+        from {border-radius: $r1;}
+        to {border-radius: $r2;}
+    }
+}
+
 //Class to use the above mixins
 
 @mixin useAnimation($animation, $speed) {
