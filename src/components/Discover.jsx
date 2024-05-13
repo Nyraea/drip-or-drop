@@ -74,16 +74,15 @@ function Discover() {
   };
 
   const toggleLike = async (postId) => {
-    // Update local state
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId
-          ? { ...post, isLiked: !post.isLiked, isDisliked: false } // Unselect dislike
+          ? { ...post, isLiked: !post.isLiked, isDisliked: false }
           : post
       )
     );
 
-    // Update userLikes in Firestore
+    // Update userLikes
     const updatedLikedPosts = userLikes.likedPosts.includes(postId)
       ? userLikes.likedPosts.filter((id) => id !== postId)
       : [...userLikes.likedPosts, postId];
@@ -91,7 +90,7 @@ function Discover() {
     const userLikesDocRef = doc(db, "userLikes", user.uid);
     await updateDoc(userLikesDocRef, {
       likedPosts: updatedLikedPosts,
-      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId), // Remove from dislikedPosts if present
+      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId),
     });
 
     setUserLikes({
@@ -108,19 +107,19 @@ function Discover() {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId
-          ? { ...post, isDisliked: !post.isDisliked, isLiked: false } // Unselect like
+          ? { ...post, isDisliked: !post.isDisliked, isLiked: false }
           : post
       )
     );
 
-    // Update userLikes in Firestore
+    // Update userLikes
     const updatedDislikedPosts = userLikes.dislikedPosts.includes(postId)
       ? userLikes.dislikedPosts.filter((id) => id !== postId)
       : [...userLikes.dislikedPosts, postId];
 
     const userLikesDocRef = doc(db, "userLikes", user.uid);
     await updateDoc(userLikesDocRef, {
-      likedPosts: userLikes.likedPosts.filter((id) => id !== postId), // Remove from likedPosts if present
+      likedPosts: userLikes.likedPosts.filter((id) => id !== postId),
       dislikedPosts: updatedDislikedPosts,
     });
 
@@ -183,6 +182,8 @@ function Discover() {
                 postId: imageDoc.id,
                 isLiked: userLikes.likedPosts.includes(imageDoc.id),
                 isDisliked: userLikes.dislikedPosts.includes(imageDoc.id),
+                upvote: imageData.upvote || 0,
+                downvote: imageData.downvote || 0,
               };
 
               fetchedPosts.push(post);
@@ -296,10 +297,10 @@ function Discover() {
                         </div>
                       </div>
 
-                      <div
-                        className="save not_saved"
-                        onClick="" // Pass postId to toggleFavorite function
-                      >
+                      <div className="save not_saved" onClick="">
+                        Score:{" "}
+                        {post.upvote &&
+                          (post.upvote / (post.upvote + post.downvote)) * 5}
                         <img src="/images/save-instagram.png" alt="Not Saved" />
                       </div>
                     </div>
@@ -312,7 +313,7 @@ function Discover() {
 
                     <div className="liked">
                       <a className="bold" href="">
-                        {post.likes} likes
+                        {post.upvote} likes
                       </a>
                     </div>
 
