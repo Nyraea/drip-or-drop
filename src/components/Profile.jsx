@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
 import "../styles/global.scss";
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -27,7 +27,8 @@ function Profile() {
   const [userDetails, setUserDetails] = useState(null);
   const [userImages, setUserImages] = useState([]);
   const [show, setShow] = useState(false);
-
+  const [showSettingsPopup, setShowSettingsPopup] = useState(false); // State for the settings popup
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -98,6 +99,34 @@ function Profile() {
     return () => clearTimeout(timer); // This will clear the timer when the component unmounts
   }, []);
 
+  const handleSettings = () => {
+    setShowSettingsPopup(true);
+  };
+
+  const handleCloseSettingsPopup = () => {
+    setShowSettingsPopup(false);
+  };
+
+  const handleAction1 = () => {
+    // Handle action 1
+  };
+
+  const handleAction2 = () => {
+    // Show the logout confirmation popup
+    setShowLogoutConfirmation(true);
+  };
+  
+  const handleLogoutConfirmation = () => {
+    // Perform logout action
+    handleLogout();
+    // Close the logout confirmation popup
+    setShowLogoutConfirmation(false);
+  };
+  
+  const handleCloseLogoutConfirmation = () => {
+    // Close the logout confirmation popup without logging out
+    setShowLogoutConfirmation(false);
+  };
   return (
 
     //MAIN DIV
@@ -234,12 +263,19 @@ function Profile() {
 
               {/* EDIT PROFILE */}
               <Link to="/edit" className={`${styles.actions}`}>
-                <button className={`${styles.button}`}>
-                  Edit Profile
-                </button>
-              </Link>
-              
-            </div>
+            <button className={`${styles.button}`}>
+              Edit Profile
+            </button>
+          </Link>
+          {/* Settings (gear icon) button */}
+          <Button variant="outline-secondary" onClick={handleSettings}>
+            <FontAwesomeIcon
+              icon={faCog}
+              style={{ color: "#000000" }}
+              size="lg"
+            />
+          </Button>
+        </div>
           </>
         ): (
           <>
@@ -351,14 +387,49 @@ function Profile() {
             </Modal.Body>
             <Modal.Footer className={`${styles.actions}`}>
             <button className={`${styles.button}`}>
-                Upload 
+                Upload
               </button>
               <button className={`${styles.button}`} onClick={handleClose}>
                 Cancel 
               </button>
+         
+              
             </Modal.Footer>
           </Modal>
         </>
+         {/* Settings Popup */}
+      <Modal show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
+        
+        <Modal.Body className="d-flex flex-column align-items-center">
+          <Button variant="primary" onClick={handleAction1}>
+            Settings
+          </Button><br></br><br></br>
+          <Button variant="secondary" onClick={handleAction2}>
+            Log Out
+          </Button>
+          {/* Add more buttons or content as needed */}
+        </Modal.Body>
+        <Modal.Footer className="d-flex flex-column align-items-center">
+          <Button variant="secondary" onClick={handleCloseSettingsPopup}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showLogoutConfirmation} onHide={handleCloseLogoutConfirmation}>
+  <Modal.Header closeButton>
+    <Modal.Title>Logout Confirmation</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>Are you sure you want to log out?</Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseLogoutConfirmation}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={handleLogoutConfirmation}>
+      Logout
+    </Button>
+  </Modal.Footer>
+</Modal>
     </div>
 
     

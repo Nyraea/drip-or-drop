@@ -21,12 +21,20 @@ function Discover() {
   const [favorited, setFavorited] = useState(false);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const toggleLike = () => {
     setLiked(!liked);
   };
 
   const toggleFavorite = () => {
     setFavorited(!favorited);
+  };
+  const handleImageClick = (imageUrl) => {
+    console.log("Image clicked:", imageUrl);
+    setSelectedImage(imageUrl);
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -95,107 +103,118 @@ function Discover() {
       return () => clearTimeout(timer); // This will clear the timer when the component unmounts
     }, []);
 
-  return (
+    return (
+      <div className="main_section">
+        {posts ? (
+          <div className="posts_container">
+            {isLoading ? (
+              <div className="uploads_loading">
+                <img src={loading} className="icon" alt="Loading..." />
+              </div>
+            ) : (
+              <div className="posts">
+                {posts.map((post, index) => (
+                  <div key={index} className="post">
+                    <div className="info">
+                      <div className="person">
+                        <img src={post.profileImageUrl} alt="Profile" />
+                        <Link to={`/profile/${post.username}`}>
+                          {post.username}
+                        </Link>
+                      </div>
+                      <div className="more">
+                        <img src="/images/show_more.png" alt="Show more" />
+                      </div>
+                    </div>
     
-    <div className="main_section">
-      {posts ? (
-      <div className="posts_container">
-        {isLoading ? ( // Render loading animation if isLoading is true
-          <div className="uploads_loading">
-            <img src={loading} className="icon" alt="Loading..." />
+                    <div className="image" onClick={() => handleImageClick(post.imageUrl)}>
+  {post.isNSFW ? (
+    <div className="image-nsfw-container">
+      <img src={post.imageUrl} alt="Post" className="image-nsfw" />
+      <div className="image-text">
+        <strong>Sensitive Content</strong>
+        <br />
+        This photo contains sensitive content which people may find offensive or disturbing.
+      </div>
+    </div>
+  ) : (
+    <button className="image-button" onClick={(e) => { e.stopPropagation(); handleImageClick(post.imageUrl); }}>
+      <img src={post.imageUrl} alt="Post" />
+    </button>
+  )}
+</div>
+    
+                    <div className="desc">
+                      <div className="icons">
+                        <div className="icon_left d-flex">
+                          <div className="like" onClick={toggleLike}>
+                            <img src="/images/drip.png" alt="drip" />
+                          </div>
+                          <div className="like" onClick={toggleLike}>
+                            <img src="/images/trashbag.png" alt="trashbag" />
+                          </div>
+                        </div>
+    
+                        <div className="save not_saved" onClick={toggleFavorite}>
+                          <img src="/images/save-instagram.png" alt="Not Saved" />
+                        </div>
+                      </div>
+    
+                      <div className="liked">
+                        <a className="">
+                          {post.tags.map((tag) => `#${tag}`).join(", ")}
+                        </a>
+                      </div>
+    
+                      <div className="liked">
+                        <a className="bold" href="">
+                          {post.likes} likes
+                        </a>
+                      </div>
+    
+                      <div className="post_desc">
+                        <p>
+                          <a className="bold" href="">
+                            {post.username}
+                          </a>{" "}
+                          {post.caption}
+                        </p>
+                        <p>
+                          <a className="gray" href="">
+                            View all {post.comments} comments
+                          </a>
+                        </p>
+                        <input type="text" placeholder="Add a comment..." />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
-          <div className="posts">
-            {posts.map((post, index) => (
-              <div key={index} className="post">
-                <div className="info">
-                  <div className="person">
-                    <img src={post.profileImageUrl} alt="Profile" />
-                    <Link to={`/profile/${post.username}`}>
-                      {post.username}
-                    </Link>
-                  </div>
-                  <div className="more">
-                    <img src="/images/show_more.png" alt="Show more" />
-                  </div>
-                </div>
-
-                <div className="image">
-                  {post.isNSFW ? (
-                    <div className="image-nsfw-container">
-                      <img
-                        src={post.imageUrl}
-                        alt="Post"
-                        className="image-nsfw"
-                      />
-                      <div className="image-text">
-                        <strong>Sensitive Content</strong>
-                        <br />
-                        This photo contains sensitive content which people may
-                        find offensive or disturbing.
-                      </div>
-                    </div>
-                  ) : (
-                    <img src={post.imageUrl} alt="Post" />
-                  )}
-                </div>
-
-                <div className="desc">
-                  <div className="icons">
-                    <div className="icon_left d-flex">
-                      <div className="like" onClick={toggleLike}>
-                        <img src="/images/drip.png" alt="drip" />
-                      </div>
-                      <div className="like" onClick={toggleLike}>
-                        <img src="/images/trashbag.png" alt="trashbag" />
-                      </div>
-                    </div>
-
-                    <div className="save not_saved" onClick={toggleFavorite}>
-                      <img src="/images/save-instagram.png" alt="Not Saved" />
-                    </div>
-                  </div>
-
-                  <div className="liked">
-                    <a className="">
-                      {post.tags.map((tag) => `#${tag}`).join(", ")}
-                    </a>
-                  </div>
-
-                  <div className="liked">
-                    <a className="bold" href="">
-                      {post.likes} likes
-                    </a>
-                  </div>
-
-                  <div className="post_desc">
-                    <p>
-                      <a className="bold" href="">
-                        {post.username}
-                      </a>{" "}
-                      {post.caption}
-                    </p>
-                    <p>
-                      <a className="gray" href="">
-                        View all {post.comments} comments
-                      </a>
-                    </p>
-                    <input type="text" placeholder="Add a comment..." />
-                  </div>
-                </div>
-              </div>
-            ))}
+          // Skeleton Loading
+          <div className="w-100">
+            <Skeleton containerClassName="flex-1" />
+            eggs
           </div>
         )}
-      </div>
-              ) : (
-                <div className="w-100">
-                  <Skeleton containerClassName="flex-1"/>
-                  eggs
-                </div>
-              )}
+    
+        {/* Modal */}
+        {showModal && (
+  <div className="modal" onClick={() => setShowModal(false)}>
+    <div className="modal-content">
+      <span className="close" onClick={() => setShowModal(false)}>
+        &times;
+      </span>
+      <p>Modal Content Here</p>
     </div>
-  );
-}
+  </div>
+)}
+  {/* Add a console.log to check showModal value */}
+  {console.log("showModal:", showModal)}
+      </div>
+    );
+  }    
 
 export default Discover;
