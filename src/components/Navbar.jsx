@@ -35,9 +35,9 @@ function Navbar() {
 
         {/* LOGO */}
         <div className="col-4">
-          <a href="">
+          <Link to = "/homepage">
             <img src={logo} alt="logo" className={styles.logo} />
-          </a>
+          </Link>
         </div>
 
         {/* LINKS */}

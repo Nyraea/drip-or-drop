@@ -23,6 +23,8 @@ import Homepage from "./Homepage";
 import Navbar from "./Navbar";
 import Discover from "./Discover";
 import EditProfile from "./EditProfile";
+import Footer from "./Footer";
+
 
 function App() {
   const [user, setUser] = useState();
@@ -34,8 +36,8 @@ function App() {
 
   return (
     <Router>
+              {user && <Navbar />}
       <div className={styles.canvas}>
-        {user && <Navbar />}
         <Routes>
           {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
           {user ? (
@@ -68,6 +70,7 @@ function App() {
         </Routes>
         <ToastContainer />
       </div>
+      {user && <Footer />}
     </Router>
   );
 }

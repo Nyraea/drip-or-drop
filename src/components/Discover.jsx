@@ -108,7 +108,7 @@ function Discover() {
         {posts ? (
           <div className="posts_container">
             {isLoading ? (
-              <div className="uploads_loading">
+              <div className="discover_loading">
                 <img src={loading} className="icon" alt="Loading..." />
               </div>
             ) : (
