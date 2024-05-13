@@ -10,7 +10,6 @@ import {
   query,
   where,
   getDocs,
-  increment,
   updateDoc,
   setDoc, // Import setDoc from Firestore
 } from "firebase/firestore";
@@ -27,8 +26,6 @@ function Discover() {
   });
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchUserLikes = async () => {
@@ -140,11 +137,6 @@ function Discover() {
     return () => unsubscribe();
   }, []);
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowModal(true);
-  };
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -168,6 +160,13 @@ function Discover() {
             const imageData = imageDoc.data();
 
             if (imageData) {
+              const isNSFW =
+                imageData.tags.includes("nsfw") ||
+                imageData.tags.includes("hentai") ||
+                imageData.tags.includes("gore") ||
+                imageData.tags.includes("death") ||
+                imageData.tags.includes("bob");
+
               const post = {
                 username: userData.username || "Unknown User",
                 profileImageUrl:
@@ -176,7 +175,7 @@ function Discover() {
                   `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                     imageData.imageUrl
                   )}?alt=media` || "/images/default_profile.jpg",
-                isNSFW: imageData.isNSFW || false,
+                isNSFW: isNSFW,
                 caption: imageData.description || "",
                 tags: imageData.tags || [],
                 postId: imageDoc.id,
@@ -235,10 +234,7 @@ function Discover() {
                     </div>
                   </div>
 
-                  <div
-                    className="image"
-                    onClick={() => handleImageClick(post.imageUrl)}
-                  >
+                  <div className="image">
                     {post.isNSFW ? (
                       <div className="image-nsfw-container">
                         <img
@@ -254,13 +250,7 @@ function Discover() {
                         </div>
                       </div>
                     ) : (
-                      <button
-                        className="image"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleImageClick(post.imageUrl);
-                        }}
-                      >
+                      <button className="image">
                         <img src={post.imageUrl} alt="Post" />
                       </button>
                     )}
@@ -300,7 +290,7 @@ function Discover() {
                       <div className="save not_saved" onClick="">
                         Score:{" "}
                         {((post.upvote - post.downvote) /
-                          (post.upvote + post.downvote)) *
+                          (post.upvote + post.downvote || 1)) *
                           5}
                         <img src="/images/totaldrips.png" alt="?" />
                       </div>
@@ -345,20 +335,6 @@ function Discover() {
           eggs
         </div>
       )}
-
-      {/* Modal */}
-      {showModal && (
-        <div className="modal" onClick={() => setShowModal(false)}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setShowModal(false)}>
-              &times;
-            </span>
-            <p>Modal Content Here</p>
-          </div>
-        </div>
-      )}
-      {/* Add a console.log to check showModal value */}
-      {console.log("showModal:", showModal)}
     </div>
   );
 }
