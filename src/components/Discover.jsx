@@ -11,6 +11,8 @@ import {
   where,
   getDocs,
   increment,
+  updateDoc,
+  setDoc, // Import setDoc from Firestore
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -18,45 +20,102 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import loading from "../assets/loading.gif";
 
 function Discover() {
-  const [favorited, setFavorited] = useState(false);
+  const [user, setUser] = useState(null);
+  const [userLikes, setUserLikes] = useState({
+    likedPosts: [],
+    dislikedPosts: [],
+  });
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
 
-  const toggleFavorite = () => {
-    setFavorited(!favorited);
+  useEffect(() => {
+    const fetchUserLikes = async () => {
+      if (!user) return;
+
+      const userLikesDocRef = doc(db, "userLikes", user.uid);
+      const userLikesDocSnap = await getDoc(userLikesDocRef);
+
+      if (userLikesDocSnap.exists()) {
+        setUserLikes(userLikesDocSnap.data());
+      } else {
+        await setDoc(userLikesDocRef, { likedPosts: [], dislikedPosts: [] });
+      }
+    };
+
+    fetchUserLikes();
+  }, [user]);
+
+  const toggleLike = async (postId) => {
+    // Update local state
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.postId === postId
+          ? { ...post, isLiked: !post.isLiked, isDisliked: false } // Unselect dislike
+          : post
+      )
+    );
+
+    // Update userLikes in Firestore
+    const updatedLikedPosts = userLikes.likedPosts.includes(postId)
+      ? userLikes.likedPosts.filter((id) => id !== postId)
+      : [...userLikes.likedPosts, postId];
+
+    const userLikesDocRef = doc(db, "userLikes", user.uid);
+    await updateDoc(userLikesDocRef, {
+      likedPosts: updatedLikedPosts,
+      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId), // Remove from dislikedPosts if present
+    });
+
+    setUserLikes({
+      likedPosts: updatedLikedPosts,
+      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId),
+    });
+
+    console.log("Toggle like for post with ID:", postId);
   };
+
+  const toggleDislike = async (postId) => {
+    // Update local state
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.postId === postId
+          ? { ...post, isDisliked: !post.isDisliked, isLiked: false } // Unselect like
+          : post
+      )
+    );
+
+    // Update userLikes in Firestore
+    const updatedDislikedPosts = userLikes.dislikedPosts.includes(postId)
+      ? userLikes.dislikedPosts.filter((id) => id !== postId)
+      : [...userLikes.dislikedPosts, postId];
+
+    const userLikesDocRef = doc(db, "userLikes", user.uid);
+    await updateDoc(userLikesDocRef, {
+      likedPosts: userLikes.likedPosts.filter((id) => id !== postId), // Remove from likedPosts if present
+      dislikedPosts: updatedDislikedPosts,
+    });
+
+    setUserLikes({
+      likedPosts: userLikes.likedPosts.filter((id) => id !== postId),
+      dislikedPosts: updatedDislikedPosts,
+    });
+
+    console.log("Toggle dislike for post with ID:", postId);
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
     setShowModal(true);
-  };
-
-  const toggleLike = (postId) => {
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.postId === postId
-          ? { ...post, isLiked: !post.isLiked, isDisliked: false }
-          : post
-      )
-    );
-    // Add your logic to update like status in the database using postId
-    console.log("Toggle like for post with ID:", postId);
-  };
-
-  const toggleDislike = (postId) => {
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.postId === postId
-          ? { ...post, isDisliked: !post.isDisliked, isLiked: false }
-          : post
-      )
-    );
-    // Add your logic to update dislike status in the database using postId
-    console.log("Toggle dislike for post with ID:", postId);
   };
 
   useEffect(() => {
@@ -71,7 +130,6 @@ function Discover() {
           const userData = userDoc.data();
           const userId = userDoc.id;
 
-          // Query the "images" collection based on the username
           const imagesCollectionRef = collection(db, "images");
           const imagesQuerySnapshot = await query(
             imagesCollectionRef,
@@ -82,7 +140,6 @@ function Discover() {
           imagesDocsSnapshot.forEach((imageDoc) => {
             const imageData = imageDoc.data();
 
-            // Create post object if image data exists
             if (imageData) {
               const post = {
                 username: userData.username || "Unknown User",
@@ -95,9 +152,9 @@ function Discover() {
                 isNSFW: imageData.isNSFW || false,
                 caption: imageData.description || "",
                 tags: imageData.tags || [],
-                postId: imageDoc.id, // Add postId for unique identification
-                isLiked: false, // Initialize isLiked status
-                isDisliked: false, // Initialize isDisliked status
+                postId: imageDoc.id,
+                isLiked: userLikes.likedPosts.includes(imageDoc.id),
+                isDisliked: userLikes.dislikedPosts.includes(imageDoc.id),
               };
 
               fetchedPosts.push(post);
@@ -113,9 +170,8 @@ function Discover() {
     };
 
     fetchPosts();
-  }, []);
+  }, [user, userLikes]);
 
-  // DELAY UPLOADS RENDER BY 1.75 SECONDS
   const [delayedRender, setDelayedRender] = useState(false);
 
   useEffect(() => {
@@ -123,7 +179,7 @@ function Discover() {
       setDelayedRender(true);
     }, 1750);
 
-    return () => clearTimeout(timer); // This will clear the timer when the component unmounts
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -212,7 +268,10 @@ function Discover() {
                         </div>
                       </div>
 
-                      <div className="save not_saved" onClick={toggleFavorite}>
+                      <div
+                        className="save not_saved"
+                        onClick="" // Pass postId to toggleFavorite function
+                      >
                         <img src="/images/save-instagram.png" alt="Not Saved" />
                       </div>
                     </div>
