@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
 import "../styles/global.scss";
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
 import farquad from "../assets/farquad.svg";
+import { updateDoc } from "firebase/firestore";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
@@ -32,6 +33,83 @@ function Profile() {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedDescription, setSelectedDescription] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [showPopupButtons, setShowPopupButtons] = useState(false); // State for the new popup
+const [selectedAction, setSelectedAction] = useState("");
+const [editableDescription, setEditableDescription] = useState("");
+const [editingDescription, setEditingDescription] = useState(false);
+
+const handleImageClick = (image, description, tags) => {
+    setSelectedImage(image.imageUrl);
+    setSelectedDescription(description);
+    setSelectedTags(tags);
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+  const handleDeletePost = async () => {
+    // Perform deletion action, such as removing the post from the database
+    // You may use the selectedImage ID or any other identifier to identify the post
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const postRef = doc(db, "posts", selectedImageId); // Replace "posts" with your collection name
+        await deleteDoc(postRef);
+        console.log("Post deleted successfully!");
+        // Close the popup modal after deletion
+        handleClosePopup();
+      } else {
+        console.log("User not logged in");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+    }
+  };
+
+  
+
+  const handleEditDescription = () => {
+    setEditableDescription(selectedDescription);
+    setEditingDescription(true);
+    handleClosePopupButtons();
+  };
+  const updateDescriptionInDatabase = async (newDescription) => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const userRef = doc(db, "Users", user.uid);
+        await updateDoc(userRef, {
+          description: newDescription,
+        });
+        console.log("Description updated in the database");
+      } catch (error) {
+        console.error("Error updating description:", error.message);
+      }
+    }
+  };
+  const handleSaveDescription = () => {
+    setSelectedDescription(editableDescription);
+    setEditingDescription(false);
+    handleClosePopupButtons(); // Close the popup after saving
+    updateDescriptionInDatabase(editableDescription); // Update the description in the database
+  };
+  
+  // Use Effect to update userDetails after description changes
+  useEffect(() => {
+    if (userDetails) {
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        description: editableDescription,
+      }));
+    }
+  }, [editableDescription, userDetails]);
+
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -128,6 +206,24 @@ function Profile() {
     // Close the logout confirmation popup without logging out
     setShowLogoutConfirmation(false);
   };
+
+  const handleShowPopupButtons = () => {
+    setShowPopupButtons(true);
+  };
+  
+  const handleClosePopupButtons = () => {
+    setShowPopupButtons(false);
+  };
+  
+ 
+  const DeleteAction = () => {
+    // Handle action 2
+    setSelectedAction("Action 2");
+    handleDeletePost();
+    handleClosePopupButtons(); // Close the popup after handling the action
+  };
+
+
   return (
 
     //MAIN DIV
@@ -284,26 +380,29 @@ function Profile() {
       {userImages && delayedRender ? (
       <>
         <div className="d-flex justify-content-center mt-3">
-          <h2 className={`${styles.uploads_title}`}>my drips</h2>  
-        </div>
-      <div className={`${styles.uploads}`}>
-        {/* USER IMAGES MAP */}
-        {userImages.map((image) => (
-          <div key={image.id} className={`${styles.upload_container}`}>
-            <img
-              src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
-                image.imageUrl
-              )}?alt=media`}
-              alt={image.description}
-              className={`${styles.upload}`}
-            />
-            <div className={`${styles.upload_details}`}>
-              <p>Description: {image.description}</p>
-              <p>Tags: {image.tags.join(", ")}</p>
-            </div>
+      <h2 className={`${styles.uploads_title}`}>my drips</h2>  
+    </div>
+    <div className={`${styles.uploads}`}>
+      {/* USER IMAGES MAP */}
+      {userImages.map((image) => (
+        <div key={image.id} className={`${styles.upload_container}`}>
+          <img
+            src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+              image.imageUrl
+            )}?alt=media`}
+            alt={image.description}
+            className={`${styles.upload}`}
+            onClick={() => handleImageClick(image.imageUrl, image.description)}
+          />
+          <div className={`${styles.upload_details}`}>
+            <p>Description: {image.description}</p>
+            <p>Tags: {image.tags.join(", ")}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
+      
+    </div>
+    
       </>
       ) : (
         <>
@@ -358,6 +457,7 @@ function Profile() {
         </SkeletonTheme>
       </>
         )}
+        
 
         {/* CHANGE DP MODAL */}
         <>
@@ -417,7 +517,63 @@ function Profile() {
           </Button>
         </Modal.Footer>
       </Modal>
-      
+        {/* Image Popup */}
+<Modal show={showPopup} onHide={handleClosePopup}>
+  <Modal.Header closeButton>
+    <Modal.Title>Image Details</Modal.Title>
+    {/* Move the pencil icon here */}
+    <FontAwesomeIcon
+      icon={faEllipsisV}
+      onClick={handleShowPopupButtons}
+      style={{ cursor: 'pointer', marginLeft: '250px' }} // Align to the right
+    />
+  </Modal.Header>
+ <Modal.Body>
+  {selectedImage && selectedImage.endsWith(".svg") ? (
+    <object type="image/svg+xml" data={selectedImage} width="100%" height="auto">
+      SVG not supported
+    </object>
+  ) : (
+    <img src={selectedImage} alt={selectedDescription} style={{ width: '100%', height: 'auto' }} />
+  )}
+  {editingDescription ? (
+    <input
+    type="text"
+    value={editableDescription}
+    onChange={(e) => setEditableDescription(e.target.value)}
+  />
+  ) : (
+    <p>Description: {selectedDescription}</p>
+  )}
+  {/* Tags */}
+  {selectedTags && (
+    <p>Tags: {selectedTags.join(", ")}</p>
+  )}
+  {editingDescription && (
+    <Button variant="primary" onClick={handleSaveDescription}>
+      Save
+    </Button>
+  )}
+</Modal.Body>
+</Modal>
+
+{/* Popup buttons */}
+<Modal show={showPopupButtons} onHide={handleClosePopupButtons}>
+  <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1' }}>
+      <Button variant="primary" onClick={handleEditDescription} style={{ width: '100%' }}>
+  Edit
+</Button>
+      <br />
+      <Button variant="primary" onClick={DeleteAction} style={{ width: '100%' }}>
+        Delete
+      </Button>
+    </div>
+  </Modal.Body>
+</Modal>
+
+
+
     </div>
 
     
