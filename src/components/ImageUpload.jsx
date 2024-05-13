@@ -1,3 +1,5 @@
+import styles from "../styles/upload.module.scss";
+
 import React, { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -80,8 +82,11 @@ function ImageUpload() {
   };
 
   return (
-    <div className="container">
+    // MAIN DIV
+    <div className={`${styles.upload_section}`}>
       <h2>Upload Images</h2>
+
+      {/* UPLOAD FILE */}
       <div className="mb-3">
         <input
           type="file"
@@ -91,6 +96,8 @@ function ImageUpload() {
           onChange={handleFileInputChange}
         />
       </div>
+
+      {/* UPLOAD DESCRIPTION */}
       <div className="mb-3">
         <label>Description:</label>
         <textarea
@@ -99,29 +106,37 @@ function ImageUpload() {
           className="form-control"
         />
       </div>
+
+      {/* UPLOAD TAGS */}
       <div className="mb-3">
         <label>Tags:</label>
         <div className="d-flex">
           {tags.map((tag, index) => (
-            <span key={index} className="badge bg-primary m-1">
+            <span key={index} className="badge d-flex align-items-center bg-dark m-1">
               {tag}
             </span>
           ))}
+
+          {/* TAG INPUT */} 
           <input
             type="text"
             value={tagInputValue}
             onChange={handleTagChange}
-            className="form-control flex-grow-1 m-1"
+            className="form-control m-1"
           />
+
+          {/* ADD TAG BUTTON */} 
           <button
-            className="btn btn-primary m-1"
+            className={`${styles.actions} ${styles.tags} m-1`}
             onClick={handleAddTag}
-            disabled={tagInputValue.trim() === ""}
+           
           >
             Add Tag
           </button>
         </div>
       </div>
+
+      {/* UPLOAD PREVIEWS */}
       <div className="d-flex flex-wrap">
         {images.map((image, index) => (
           <div key={index} className="p-2" style={{ width: "200px" }}>
@@ -134,9 +149,11 @@ function ImageUpload() {
           </div>
         ))}
       </div>
+
+      {/* UPLOAD BUTTON */}
       <div className="mt-3">
-        <button className="btn btn-primary" onClick={handleUpload}>
-          Upload Images
+        <button className={`${styles.actions} ${styles.upload}`} onClick={handleUpload}>
+          Upload Image
         </button>
       </div>
     </div>

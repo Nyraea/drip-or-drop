@@ -1,0 +1,37 @@
+@import "./util.scss";
+
+.edit_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    height: 100vh;
+}
+
+.profile_pic {
+    display: flex;
+    width: 75%;
+    margin: 0 auto 0 auto;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 75%;
+    height: 25%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+  
+        &:hover {
+          @include colorTransition(black, white, white, black, blackToWhite);
+          @include useAnimation(blackToWhite, 0.5s);
+        }
+    }
+  }

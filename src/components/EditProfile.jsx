@@ -1,7 +1,14 @@
+import styles from "../styles/edit.module.scss";
+
 import React, { useState, useEffect } from "react";
+import Modal from 'react-bootstrap/Modal';
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { Link } from "react-router-dom";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import farquad from "../assets/farquad.svg";
 
 function EditProfile() {
   const [formData, setFormData] = useState({
@@ -10,6 +17,10 @@ function EditProfile() {
     lastName: "",
   });
   const [loading, setLoading] = useState(false); // State for loading indicator
+  const [show, setShow] = useState(false); //MODAL STATE
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -63,10 +74,26 @@ function EditProfile() {
     }
   };
 
+
+
   return (
-    <div className="container">
-      <h1>Edit Profile</h1>
+
+    //MAIN DIV
+    <div className={`${styles.edit_section}`}>
+
+      {/* FORM */}
       <form onSubmit={handleSubmit}>
+
+        {/* PROFILE PICTURE */}
+        <div className="">
+          <a href = "" onClick={(event) => {event.preventDefault(); handleShow();}}>
+            <img src={farquad} alt = "sigma" className={`${styles.profile_pic}`}>
+
+            </img>
+          </a>
+        </div>
+
+        {/* USERNAME */}
         <div className="mb-3">
           <label htmlFor="username" className="form-label">
             Username
@@ -79,6 +106,8 @@ function EditProfile() {
             value={formData.username}
             onChange={handleChange}
           />
+
+          {/* FIRST NAME */}
         </div>
         <div className="mb-3">
           <label htmlFor="firstName" className="form-label">
@@ -93,6 +122,8 @@ function EditProfile() {
             onChange={handleChange}
           />
         </div>
+
+        {/* LAST NAME */}
         <div className="mb-3">
           <label htmlFor="lastName" className="form-label">
             Last Name
@@ -106,17 +137,46 @@ function EditProfile() {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-dark">
-          Save Changes
-        </button>
-        <button className="btn btn-dark">
-          <Link to="/profile" className="text-decoration-none text-light">
-            Back
-          </Link>
-        </button>
+
+          {/* SAVE CHANGES */}
+        <div className={`${styles.actions}`}>
+          <button type="submit" className={`${styles.button}`}>
+            Save Changes
+          </button>
+
+        {/* BACK BUTTON */}
+          <button className={`${styles.button}`}>
+            <Link to="/profile" className="text-decoration-none text-light my-1">
+              Back
+            </Link>
+          </button>
+        </div>
       </form>
       {loading && <div className="alert alert-info">Loading changes...</div>}
+
+      {/* CHANGE DP MODAL */}
+      <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title><b>Change Profile Picture</b></Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center">
+              
+              <img src={farquad} alt = "sigma"/>
+
+            </Modal.Body>
+            <Modal.Footer className={`${styles.actions}`}>
+            <button className={`${styles.button}`}>
+                Upload 
+              </button>
+              <button className={`${styles.button}`} onClick={handleClose}>
+                Cancel 
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </>
     </div>
+    
   );
 }
 
