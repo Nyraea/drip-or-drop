@@ -42,12 +42,12 @@ const [selectedAction, setSelectedAction] = useState("");
 const [editableDescription, setEditableDescription] = useState("");
 const [editingDescription, setEditingDescription] = useState(false);
 
-const handleImageClick = (image, description, tags) => {
-    setSelectedImage(image.imageUrl);
-    setSelectedDescription(description);
-    setSelectedTags(tags);
-    setShowPopup(true);
-  };
+const handleImageClick = (imageUrl, description, tags) => {
+  setSelectedImage({ imageUrl, description, tags });
+  setSelectedDescription(description);
+  setSelectedTags(tags);
+  setShowPopup(true);
+};
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -528,31 +528,33 @@ const handleImageClick = (image, description, tags) => {
       style={{ cursor: 'pointer', marginLeft: '250px' }} // Align to the right
     />
   </Modal.Header>
- <Modal.Body>
-  {selectedImage && selectedImage.endsWith(".svg") ? (
-    <object type="image/svg+xml" data={selectedImage} width="100%" height="auto">
-      SVG not supported
-    </object>
-  ) : (
-    <img src={selectedImage} alt={selectedDescription} style={{ width: '100%', height: 'auto' }} />
-  )}
-  {editingDescription ? (
-    <input
-    type="text"
-    value={editableDescription}
-    onChange={(e) => setEditableDescription(e.target.value)}
-  />
-  ) : (
-    <p>Description: {selectedDescription}</p>
-  )}
-  {/* Tags */}
-  {selectedTags && (
-    <p>Tags: {selectedTags.join(", ")}</p>
-  )}
-  {editingDescription && (
-    <Button variant="primary" onClick={handleSaveDescription}>
-      Save
-    </Button>
+  <Modal.Body>
+  {selectedImage && (
+    <div className={`${styles.upload_container}`}>
+      <img
+        src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+          selectedImage.imageUrl
+        )}?alt=media`}
+        alt={selectedImage.description}
+        className={`${styles.upload}`}
+      />
+      {editingDescription ? (
+        <input
+          type="text"
+          value={editableDescription}
+          onChange={(e) => setEditableDescription(e.target.value)}
+        />
+      ) : (
+        <p>Description: {selectedImage.description}</p>
+      )}
+      {/* Tags */}
+      {selectedTags && <p>Tags: {selectedTags.join(", ")}</p>}
+      {editingDescription && (
+        <Button variant="primary" onClick={handleSaveDescription}>
+          Save
+        </Button>
+      )}
+    </div>
   )}
 </Modal.Body>
 </Modal>
