@@ -32,21 +32,22 @@ function Login() {
   };
 
   return (
-    
     //MAIN
     <div className={styles.main}>
-
       {/* FORM */}
       <form className={styles.form} onSubmit={handleSubmit}>
-
         {/* LOGO */}
         <img src={logo} alt="logo" className={styles.logo} />
 
         {/* HEADER */}
-        <div className={styles.header}>  
-          <p className={styles.header_l}><b>No account yet?</b></p>
+        <div className={styles.header}>
+          <p className={styles.header_l}>
+            <b>No account yet?</b>
+          </p>
           <p className="">
-            <a className={styles.header_r} href="/register"><b>Create your account</b></a>
+            <a className={styles.header_r} href="/register">
+              <b>Create your account</b>
+            </a>
           </p>
         </div>
 
@@ -79,7 +80,6 @@ function Login() {
           </button>
         </div>
         {/* <SignInwithGoogle /> */}
-        
       </form>
     </div>
   );

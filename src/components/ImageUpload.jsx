@@ -72,6 +72,8 @@ function ImageUpload() {
           description,
           tags,
           imageUrl: `images/${user.uid}/${imageId}`,
+          upvote: 0,
+          downvote: 0,
         });
 
         console.log("Image uploaded successfully!", imageDoc.id);
@@ -112,12 +114,15 @@ function ImageUpload() {
         <label>Tags:</label>
         <div className="d-flex">
           {tags.map((tag, index) => (
-            <span key={index} className="badge d-flex align-items-center bg-dark m-1">
+            <span
+              key={index}
+              className="badge d-flex align-items-center bg-dark m-1"
+            >
               {tag}
             </span>
           ))}
 
-          {/* TAG INPUT */} 
+          {/* TAG INPUT */}
           <input
             type="text"
             value={tagInputValue}
@@ -125,11 +130,10 @@ function ImageUpload() {
             className="form-control m-1"
           />
 
-          {/* ADD TAG BUTTON */} 
+          {/* ADD TAG BUTTON */}
           <button
             className={`${styles.actions} ${styles.tags} m-1`}
             onClick={handleAddTag}
-           
           >
             Add Tag
           </button>
@@ -152,7 +156,10 @@ function ImageUpload() {
 
       {/* UPLOAD BUTTON */}
       <div className="mt-3">
-        <button className={`${styles.actions} ${styles.upload}`} onClick={handleUpload}>
+        <button
+          className={`${styles.actions} ${styles.upload}`}
+          onClick={handleUpload}
+        >
           Upload Image
         </button>
       </div>
