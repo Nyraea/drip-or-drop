@@ -47,6 +47,33 @@ function Discover() {
     fetchUserLikes();
   }, [user]);
 
+  const updateVoteCount = async (postId) => {
+    const userLikesDocRef = doc(db, "userLikes", user.uid);
+    const userLikesDocSnap = await getDoc(userLikesDocRef);
+
+    if (userLikesDocSnap.exists()) {
+      const userLikesData = userLikesDocSnap.data();
+      const upvoteCount = userLikesData.likedPosts.filter(
+        (id) => id === postId
+      ).length;
+      const downvoteCount = userLikesData.dislikedPosts.filter(
+        (id) => id === postId
+      ).length;
+
+      const imageDocRef = doc(db, "images", postId);
+      const imageDocSnap = await getDoc(imageDocRef);
+
+      if (imageDocSnap.exists()) {
+        const updatedData = {
+          upvote: upvoteCount,
+          downvote: downvoteCount,
+        };
+
+        await updateDoc(imageDocRef, updatedData);
+      }
+    }
+  };
+
   const toggleLike = async (postId) => {
     // Update local state
     setPosts((prevPosts) =>
@@ -73,6 +100,7 @@ function Discover() {
       dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId),
     });
 
+    await updateVoteCount(postId);
     console.log("Toggle like for post with ID:", postId);
   };
 
@@ -102,6 +130,7 @@ function Discover() {
       dislikedPosts: updatedDislikedPosts,
     });
 
+    await updateVoteCount(postId);
     console.log("Toggle dislike for post with ID:", postId);
   };
 
