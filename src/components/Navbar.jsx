@@ -8,6 +8,7 @@ import logo from "../assets/logo.svg";
 function Navbar() {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   
   return (
     <nav className={`fixed-top ${styles.navbar}`}>
@@ -40,23 +41,28 @@ function Navbar() {
         </div>
 
         {/* LINKS */}
-        <div className={`col-1 ${styles.navcol}`}>
-          <a href="" className={` ${styles.link}`}>
-            notifications
-          </a>
+        <div className={`col-1 ${styles.navcol} ${styles.dropdown}`} onMouseLeave={() => setDropdownOpen(false)}>
+          <div onClick={() => setDropdownOpen(!dropdownOpen)}>
+            <a href="" onClick={(event) => event.preventDefault()} className={` ${styles.link}`}> notifications</a>
+          </div>
+          {dropdownOpen && (
+            <div className={`${styles.dropdownMenu} p-2`} onMouseLeave={() => setDropdownOpen(false)}>
+              <p className={styles.dropdownText}>you have no notifications, you should kill yourself NOW</p>
+            </div>
+          )}
         </div>
 
-          <div className={`col-1 ${styles.navcol} ${styles.dropdown}`} onMouseLeave={() => setDropdownOpen(!dropdownOpen)}>
-            <div onMouseEnter={() => setDropdownOpen(!dropdownOpen)}>
-              <Link to = "/profile" className={`${styles.link}`}>account</Link>
-            </div>
-            {dropdownOpen && (
-              <div className={styles.dropdownMenu} onMouseLeave={() => setDropdownOpen(!dropdownOpen)}>
-                <Link to="/profile" className={styles.dropdownItem}>view profile</Link>
-                <Link to="/edit" className={styles.dropdownItem}>edit info</Link>
-              </div>
-            )}
+        <div className={`col-1 ${styles.navcol} ${styles.dropdown}`} onMouseLeave={() => setAccountDropdownOpen(false)}>
+          <div onMouseEnter={() => setAccountDropdownOpen(true)}>
+            <Link to = "/profile" className={`${styles.link}`}>account</Link>
           </div>
+          {accountDropdownOpen && (
+            <div className={styles.dropdownMenu} onMouseLeave={() => setAccountDropdownOpen(false)}>
+              <Link to="/profile" className={styles.dropdownItem}>view profile</Link>
+              <Link to="/edit" className={styles.dropdownItem}>edit info</Link>
+            </div>
+          )}
+        </div>
 
         <div className={`col-1 ${styles.navcol}`}>
           <a href="" className={` ${styles.link}`}>

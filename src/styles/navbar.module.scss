@@ -64,6 +64,13 @@
         @include colorTransition(white, black, black, white, whiteToBlack);
         @include useAnimation(whiteToBlack, 0.5s);
     }
+
+    .dropdownText {
+        color: black;
+        padding: 8.5% 15% 8.5% 15%;
+        text-decoration: none;
+        display: block;
+      }
   }
 
 //D||D Logo Styling
