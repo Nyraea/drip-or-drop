@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
 import "../styles/global.scss";
 import 'react-loading-skeleton/dist/skeleton.css'
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -14,10 +14,11 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
+
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
-
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";

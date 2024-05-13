@@ -2,15 +2,25 @@ import styles from "../styles/edit.module.scss";
 
 import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
-import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import farquad from "../assets/farquad.svg";
+import load from "../assets/loading.gif";
 
 function EditProfile() {
+  const [userDetails, setUserDetails] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -21,6 +31,27 @@ function EditProfile() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          console.log("User is not logged in");
+          return;
+        }
+
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserDetails(docSnap.data());
+        } else {
+          console.log("User document does not exist");
+        }
+      });
+    };
+
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -81,6 +112,8 @@ function EditProfile() {
     //MAIN DIV
     <div className={`${styles.edit_section}`}>
 
+      {userDetails ? (
+        <>
       {/* FORM */}
       <form onSubmit={handleSubmit}>
 
@@ -100,9 +133,10 @@ function EditProfile() {
           </label>
           <input
             type="text"
-            className="form-control"
+            className={`${styles.input} form-control`}
             id="username"
             name="username"
+            placeholder={userDetails.username}
             value={formData.username}
             onChange={handleChange}
           />
@@ -115,9 +149,10 @@ function EditProfile() {
           </label>
           <input
             type="text"
-            className="form-control"
+            className={`${styles.input} form-control`}
             id="firstName"
             name="firstName"
+            placeholder={userDetails.firstName}
             value={formData.firstName}
             onChange={handleChange}
           />
@@ -130,9 +165,10 @@ function EditProfile() {
           </label>
           <input
             type="text"
-            className="form-control"
+            className={`${styles.input} form-control`}
             id="lastName"
             name="lastName"
+            placeholder={userDetails.lastName}
             value={formData.lastName}
             onChange={handleChange}
           />
@@ -175,6 +211,14 @@ function EditProfile() {
             </Modal.Footer>
           </Modal>
         </>
+        </>
+      ) : (
+        <>
+        <div className={`${styles.loading}`}>
+          <img src={load} alt="loading" className={`${styles.load}`} />
+        </div>
+        </>
+      )}
     </div>
     
   );

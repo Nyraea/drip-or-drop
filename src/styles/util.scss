@@ -33,6 +33,14 @@
     }
 }
 
+//BORDER WIDTH
+@mixin borderTransition($b1, $b2, $animationName) {
+    @keyframes #{$animationName} {
+        from {border-width: $b1;}
+        to {border-width: $b2;}
+    }
+}
+
 //Class to use the above mixins
 
 @mixin useAnimation($animation, $speed) {

@@ -6,12 +6,33 @@
     justify-content: center;
     width: 30%;
     height: 100vh;
+
+    .loading {
+      display: flex;
+      justify-content: center;
+    }
 }
 
 .profile_pic {
     display: flex;
     width: 75%;
     margin: 0 auto 0 auto;
+}
+
+.input {
+  border-color: black;
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-width: 2px;
+
+  &:focus {
+    box-shadow: none;
+    border-color: black;
+    @include borderTransition(2px, 4px, borderGrow);
+    @include useAnimation(borderGrow, 0.1s);
+  }
 }
 
 .actions {
@@ -34,4 +55,10 @@
           @include useAnimation(blackToWhite, 0.5s);
         }
     }
+  }
+
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
   }
