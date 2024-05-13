@@ -48,29 +48,28 @@ function Discover() {
   }, [user]);
 
   const updateVoteCount = async (postId) => {
-    const userLikesDocRef = doc(db, "userLikes", user.uid);
-    const userLikesDocSnap = await getDoc(userLikesDocRef);
+    const userLikesCollectionRef = collection(db, "userLikes");
+    const userLikesQuerySnapshot = await getDocs(userLikesCollectionRef);
 
-    if (userLikesDocSnap.exists()) {
-      const userLikesData = userLikesDocSnap.data();
-      const upvoteCount = userLikesData.likedPosts.filter(
-        (id) => id === postId
-      ).length;
-      const downvoteCount = userLikesData.dislikedPosts.filter(
-        (id) => id === postId
-      ).length;
+    let totalUpvotes = 0;
+    let totalDownvotes = 0;
 
-      const imageDocRef = doc(db, "images", postId);
-      const imageDocSnap = await getDoc(imageDocRef);
+    userLikesQuerySnapshot.forEach((doc) => {
+      const data = doc.data();
+      totalUpvotes += data.likedPosts.filter((id) => id === postId).length;
+      totalDownvotes += data.dislikedPosts.filter((id) => id === postId).length;
+    });
 
-      if (imageDocSnap.exists()) {
-        const updatedData = {
-          upvote: upvoteCount,
-          downvote: downvoteCount,
-        };
+    const imageDocRef = doc(db, "images", postId);
+    const imageDocSnap = await getDoc(imageDocRef);
 
-        await updateDoc(imageDocRef, updatedData);
-      }
+    if (imageDocSnap.exists()) {
+      const updatedData = {
+        upvote: totalUpvotes,
+        downvote: totalDownvotes,
+      };
+
+      await updateDoc(imageDocRef, updatedData);
     }
   };
 
