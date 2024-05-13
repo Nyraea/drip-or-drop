@@ -301,7 +301,7 @@ function Discover() {
                         Score:{" "}
                         {post.upvote &&
                           (post.upvote / (post.upvote + post.downvote)) * 5}
-                        <img src="/images/save-instagram.png" alt="Not Saved" />
+                        <img src="/images/totaldrips.png" alt="?" />
                       </div>
                     </div>
 
