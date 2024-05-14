@@ -120,7 +120,7 @@ function Profile() {
         description: editableDescription,
       }));
     }
-  }, [editableDescription, userDetails]);
+  }, [editableDescription]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -256,7 +256,7 @@ function Profile() {
         ) : (
           <>
             {/* TOTAL DRIP SKELETON */}
-            <div className="d-flex flex-column col-1 px-2">
+            <div className="d-flex flex-column justify-content-center offset-1 col-1 px-2">
               <Skeleton containerClassName="flex-1" />
               <br />
               <Skeleton
@@ -266,7 +266,7 @@ function Profile() {
             </div>
 
             {/* AVERAGE DRIP SCORE SKELETON*/}
-            <div className="d-flex flex-column col-2 px-2">
+            <div className="d-flex flex-column justify-content-center col-2 px-2">
               <Skeleton containerClassName="flex-1" />
               <br />
               <Skeleton
@@ -276,7 +276,7 @@ function Profile() {
             </div>
 
             {/* DRIP SCORE SKELETON*/}
-            <div className="d-flex flex-column col-2 px-2">
+            <div className="d-flex flex-column justify-content-center col-1 px-2">
               <Skeleton containerClassName="flex-1" />
               <br />
               <Skeleton
@@ -386,6 +386,11 @@ function Profile() {
               <Skeleton
                 containerClassName="flex-1"
                 className={`${styles.sk_edit}`}
+              />
+
+              <Skeleton
+                containerClassName="flex-1"
+                className={`${styles.sk_settings}`}
               />
             </div>
           </>

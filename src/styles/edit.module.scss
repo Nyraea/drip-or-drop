@@ -18,6 +18,11 @@
     width: 75%;
     border-radius: 100%;
     margin: 0 auto 0 auto;
+
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
 }
 
 .input {
