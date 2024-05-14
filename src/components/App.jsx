@@ -24,7 +24,7 @@ import Navbar from "./Navbar";
 import Discover from "./Discover";
 import EditProfile from "./EditProfile";
 import Footer from "./Footer";
-
+import ResetPassword from "./ResetPassword";
 
 function App() {
   const [user, setUser] = useState();
@@ -48,6 +48,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/images" element={<UserImages />} />
               <Route path="/upload" element={<ImageUpload />} />
+              <Route path="/resetpass" element={<ResetPassword />} />
             </>
           ) : (
             <>

@@ -517,9 +517,9 @@ function Profile() {
       {/* ACCOUNT SETTINGS MODAL */}
       <Modal show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
         <Modal.Body className="d-flex flex-column align-items-center">
-          <Button variant="primary" onClick={handleAction1}>
-            Settings
-          </Button>
+          <Link to="/resetpass" variant="primary">
+            Reset Password
+          </Link>
           <br></br>
           <br></br>
           <Button variant="secondary" onClick={handleAction2}>
