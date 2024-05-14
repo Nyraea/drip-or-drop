@@ -154,6 +154,8 @@ function Register() {
           />
         </div>
 
+        <br/>
+
         {/* SIGN UP BUTTON */}
         <div className="d-grid">
           <button type="submit" className={styles.submit}>

@@ -108,6 +108,8 @@ function EditProfile() {
 
   return (
     <div className={`${styles.edit_section}`}>
+      <br/>
+      <br/>
       {userDetails ? (
         <>
           <form onSubmit={handleSubmit}>

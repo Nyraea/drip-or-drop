@@ -69,8 +69,8 @@ function App() {
           />
         </Routes>
         <ToastContainer />
+        {user && <Footer />}
       </div>
-      {user && <Footer />}
     </Router>
   );
 }

@@ -174,7 +174,9 @@ function Navbar() {
 
               <br/>
 
-              <a href="" className={` ${styles.link}`}>
+              <a href="" className={` ${styles.link}`} onClick={(event) => {
+            event.preventDefault();
+            {handleLogout()};}}>
                 <h4>logout</h4>
               </a>
 

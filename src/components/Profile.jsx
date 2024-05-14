@@ -288,7 +288,7 @@ function Profile() {
         )}
 
         {/* PROFILE PIC */}
-        <div className="col-2 center">
+        <div className={` col-2 center`}>
           <div className="">
             {userDetails && userDetails.profilePic ? (
               <a href="" onClick={(event) => event.preventDefault()}>

@@ -303,12 +303,12 @@ function Discover() {
                         {((post.upvote - post.downvote) /
                           (post.upvote + post.downvote || 1)) *
                           5}
-                        <img src="/images/totaldrips.png" alt="?" />
+                        <img src="/images/totaldrips.png" alt="?" className="mx-2"/>
                       </div>
                     </div>
 
                     <div className="liked">
-                      <a className="">
+                      <a className="text-decoration-none text-dark">
                         {post.tags.map((tag) => `#${tag}`).join(", ")}
                       </a>
                     </div>
@@ -331,7 +331,7 @@ function Discover() {
                           View all {post.comments} comments
                         </a>
                       </p>
-                      <input type="text" placeholder="Add a comment..." />
+                      <input type="text" placeholder="Add a comment..." className="rounded-pill px-2"/>
                     </div>
                   </div>
                 </div>
