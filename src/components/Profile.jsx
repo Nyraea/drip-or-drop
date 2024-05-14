@@ -248,13 +248,6 @@ function Profile() {
               <h4>{imageCount}</h4>
             </div>
 
-            {/* AVERAGE DRIP*/}
-            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
-              <h6>average drip</h6>
-              <br />
-              <h4>69420</h4>
-            </div>
-
             {/* DRIP SCORE */}
             <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
               <h6>drip score</h6>
