@@ -26,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
 import close from "../assets/close.svg";
-import farquad from "../assets/farquad.svg";
+import farquad from "../assets/default_profile.jpg";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);

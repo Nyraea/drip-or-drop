@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from "react-router-dom";
-import farquad from "../assets/farquad.svg";
+import farquad from "../assets/default_profile.jpg";
 import load from "../assets/loading.gif";
 
 function EditProfile() {
@@ -211,22 +211,23 @@ function EditProfile() {
                 onChange={handleChange}
               />
             </div>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <div className={`${styles.actions}`}>
               {loading ? (
                 <button className={`${styles.save}`}>
-                  <img src={load} alt = "..." className={`${styles.loading}`}/>
+                  <img src={load} alt="..." className={`${styles.loading}`} />
                 </button>
-              ) : (              
-              <button type="submit" className={`${styles.button}`}>
-                Save Changes
-              </button>)}
-              <br/>
-              <br/>
-                <Link to="/profile" className={`${styles.button} text-center`}>
-                  Back
-                </Link>
+              ) : (
+                <button type="submit" className={`${styles.button}`}>
+                  Save Changes
+                </button>
+              )}
+              <br />
+              <br />
+              <Link to="/profile" className={`${styles.button} text-center`}>
+                Back
+              </Link>
             </div>
           </form>
 
