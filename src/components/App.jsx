@@ -25,6 +25,7 @@ import Discover from "./Discover";
 import EditProfile from "./EditProfile";
 import Footer from "./Footer";
 import ResetPassword from "./ResetPassword";
+import UserProfile from "./UserProfile";
 
 function App() {
   const [user, setUser] = useState();
@@ -43,13 +44,14 @@ function App() {
             {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
             {user ? (
               <>
-                  <Route path="/edit" element={<EditProfile />} />
-                  <Route path="/homepage" element={<Homepage />} />
-                  <Route path="/discover" element={<Discover />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/images" element={<UserImages />} />
-                  <Route path="/upload" element={<ImageUpload />} />
-                  <Route path="/resetpass" element={<ResetPassword />} />
+                <Route path="/edit" element={<EditProfile />} />
+                <Route path="/homepage" element={<Homepage />} />
+                <Route path="/discover" element={<Discover />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/images" element={<UserImages />} />
+                <Route path="/upload" element={<ImageUpload />} />
+                <Route path="/resetpass" element={<ResetPassword />} />
+                <Route path="/profile/:username" element={<UserProfile />} />
               </>
             ) : (
               <>
@@ -70,13 +72,11 @@ function App() {
               }
             />
           </Routes>
-          
         </div>
         <ToastContainer />
         {user && <Footer />}
       </div>
     </Router>
-    
   );
 }
 
