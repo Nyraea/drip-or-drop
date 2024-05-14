@@ -5,6 +5,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { db } from "./firebase"; // Adjust the import path as needed
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const API_URL = "https://api.unsplash.com/search/photos";
 const IMAGES_PER_PAGE = 20;
@@ -17,20 +19,56 @@ function Trending() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const fetchUnsplashImages = async (query, page) => {
+    const { data } = await axios.get(
+      `${API_URL}?query=${query}&page=${page}&per_page=${IMAGES_PER_PAGE}&client_id=${
+        import.meta.env.VITE_API_KEY
+      }`
+    );
+    return data;
+  };
+
+  const fetchFirebaseImages = async (queryText) => {
+    const imagesRef = collection(db, "images");
+    const q = query(imagesRef, where("tags", "array-contains", queryText));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => {
+      const imageData = doc.data();
+      return {
+        ...imageData,
+        imageUrl:
+          `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+            imageData.imageUrl
+          )}?alt=media` || "/images/default_profile.jpg",
+      };
+    });
+  };
+
   const fetchImages = useCallback(async () => {
     try {
-      if (searchInput.current.value) {
+      const queryText = searchInput.current.value;
+      if (queryText) {
         setErrorMsg("");
         setLoading(true);
-        const { data } = await axios.get(
-          `${API_URL}?query=${
-            searchInput.current.value
-          }&page=${page}&per_page=${IMAGES_PER_PAGE}&client_id=${
-            import.meta.env.VITE_API_KEY
-          }`
-        );
-        setImages(data.results);
-        setTotalPages(data.total_pages);
+
+        const [unsplashData, firebaseImages] = await Promise.all([
+          fetchUnsplashImages(queryText, page),
+          fetchFirebaseImages(queryText),
+        ]);
+
+        console.log("Unsplash Data:", unsplashData.results);
+        console.log("Firebase Data:", firebaseImages);
+
+        const combinedImages = [
+          ...firebaseImages.map((img) => ({ ...img, source: "firebase" })),
+          ...unsplashData.results.map((img) => ({
+            ...img,
+            source: "unsplash",
+          })),
+        ];
+
+        setImages(combinedImages);
+        setTotalPages(unsplashData.total_pages);
         setLoading(false);
       }
     } catch (error) {
@@ -91,51 +129,11 @@ function Trending() {
         <>
           <SkeletonTheme height={350} width={250}>
             <div className="d-flex row justify-content-center w-100 px-5 mt-4 g-2">
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
-              <div className="d-flex justify-content-center col">
-                <Skeleton containerClassName="flex-1" />
-              </div>
+              {[...Array(16)].map((_, index) => (
+                <div className="d-flex justify-content-center col" key={index}>
+                  <Skeleton containerClassName="flex-1" />
+                </div>
+              ))}
             </div>
           </SkeletonTheme>
           <br />
@@ -145,21 +143,25 @@ function Trending() {
       ) : (
         <>
           <div className="images">
-            {images.map((image) => (
+            {images.map((image, index) => (
               <img
-                key={image.id}
-                src={image.urls.small}
-                alt={image.alt_description}
+                key={index}
+                src={image.urls ? image.urls.small : image.imageUrl}
+                alt={image.alt_description || image.description}
                 className="image"
               />
             ))}
           </div>
           <div className="buttons">
             {page > 1 && (
-              <button onClick={() => setPage(page - 1)} className={`previous`}>Previous</button>
+              <button onClick={() => setPage(page - 1)} className="previous">
+                Previous
+              </button>
             )}
             {page < totalPages && (
-              <button onClick={() => setPage(page + 1)} className={`next`}>Next</button>
+              <button onClick={() => setPage(page + 1)} className="next">
+                Next
+              </button>
             )}
           </div>
           <br />

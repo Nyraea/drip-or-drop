@@ -17,19 +17,10 @@ function UserProfile() {
   const [userDetails, setUserDetails] = useState(null);
   const [imageCount, setImageCount] = useState(0);
   const [userImages, setUserImages] = useState([]);
-  const [show, setShow] = useState(false);
-  const [showSettingsPopup, setShowSettingsPopup] = useState(false); // State for the settings popup
-  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedDescription, setSelectedDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [showPopupButtons, setShowPopupButtons] = useState(false); // State for the new popup
-  const [selectedAction, setSelectedAction] = useState("");
-  const [editableDescription, setEditableDescription] = useState("");
-  const [editingDescription, setEditingDescription] = useState(false);
   const [totalUpvotes, setTotalUpvotes] = useState(0);
   const { username } = useParams();
 

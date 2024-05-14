@@ -80,6 +80,7 @@ function ImageUpload() {
     for (let i = 0; i < images.length; i++) {
       try {
         const imageId = Date.now(); // Generate a unique timestamp for each image
+        const timestamp = new Date().toISOString();
         const imageRef = ref(storage, `images/${user.uid}/${imageId}`); // Create a reference for the image
         await uploadString(imageRef, images[i], "data_url"); // Upload the image
 
@@ -90,6 +91,7 @@ function ImageUpload() {
           tags,
           imageUrl: `images/${user.uid}/${imageId}`,
           upvote: 0,
+          timestamp: timestamp,
           downvote: 0,
         });
 
