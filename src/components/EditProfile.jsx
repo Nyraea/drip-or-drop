@@ -219,6 +219,9 @@ function EditProfile() {
         </div>
         </>
       )}
+      <br />
+      <br />
+      <br />
     </div>
     
   );

@@ -4,8 +4,8 @@
 //PROFILE INFORMATION DIV
 .profile {
   display: flex;
-
   width: 100%;
+  justify-content: center;
   background-color: #fff;
   padding: 20px;
   margin-top: 60px;
@@ -15,7 +15,8 @@
 .profile_pic {
 
   &:hover {
-
+    @include opacityTransition(1, 0.75, opaqueToTranslucent);
+    @include useAnimation(opaqueToTranslucent, 0.5s);
   }
 }
 
