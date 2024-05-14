@@ -40,6 +40,9 @@ function Profile() {
   const [selectedDescription, setSelectedDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [editingTags, setEditingTags] = useState(false);
+  const [editableTags, setEditableTags] = useState([]);
+  const [tagInputValue, setTagInputValue] = useState("");
   const [showPopupButtons, setShowPopupButtons] = useState(false); // State for the new popup
   const [selectedAction, setSelectedAction] = useState("");
   const [editableDescription, setEditableDescription] = useState("");
@@ -86,6 +89,51 @@ function Profile() {
     setEditingDescription(true);
     handleClosePopupButtons();
   };
+
+  const handleTagChange = (e) => {
+    setTagInputValue(e.target.value);
+  };
+
+  const handleAddTag = () => {
+    if (tagInputValue.trim() !== "") {
+      setEditableTags((prevTags) => [...prevTags, tagInputValue.trim()]);
+      setTagInputValue("");
+    }
+  };
+
+  const handleEditTags = () => {
+    setEditableTags(selectedTags);
+    setEditingTags(true);
+    handleClosePopupButtons();
+  };
+
+  const handleSaveTags = async () => {
+    const user = auth.currentUser;
+    if (user && selectedImage && selectedImage.id) {
+      try {
+        const imageRef = doc(db, "images", selectedImage.id);
+        await updateDoc(imageRef, {
+          tags: editableTags,
+        });
+        console.log("Tags updated in the database");
+
+        // Update the tags in the local state
+        setUserImages((prevImages) =>
+          prevImages.map((image) =>
+            image.id === selectedImage.id
+              ? { ...image, tags: editableTags }
+              : image
+          )
+        );
+        setSelectedTags(editableTags);
+      } catch (error) {
+        console.error("Error updating tags:", error.message);
+      }
+    }
+    setEditingTags(false);
+    handleClosePopupButtons();
+  };
+
   const updateDescriptionInDatabase = async (newDescription) => {
     const user = auth.currentUser;
     if (user && selectedImage && selectedImage.id) {
@@ -109,6 +157,7 @@ function Profile() {
       }
     }
   };
+
   const handleSaveDescription = () => {
     setSelectedDescription(editableDescription);
     setEditingDescription(false);
@@ -245,7 +294,7 @@ function Profile() {
     <div className="w-100">
       {/* ACCOUNT INFORMATION*/}
       <div className={` ${styles.profile}`}>
-        {userDetails  ? (
+        {userDetails ? (
           <>
             {/* TOTAL DRIP */}
             <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
@@ -288,7 +337,7 @@ function Profile() {
         {/* PROFILE PIC */}
         <div className={` col-2 center`}>
           <div className="">
-            {userDetails && userDetails.profilePic  ? (
+            {userDetails && userDetails.profilePic ? (
               <a href="" onClick={(event) => event.preventDefault()}>
                 <img
                   src={userDetails.profilePic}
@@ -315,7 +364,7 @@ function Profile() {
         </div>
 
         {/* PROFILE INFORMATION & ACTIONS */}
-        {userDetails  ? (
+        {userDetails ? (
           <>
             <div className="d-flex flex-column justify-content-center col-2">
               {/* PROFILE INFO */}
@@ -352,7 +401,7 @@ function Profile() {
           </>
         )}
 
-        {userDetails  ? (
+        {userDetails ? (
           <>
             {/* UPLOAD & EDIT PROFILE BUTTONS */}
             <div className="d-flex flex-column justify-content-around align-items-center col-2 ">
@@ -393,7 +442,7 @@ function Profile() {
           <div className="d-flex justify-content-center mt-3">
             <h2 className={`${styles.uploads_title}`}>my drips</h2>
           </div>
-          <br/>
+          <br />
           <div className={`${styles.uploads}`}>
             {/* USER IMAGES MAP */}
             {userImages.map((image) => (
@@ -506,15 +555,27 @@ function Profile() {
       </>
 
       {/* ACCOUNT SETTINGS MODAL */}
-      <Modal className={`${styles.settings_modal}`} show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
-
-        <Modal.Header> <a href = "" onClick={(event) => {event.preventDefault(); handleCloseSettingsPopup()}} className="ms-auto"><img src = {close} alt = "close" className="w-75"/></a></Modal.Header>
+      <Modal
+        className={`${styles.settings_modal}`}
+        show={showSettingsPopup}
+        onHide={handleCloseSettingsPopup}
+      >
+        <Modal.Header>
+          {" "}
+          <a
+            href=""
+            onClick={(event) => {
+              event.preventDefault();
+              handleCloseSettingsPopup();
+            }}
+            className="ms-auto"
+          >
+            <img src={close} alt="close" className="w-75" />
+          </a>
+        </Modal.Header>
 
         <Modal.Body className="d-flex flex-column align-items-center">
-
           <div className={`${styles.settings}`}>
-
-
             <Link to="/upload" className={`${styles.button}`}>
               {" "}
               upload image{" "}
@@ -524,16 +585,18 @@ function Profile() {
               reset password
             </Link>
 
-            <a href = "" onClick={(event) => {
-              event.preventDefault();
-              handleAction2();
-            }} className={`${styles.button}`}>
+            <a
+              href=""
+              onClick={(event) => {
+                event.preventDefault();
+                handleAction2();
+              }}
+              className={`${styles.button}`}
+            >
               log out
             </a>
           </div>
-
         </Modal.Body>
-        
       </Modal>
 
       {/* LOGOUT CONFIRMATION MODAL */}
@@ -619,6 +682,53 @@ function Profile() {
         </Modal.Footer>
       </Modal>
 
+      {/* EDIT TAGS */}
+      <Modal show={editingTags} onHide={() => setEditingTags(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Tags</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* UPLOAD TAGS */}
+          <div className="mb-3">
+            <label>Tags:</label>
+            <div className="d-flex flex-wrap">
+              {editableTags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="badge d-flex align-items-center bg-dark m-1"
+                >
+                  {tag}
+                </span>
+              ))}
+
+              {/* TAG INPUT */}
+              <input
+                type="text"
+                value={tagInputValue}
+                onChange={handleTagChange}
+                className="form-control m-1"
+              />
+
+              {/* ADD TAG BUTTON */}
+              <button
+                className={`${styles.actions} ${styles.tags} ${styles.upload} m-1`}
+                onClick={handleAddTag}
+              >
+                Add Tag
+              </button>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setEditingTags(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveTags}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {/* EDIT OR DELETE IMAGE */}
       <Modal show={showPopupButtons} onHide={handleClosePopupButtons}>
         <Modal.Body
@@ -642,7 +752,15 @@ function Profile() {
               onClick={handleEditDescription}
               style={{ width: "100%" }}
             >
-              Edit
+              Edit Description
+            </Button>
+            <br />
+            <Button
+              variant="primary"
+              onClick={handleEditTags}
+              style={{ width: "100%" }}
+            >
+              Edit Tags
             </Button>
             <br />
             <Button
