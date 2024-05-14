@@ -39,7 +39,7 @@ function App() {
     <Router>
       {user && <Navbar />}
       <div className={styles.canvas}>
-        <div className="main-content">
+        <div className={styles.main_content}>
           <Routes>
             {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
             {user ? (

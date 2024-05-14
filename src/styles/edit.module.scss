@@ -51,7 +51,6 @@
   align-items: center;
   justify-content: space-evenly;
   width: 75%;
-  height: 25%;
   margin: 0 auto 0 auto;
 
   .button {
@@ -59,10 +58,28 @@
     color: white;
     text-decoration: none;
     width: 100%;
+    padding: 2.5% 0 2.5% 0;
+    border: 2px solid black;
 
     &:hover {
       @include colorTransition(black, white, white, black, blackToWhite);
       @include useAnimation(blackToWhite, 0.5s);
+    }
+
+  }
+
+  .save {
+    display: flex;
+    background-color: white;
+    color: black;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 2.5% 0 2.5% 0;
+    border: 2px solid black;
+
+    .loading {
+      width: 10%;
     }
   }
 }
