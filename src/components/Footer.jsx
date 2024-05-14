@@ -8,21 +8,42 @@ import logo from "../assets/logo2.svg";
 function Footer() {
     return (
         <footer className={`${styles.footer}`}>
-
+            <br /><br />
             {/* LINKS */}
             <div className={`${styles.links_section} row`}>
 
-                <div className= {`${styles.links} col`}>
+                <div className= {`${styles.links} d-none d-sm-flex col-sm-4`}>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Home</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>About</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Contact</a>
                 </div>
-                <div className= {`${styles.links} col`}>
+                <div className= {`${styles.links} d-none d-sm-flex col-sm-4`}>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Collaborate</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Portfolio</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Blog</a>   
                 </div>
-                <div className= {`${styles.links} col`}>
+                <div className= {`${styles.links} d-none d-sm-flex col-sm-4`}>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Privacy</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>TOS</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>FAQ</a>
+                </div>
+
+            </div>
+
+            {/* LINKS */}
+            <div className={`${styles.links_section_xs} d-flex d-sm-none row`}>
+
+                {/* XS Links */}
+                <div className= {`${styles.links} col-6`}>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Home</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>About</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Contact</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Collaborate</a>
+                </div>
+
+                <div className= {`${styles.links} col-6`}>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Portfolio</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Blog</a>   
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Privacy</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>TOS</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>FAQ</a>
