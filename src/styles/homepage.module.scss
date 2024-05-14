@@ -24,7 +24,7 @@
   .text {
     font-family: "Georama";
     font-weight: 700;
-    font-size: 45px;
+    font-size: 75px;
   }
 }
 
@@ -41,15 +41,16 @@
   .text {
     font-family: "Georama";
     font-weight: 400;
-    font-size: 25px;
+    font-size: 35px;
   }
 
   .button {
     background-color: black;
     color: white;
-    padding: 0.5% 5% 0.5% 5%;
+    width: 75%;
+    padding: 5% 2.5% 5% 2.5%;
     font-family: "Rochester";
-    font-size: x-large;
+    font-size: xx-large;
     text-decoration: none;
     border-radius: 25px;
     z-index: 1;

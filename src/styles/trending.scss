@@ -27,9 +27,8 @@ body {
 //the container of it all
 .trendingcontainer {
   height: fit-content;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100vh;
+  margin: 0 auto 0 auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
