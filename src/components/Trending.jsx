@@ -156,10 +156,10 @@ function Trending() {
           </div>
           <div className="buttons">
             {page > 1 && (
-              <Button onClick={() => setPage(page - 1)}>Previous</Button>
+              <button onClick={() => setPage(page - 1)} className={`previous`}>Previous</button>
             )}
             {page < totalPages && (
-              <Button onClick={() => setPage(page + 1)}>Next</Button>
+              <button onClick={() => setPage(page + 1)} className={`next`}>Next</button>
             )}
           </div>
           <br />

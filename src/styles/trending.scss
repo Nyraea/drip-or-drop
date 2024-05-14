@@ -184,3 +184,161 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.buttons {
+
+  .previous {
+    background-color: black;
+    color: white;
+    
+    &:hover {
+      @include colorTransition(black, white, white, black, blackToWhite);
+      @include useAnimation(blackToWhite, 0.5s);
+    }
+  }
+  
+  .next {
+    background-color: black;
+    color: white;
+    
+    &:hover {
+      @include colorTransition(black, white, white, black, blackToWhite);
+      @include useAnimation(blackToWhite, 0.5s);
+    }
+  }
+
+}
+
+//X-SMALL SCREENS
+@media screen and (max-width: 575px) {
+  .buttons {
+    display: flex;
+    width: 85%;
+    margin: 10% auto 10% auto;
+  }
+
+  .previous {
+    width: 50%;
+    padding: 2% 0 2% 0;
+    margin: 0% 3% 0% 3%;
+  }
+
+  .next {
+    width: 50%;
+    padding: 2% 0 2% 0;
+    margin: 0% 2% 0% 2%;
+  }
+}
+
+        //SMALL SCREENS
+        @media screen and (min-width: 576px ) and (max-width: 767px) {
+
+          .buttons {
+            display: flex;
+            width: 85%;
+            margin: 10% auto 10% auto;
+          }
+        
+          .previous {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 3% 0% 3%;
+          }
+        
+          .next {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 2% 0% 2%;
+          }
+
+        }
+
+                //MEDIUM SCREENS
+                @media screen and (min-width: 768px ) and (max-width: 991px) {
+                  
+                  .buttons {
+                    display: flex;
+                    width: 65%;
+                    margin: 10% auto 10% auto;
+                  }
+                
+                  .previous {
+                    width: 50%;
+                    padding: 2% 0 2% 0;
+                    margin: 0% 3% 0% 3%;
+                  }
+                
+                  .next {
+                    width: 50%;
+                    padding: 2% 0 2% 0;
+                    margin: 0% 2% 0% 2%;
+                  }
+
+                }
+
+        //LARGE SCREENS
+        @media screen and (min-width: 992px ) and (max-width: 1199px) {
+          .buttons {
+            display: flex;
+            width: 45%;
+            margin: 10% auto 10% auto;
+          }
+        
+          .previous {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 3% 0% 3%;
+          }
+        
+          .next {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 2% 0% 2%;
+          }
+          
+        }
+
+//X-LARGE SCREENS
+@media screen and (min-width: 1200px ) and (max-width: 1399px) {
+  .buttons {
+    display: flex;
+    width: 35%;
+    margin: 10% auto 10% auto;
+  }
+
+  .previous {
+    width: 50%;
+    padding: 2% 0 2% 0;
+    margin: 0% 3% 0% 3%;
+  }
+
+  .next {
+    width: 50%;
+    padding: 2% 0 2% 0;
+    margin: 0% 2% 0% 2%;
+  }
+
+}
+
+        //XX-LARGE SCREENS
+        @media screen and (min-width: 1400px){
+
+          .buttons {
+            display: flex;
+            width: 35%;
+            margin: 10% auto 10% auto;
+          }
+        
+          .previous {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 3% 0% 3%;
+          }
+        
+          .next {
+            width: 50%;
+            padding: 2% 0 2% 0;
+            margin: 0% 2% 0% 2%;
+          }
+
+        }
