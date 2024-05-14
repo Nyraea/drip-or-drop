@@ -4,19 +4,29 @@ import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Accordion from 'react-bootstrap/Accordion';
+import { auth } from "./firebase";
 
 import logo from "../assets/logo.svg";
 import close from "../assets/close.svg";
 import toggler from "../assets/toggler.svg";
 
 function Navbar() {
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  async function handleLogout() {
+    try {
+      await auth.signOut();
+      window.location.href = "/login";
+      console.log("User logged out successfully!");
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  }
 
   return (
 
@@ -64,23 +74,44 @@ function Navbar() {
         {/* LINKS */}
         <div className={`col-lg-1 ${styles.navcol} ${styles.dropdown} me-lg-3`} onMouseLeave={() => setDropdownOpen(false)}>
           <div onClick={() => setDropdownOpen(!dropdownOpen)}>
-            <a href="" onClick={(event) => event.preventDefault()} className={` ${styles.link}`}> notifications</a>
+            <a
+              href=""
+              onClick={(event) => event.preventDefault()}
+              className={` ${styles.link}`}
+            >
+              {" "}
+              notifications
+            </a>
           </div>
           {dropdownOpen && (
-            <div className={`${styles.dropdownMenu} p-2`} onMouseLeave={() => setDropdownOpen(false)}>
-              <p className={styles.dropdownText}>you have no notifications, you should kill yourself <b>NOW</b></p>
+            <div
+              className={`${styles.dropdownMenu} p-2`}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <p className={styles.dropdownText}>
+                you have no notifications, you should kill yourself <b>NOW</b>
+              </p>
             </div>
           )}
         </div>
 
         <div className={`col-lg-1 ${styles.navcol} ${styles.dropdown}`} onMouseLeave={() => setAccountDropdownOpen(false)}>
           <div onMouseEnter={() => setAccountDropdownOpen(true)}>
-            <Link to = "/profile" className={`${styles.link}`}>account</Link>
+            <Link to="/profile" className={`${styles.link}`}>
+              account
+            </Link>
           </div>
           {accountDropdownOpen && (
-            <div className={styles.dropdownMenu} onMouseLeave={() => setAccountDropdownOpen(false)}>
-              <Link to="/profile" className={styles.dropdownItem}>view profile</Link>
-              <Link to="/edit" className={styles.dropdownItem}>edit info</Link>
+            <div
+              className={styles.dropdownMenu}
+              onMouseLeave={() => setAccountDropdownOpen(false)}
+            >
+              <Link to="/profile" className={styles.dropdownItem}>
+                view profile
+              </Link>
+              <Link to="/edit" className={styles.dropdownItem}>
+                edit info
+              </Link>
             </div>
           )}
         </div>

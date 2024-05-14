@@ -217,5 +217,8 @@
 
 .discover_loading {
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto 0 auto 0;
 }

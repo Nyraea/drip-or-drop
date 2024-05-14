@@ -1,6 +1,8 @@
 import "../styles/discover.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "../styles/profile.module.scss";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -10,12 +12,11 @@ import {
   query,
   where,
   getDocs,
-  increment,
   updateDoc,
-  setDoc, // Import setDoc from Firestore
+  setDoc,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 
 import loading from "../assets/loading.gif";
 
@@ -29,6 +30,12 @@ function Discover() {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageClick = (image) => {
+    console.log("Image clicked:", image);
+    setSelectedImage(image);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const fetchUserLikes = async () => {
@@ -47,17 +54,41 @@ function Discover() {
     fetchUserLikes();
   }, [user]);
 
+  const updateVoteCount = async (postId) => {
+    const userLikesCollectionRef = collection(db, "userLikes");
+    const userLikesQuerySnapshot = await getDocs(userLikesCollectionRef);
+
+    let totalUpvotes = 0;
+    let totalDownvotes = 0;
+
+    userLikesQuerySnapshot.forEach((doc) => {
+      const data = doc.data();
+      totalUpvotes += data.likedPosts.filter((id) => id === postId).length;
+      totalDownvotes += data.dislikedPosts.filter((id) => id === postId).length;
+    });
+
+    const imageDocRef = doc(db, "images", postId);
+    const imageDocSnap = await getDoc(imageDocRef);
+
+    if (imageDocSnap.exists()) {
+      const updatedData = {
+        upvote: totalUpvotes,
+        downvote: totalDownvotes,
+      };
+
+      await updateDoc(imageDocRef, updatedData);
+    }
+  };
+
   const toggleLike = async (postId) => {
-    // Update local state
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId
-          ? { ...post, isLiked: !post.isLiked, isDisliked: false } // Unselect dislike
+          ? { ...post, isLiked: !post.isLiked, isDisliked: false }
           : post
       )
     );
 
-    // Update userLikes in Firestore
     const updatedLikedPosts = userLikes.likedPosts.includes(postId)
       ? userLikes.likedPosts.filter((id) => id !== postId)
       : [...userLikes.likedPosts, postId];
@@ -65,7 +96,7 @@ function Discover() {
     const userLikesDocRef = doc(db, "userLikes", user.uid);
     await updateDoc(userLikesDocRef, {
       likedPosts: updatedLikedPosts,
-      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId), // Remove from dislikedPosts if present
+      dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId),
     });
 
     setUserLikes({
@@ -73,27 +104,26 @@ function Discover() {
       dislikedPosts: userLikes.dislikedPosts.filter((id) => id !== postId),
     });
 
+    await updateVoteCount(postId);
     console.log("Toggle like for post with ID:", postId);
   };
 
   const toggleDislike = async (postId) => {
-    // Update local state
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId
-          ? { ...post, isDisliked: !post.isDisliked, isLiked: false } // Unselect like
+          ? { ...post, isDisliked: !post.isDisliked, isLiked: false }
           : post
       )
     );
 
-    // Update userLikes in Firestore
     const updatedDislikedPosts = userLikes.dislikedPosts.includes(postId)
       ? userLikes.dislikedPosts.filter((id) => id !== postId)
       : [...userLikes.dislikedPosts, postId];
 
     const userLikesDocRef = doc(db, "userLikes", user.uid);
     await updateDoc(userLikesDocRef, {
-      likedPosts: userLikes.likedPosts.filter((id) => id !== postId), // Remove from likedPosts if present
+      likedPosts: userLikes.likedPosts.filter((id) => id !== postId),
       dislikedPosts: updatedDislikedPosts,
     });
 
@@ -102,6 +132,7 @@ function Discover() {
       dislikedPosts: updatedDislikedPosts,
     });
 
+    await updateVoteCount(postId);
     console.log("Toggle dislike for post with ID:", postId);
   };
 
@@ -112,11 +143,6 @@ function Discover() {
 
     return () => unsubscribe();
   }, []);
-
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowModal(true);
-  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -141,6 +167,13 @@ function Discover() {
             const imageData = imageDoc.data();
 
             if (imageData) {
+              const isNSFW =
+                imageData.tags.includes("nsfw") ||
+                imageData.tags.includes("hentai") ||
+                imageData.tags.includes("gore") ||
+                imageData.tags.includes("death") ||
+                imageData.tags.includes("bob");
+
               const post = {
                 username: userData.username || "Unknown User",
                 profileImageUrl:
@@ -149,12 +182,14 @@ function Discover() {
                   `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                     imageData.imageUrl
                   )}?alt=media` || "/images/default_profile.jpg",
-                isNSFW: imageData.isNSFW || false,
+                isNSFW: isNSFW,
                 caption: imageData.description || "",
                 tags: imageData.tags || [],
                 postId: imageDoc.id,
                 isLiked: userLikes.likedPosts.includes(imageDoc.id),
                 isDisliked: userLikes.dislikedPosts.includes(imageDoc.id),
+                upvote: imageData.upvote || 0,
+                downvote: imageData.downvote || 0,
               };
 
               fetchedPosts.push(post);
@@ -182,6 +217,7 @@ function Discover() {
     return () => clearTimeout(timer);
   }, []);
 
+
   return (
     <div className="main_section">
       {posts ? (
@@ -206,10 +242,7 @@ function Discover() {
                     </div>
                   </div>
 
-                  <div
-                    className="image"
-                    onClick={() => handleImageClick(post.imageUrl)}
-                  >
+                  <div className="image">
                     {post.isNSFW ? (
                       <div className="image-nsfw-container">
                         <img
@@ -227,10 +260,7 @@ function Discover() {
                     ) : (
                       <button
                         className="image"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleImageClick(post.imageUrl);
-                        }}
+                        onClick={() => handleImageClick(post)}
                       >
                         <img src={post.imageUrl} alt="Post" />
                       </button>
@@ -268,11 +298,12 @@ function Discover() {
                         </div>
                       </div>
 
-                      <div
-                        className="save not_saved"
-                        onClick="" // Pass postId to toggleFavorite function
-                      >
-                        <img src="/images/save-instagram.png" alt="Not Saved" />
+                      <div className="save not_saved" onClick="">
+                        Score:{" "}
+                        {((post.upvote - post.downvote) /
+                          (post.upvote + post.downvote || 1)) *
+                          5}
+                        <img src="/images/totaldrips.png" alt="?" />
                       </div>
                     </div>
 
@@ -284,7 +315,7 @@ function Discover() {
 
                     <div className="liked">
                       <a className="bold" href="">
-                        {post.likes} likes
+                        {post.upvote} likes
                       </a>
                     </div>
 
@@ -309,26 +340,31 @@ function Discover() {
           )}
         </div>
       ) : (
-        // Skeleton Loading
         <div className="w-100">
           <Skeleton containerClassName="flex-1" />
-          eggs
         </div>
       )}
-
-      {/* Modal */}
-      {showModal && (
-        <div className="modal" onClick={() => setShowModal(false)}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setShowModal(false)}>
-              &times;
-            </span>
-            <p>Modal Content Here</p>
-          </div>
-        </div>
-      )}
-      {/* Add a console.log to check showModal value */}
-      {console.log("showModal:", showModal)}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Body>
+          {selectedImage && (
+            <div className={`${styles.upload_container}`}>
+              <img
+                src={selectedImage.imageUrl}
+                alt={selectedImage.description}
+                className={`${styles.upload}`}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} //remove if the image is too small kek
+              />
+              <div className={styles.image_details}>
+                <p><strong>User:</strong> {selectedImage.username}</p>
+                <p><strong>Caption:</strong> {selectedImage.caption}</p>
+                <p><strong>Tags:</strong> {selectedImage.tags.join(", ")}</p>
+                <p><strong>Likes:</strong> {selectedImage.upvote}</p>
+                <p><strong>Dislikes:</strong> {selectedImage.downvote}</p>
+              </div>
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

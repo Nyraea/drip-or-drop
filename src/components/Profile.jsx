@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
 import "../styles/global.scss";
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -12,7 +12,9 @@ import {
   query,
   where,
   getDocs,
-} from "firebase/firestore";
+  deleteDoc,
+  updateDoc
+}  from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
@@ -24,6 +26,7 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
 import farquad from "../assets/farquad.svg";
 
+
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
   const [userImages, setUserImages] = useState([]);
@@ -32,6 +35,90 @@ function Profile() {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedDescription, setSelectedDescription] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [showPopupButtons, setShowPopupButtons] = useState(false); // State for the new popup
+const [selectedAction, setSelectedAction] = useState("");
+const [editableDescription, setEditableDescription] = useState("");
+const [editingDescription, setEditingDescription] = useState(false);
+
+const handleImageClick = (imageUrl, description, tags, id) => {
+  setSelectedImage({ imageUrl, description, tags, id });
+  setSelectedDescription(description);
+  setSelectedTags(tags);
+  setShowPopup(true);
+};
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+  const handleDeletePost = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user && selectedImage && selectedImage.id) {
+        const postRef = doc(db, "images", selectedImage.id); // Use selectedImage.id
+        await deleteDoc(postRef);
+        console.log("Post deleted successfully!");
+
+        // Remove the deleted image from the state
+        setUserImages(prevImages => prevImages.filter(image => image.id !== selectedImage.id));
+
+        // Close the popup modal after deletion
+        handleClosePopup();
+        handleClosePopupButtons(); // Close the popup buttons modal
+      } else {
+        console.log("User not logged in or no image selected");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+    }
+  };
+  
+
+  const handleEditDescription = () => {
+    setEditableDescription(selectedDescription);
+    setEditingDescription(true);
+    handleClosePopupButtons();
+  };
+  const updateDescriptionInDatabase = async (newDescription) => {
+    const user = auth.currentUser;
+    if (user && selectedImage && selectedImage.id) {
+      try {
+        const imageRef = doc(db, "images", selectedImage.id);
+        await updateDoc(imageRef, {
+          description: newDescription,
+        });
+        console.log("Description updated in the database");
+
+        // Update the description in the local state
+        setUserImages(prevImages =>
+          prevImages.map(image =>
+            image.id === selectedImage.id ? { ...image, description: newDescription } : image
+          )
+        );
+      } catch (error) {
+        console.error("Error updating description:", error.message);
+      }
+    }
+  };
+  const handleSaveDescription = () => {
+    setSelectedDescription(editableDescription);
+    setEditingDescription(false);
+    handleClosePopupButtons(); // Close the popup after saving
+    updateDescriptionInDatabase(editableDescription); // Update the description in the database
+  };
+  
+  // Use Effect to update userDetails after description changes
+  useEffect(() => {
+    if (userDetails) {
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        description: editableDescription,
+      }));
+    }
+  }, [editableDescription, userDetails]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -58,7 +145,7 @@ function Profile() {
     const fetchUserImages = async () => {
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
-          return; // Exit early if user is not logged in
+          return;
         }
 
         const q = query(
@@ -109,25 +196,35 @@ function Profile() {
   };
 
   const handleAction1 = () => {
-    // Handle action 1
   };
 
   const handleAction2 = () => {
-    // Show the logout confirmation popup
     setShowLogoutConfirmation(true);
   };
-  
+
   const handleLogoutConfirmation = () => {
-    // Perform logout action
     handleLogout();
-    // Close the logout confirmation popup
     setShowLogoutConfirmation(false);
   };
-  
+
   const handleCloseLogoutConfirmation = () => {
-    // Close the logout confirmation popup without logging out
     setShowLogoutConfirmation(false);
   };
+
+  const handleShowPopupButtons = () => {
+    setShowPopupButtons(true);
+  };
+
+  const handleClosePopupButtons = () => {
+    setShowPopupButtons(false);
+  };
+
+  const DeleteAction = () => {
+    setSelectedAction("Action 2");
+    handleDeletePost();
+  };
+
+
   return (
 
     //MAIN DIV
@@ -284,29 +381,32 @@ function Profile() {
       {userImages && delayedRender ? (
       <>
         <div className="d-flex justify-content-center mt-3">
-          <h2 className={`${styles.uploads_title}`}>my drips</h2>  
-        </div>
-      <div className={`${styles.uploads}`}>
-        {/* USER IMAGES MAP */}
-        {userImages.map((image) => (
-          <div key={image.id} className={`${styles.upload_container}`}>
-            <img
-              src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
-                image.imageUrl
-              )}?alt=media`}
-              alt={image.description}
-              className={`${styles.upload}`}
-            />
-            <div className={`${styles.upload_details}`}>
-              <p>Description: {image.description}</p>
-              <p>Tags: {image.tags.join(", ")}</p>
-            </div>
+      <h2 className={`${styles.uploads_title}`}>my drips</h2>  
+    </div>
+    <div className={`${styles.uploads}`}>
+      {/* USER IMAGES MAP */}
+      {userImages.map((image) => (
+        <div key={image.id} className={`${styles.upload_container}`}>
+          <img
+            src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+              image.imageUrl
+            )}?alt=media`}
+            alt={image.description}
+            className={`${styles.upload}`}
+            onClick={() =>
+              handleImageClick(image.imageUrl, image.description, image.tags, image.id)}
+          />
+          <div className={`${styles.upload_details}`}>
+            <p>Description: {image.description}</p>
+            <p>Tags: {image.tags.join(", ")}</p>
           </div>
-        ))}
-      </div>
-      <br/>
-      <br/>
-      <br/>
+        </div>
+      ))}
+      
+    </div>
+    <br/>
+    <br/>
+    <br/>
       </>
       ) : (
         <>
@@ -364,6 +464,7 @@ function Profile() {
             <br/>
       </>
         )}
+        
 
         {/* CHANGE DP MODAL */}
         <>
@@ -423,7 +524,74 @@ function Profile() {
           </Button>
         </Modal.Footer>
       </Modal>
-      
+      <Modal show={showPopup} onHide={handleClosePopup}>
+  <Modal.Header closeButton>
+    <Modal.Title>Image Details</Modal.Title>
+    {/* Move the pencil icon here */}
+    <FontAwesomeIcon
+      icon={faEllipsisV}
+      onClick={handleShowPopupButtons}
+      style={{ cursor: 'pointer', marginLeft: '250px' }} // Align to the right
+    />
+  </Modal.Header>
+  <Modal.Body>
+    {selectedImage && (
+      <div className={`${styles.upload_container}`}>
+        <img
+          src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+            selectedImage.imageUrl
+          )}?alt=media`}
+          alt={selectedImage.description}
+          className={`${styles.upload}`}
+          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+           // Ensure the whole image is visible
+        /><p>Description: {selectedDescription}</p>
+        <p>Tags: {selectedTags.join(", ")}</p>
+        
+      </div>
+    )}
+  </Modal.Body>
+</Modal>
+
+ <Modal show={editingDescription} onHide={() => setEditingDescription(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Description</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editableDescription}
+            onChange={(e) => setEditableDescription(e.target.value)}
+            className="form-control"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setEditingDescription(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveDescription}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+{/* Popup buttons */}
+<Modal show={showPopupButtons} onHide={handleClosePopupButtons}>
+  <Modal.Body style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1' }}>
+      <Button variant="primary" onClick={handleEditDescription} style={{ width: '100%' }}>
+  Edit
+</Button>
+      <br />
+      <Button variant="primary" onClick={DeleteAction} style={{ width: '100%' }}>
+        Delete
+      </Button>
+    </div>
+  </Modal.Body>
+</Modal>
+
+
+
     </div>
 
     

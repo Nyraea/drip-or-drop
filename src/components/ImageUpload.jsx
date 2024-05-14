@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadString } from "firebase/storage";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
-
+import { Link } from "react-router-dom";
 function ImageUpload() {
   const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -59,13 +59,30 @@ function ImageUpload() {
       console.error("User not logged in");
       return;
     }
-
+  
+    // Check if description is empty
+    if (description.trim() === "") {
+      alert("Please enter a description for the image.");
+      return;
+    }
+  
+    // Check if tags array is empty
+    if (tags.length === 0) {
+      alert("Please add at least one tag for the image.");
+      return;
+    }
+  
+    if (images.length === 0) {
+      alert("Please upload an image.");
+      return;
+    }
+  
     for (let i = 0; i < images.length; i++) {
       try {
         const imageId = Date.now(); // Generate a unique timestamp for each image
         const imageRef = ref(storage, `images/${user.uid}/${imageId}`); // Create a reference for the image
         await uploadString(imageRef, images[i], "data_url"); // Upload the image
-
+  
         // Create a new document in the "images" collection
         const imageDoc = await addDoc(imagesRef, {
           userId: user.uid,
@@ -75,8 +92,14 @@ function ImageUpload() {
           upvote: 0,
           downvote: 0,
         });
-
+  
         console.log("Image uploaded successfully!", imageDoc.id);
+  
+        // Show the success message popup
+        alert("Image uploaded!");
+  
+        // Redirect to the profile using useHistory()
+        history.push("/profile");
       } catch (error) {
         console.error("Error uploading image:", error.message);
       }
@@ -171,6 +194,13 @@ function ImageUpload() {
         >
           Upload Drip
         </button>
+
+        {/* BACK BUTTON */}
+        <button className={`${styles.actions} ${styles.upload}`}>
+            <Link to="/profile" className="text-decoration-none text-light my-1">
+              Back
+            </Link>
+          </button>
       </div>
     </div>
   );
