@@ -6,6 +6,11 @@
   align-items: center;
   justify-content: space-around;
 }
+.post_desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 498px) {
   .main_section {
     justify-content: center;
