@@ -12,7 +12,9 @@ import {
   query,
   where,
   getDocs,
-} from "firebase/firestore";
+  deleteDoc,
+  updateDoc
+}  from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
@@ -23,7 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
 import farquad from "../assets/farquad.svg";
-import { updateDoc } from "firebase/firestore";
+
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
@@ -42,8 +44,8 @@ const [selectedAction, setSelectedAction] = useState("");
 const [editableDescription, setEditableDescription] = useState("");
 const [editingDescription, setEditingDescription] = useState(false);
 
-const handleImageClick = (imageUrl, description, tags) => {
-  setSelectedImage({ imageUrl, description, tags });
+const handleImageClick = (imageUrl, description, tags, id) => {
+  setSelectedImage({ imageUrl, description, tags, id });
   setSelectedDescription(description);
   setSelectedTags(tags);
   setShowPopup(true);
@@ -53,24 +55,26 @@ const handleImageClick = (imageUrl, description, tags) => {
     setShowPopup(false);
   };
   const handleDeletePost = async () => {
-    // Perform deletion action, such as removing the post from the database
-    // You may use the selectedImage ID or any other identifier to identify the post
     try {
       const user = auth.currentUser;
-      if (user) {
-        const postRef = doc(db, "posts", selectedImageId); // Replace "posts" with your collection name
+      if (user && selectedImage && selectedImage.id) {
+        const postRef = doc(db, "images", selectedImage.id); // Use selectedImage.id
         await deleteDoc(postRef);
         console.log("Post deleted successfully!");
+
+        // Remove the deleted image from the state
+        setUserImages(prevImages => prevImages.filter(image => image.id !== selectedImage.id));
+
         // Close the popup modal after deletion
         handleClosePopup();
+        handleClosePopupButtons(); // Close the popup buttons modal
       } else {
-        console.log("User not logged in");
+        console.log("User not logged in or no image selected");
       }
     } catch (error) {
       console.error("Error deleting post:", error.message);
     }
   };
-
   
 
   const handleEditDescription = () => {
@@ -80,13 +84,20 @@ const handleImageClick = (imageUrl, description, tags) => {
   };
   const updateDescriptionInDatabase = async (newDescription) => {
     const user = auth.currentUser;
-    if (user) {
+    if (user && selectedImage && selectedImage.id) {
       try {
-        const userRef = doc(db, "Users", user.uid);
-        await updateDoc(userRef, {
+        const imageRef = doc(db, "images", selectedImage.id);
+        await updateDoc(imageRef, {
           description: newDescription,
         });
         console.log("Description updated in the database");
+
+        // Update the description in the local state
+        setUserImages(prevImages =>
+          prevImages.map(image =>
+            image.id === selectedImage.id ? { ...image, description: newDescription } : image
+          )
+        );
       } catch (error) {
         console.error("Error updating description:", error.message);
       }
@@ -108,8 +119,6 @@ const handleImageClick = (imageUrl, description, tags) => {
       }));
     }
   }, [editableDescription, userDetails]);
-
-  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -136,7 +145,7 @@ const handleImageClick = (imageUrl, description, tags) => {
     const fetchUserImages = async () => {
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
-          return; // Exit early if user is not logged in
+          return;
         }
 
         const q = query(
@@ -187,40 +196,32 @@ const handleImageClick = (imageUrl, description, tags) => {
   };
 
   const handleAction1 = () => {
-    // Handle action 1
   };
 
   const handleAction2 = () => {
-    // Show the logout confirmation popup
     setShowLogoutConfirmation(true);
   };
-  
+
   const handleLogoutConfirmation = () => {
-    // Perform logout action
     handleLogout();
-    // Close the logout confirmation popup
     setShowLogoutConfirmation(false);
   };
-  
+
   const handleCloseLogoutConfirmation = () => {
-    // Close the logout confirmation popup without logging out
     setShowLogoutConfirmation(false);
   };
 
   const handleShowPopupButtons = () => {
     setShowPopupButtons(true);
   };
-  
+
   const handleClosePopupButtons = () => {
     setShowPopupButtons(false);
   };
-  
- 
+
   const DeleteAction = () => {
-    // Handle action 2
     setSelectedAction("Action 2");
     handleDeletePost();
-    handleClosePopupButtons(); // Close the popup after handling the action
   };
 
 
@@ -392,7 +393,8 @@ const handleImageClick = (imageUrl, description, tags) => {
             )}?alt=media`}
             alt={image.description}
             className={`${styles.upload}`}
-            onClick={() => handleImageClick(image.imageUrl, image.description)}
+            onClick={() =>
+              handleImageClick(image.imageUrl, image.description, image.tags, image.id)}
           />
           <div className={`${styles.upload_details}`}>
             <p>Description: {image.description}</p>
@@ -536,27 +538,37 @@ const handleImageClick = (imageUrl, description, tags) => {
           )}?alt=media`}
           alt={selectedImage.description}
           className={`${styles.upload}`}
-          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} // Ensure the whole image is visible
-        />
-        {editingDescription ? (
-          <input
-            type="text"
-            value={editableDescription}
-            onChange={(e) => setEditableDescription(e.target.value)}
-          />
-        ) : (
-          <p>Description: {selectedImage.description} Tags: {selectedImage.tags}</p>
-        )}
-        {editingDescription && (
-          <Button variant="primary" onClick={handleSaveDescription}>
-            Save
-          </Button>
-        )}
+          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+           // Ensure the whole image is visible
+        /><p>Description: {selectedDescription}</p>
+        <p>Tags: {selectedTags.join(", ")}</p>
+        
       </div>
     )}
   </Modal.Body>
 </Modal>
-.
+
+ <Modal show={editingDescription} onHide={() => setEditingDescription(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Description</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editableDescription}
+            onChange={(e) => setEditableDescription(e.target.value)}
+            className="form-control"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setEditingDescription(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveDescription}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
 {/* Popup buttons */}
 <Modal show={showPopupButtons} onHide={handleClosePopupButtons}>
