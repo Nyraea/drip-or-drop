@@ -177,7 +177,7 @@ function Discover() {
               const post = {
                 username: userData.username || "Unknown User",
                 profileImageUrl:
-                  userData.profileImageUrl || "/images/default_profile.jpg",
+                  userData.profilePic || "/images/default_profile.jpg",
                 imageUrl:
                   `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
                     imageData.imageUrl
@@ -216,7 +216,6 @@ function Discover() {
 
     return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <div className="main_section">
@@ -303,7 +302,11 @@ function Discover() {
                         {((post.upvote - post.downvote) /
                           (post.upvote + post.downvote || 1)) *
                           5}
-                        <img src="/images/totaldrips.png" alt="?" className="mx-2"/>
+                        <img
+                          src="/images/totaldrips.png"
+                          alt="?"
+                          className="mx-2"
+                        />
                       </div>
                     </div>
 
@@ -331,7 +334,11 @@ function Discover() {
                           View all {post.comments} comments
                         </a>
                       </p>
-                      <input type="text" placeholder="Add a comment..." className="rounded-pill px-2"/>
+                      <input
+                        type="text"
+                        placeholder="Add a comment..."
+                        className="rounded-pill px-2"
+                      />
                     </div>
                   </div>
                 </div>
@@ -352,14 +359,28 @@ function Discover() {
                 src={selectedImage.imageUrl}
                 alt={selectedImage.description}
                 className={`${styles.upload}`}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} //remove if the image is too small kek
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }} //remove if the image is too small kek
               />
               <div className={styles.image_details}>
-                <p><strong>User:</strong> {selectedImage.username}</p>
-                <p><strong>Caption:</strong> {selectedImage.caption}</p>
-                <p><strong>Tags:</strong> {selectedImage.tags.join(", ")}</p>
-                <p><strong>Likes:</strong> {selectedImage.upvote}</p>
-                <p><strong>Dislikes:</strong> {selectedImage.downvote}</p>
+                <p>
+                  <strong>User:</strong> {selectedImage.username}
+                </p>
+                <p>
+                  <strong>Caption:</strong> {selectedImage.caption}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {selectedImage.tags.join(", ")}
+                </p>
+                <p>
+                  <strong>Likes:</strong> {selectedImage.upvote}
+                </p>
+                <p>
+                  <strong>Dislikes:</strong> {selectedImage.downvote}
+                </p>
               </div>
             </div>
           )}
