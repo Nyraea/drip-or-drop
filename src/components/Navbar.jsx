@@ -127,7 +127,11 @@ function Navbar() {
 
         {/* LOGOUT */}
         <div className={`col-lg-1 ${styles.navcol}`}>
-          <a href="" className={` ${styles.link}`}>
+          <a href="" className={` ${styles.link}`} 
+          onClick={(event) => {
+                  event.preventDefault();              
+                  handleLogout();
+                }}>
             logout
           </a>
         </div>
@@ -200,10 +204,8 @@ function Navbar() {
                 href=""
                 className={` ${styles.link}`}
                 onClick={(event) => {
-                  event.preventDefault();
-                  {
-                    handleLogout();
-                  }
+                  event.preventDefault();              
+                  handleLogout();
                 }}
               >
                 <h4>logout</h4>

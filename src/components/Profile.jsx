@@ -55,6 +55,7 @@ function Profile() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+  
   const handleDeletePost = async () => {
     try {
       const user = auth.currentUser;
@@ -114,7 +115,7 @@ function Profile() {
     updateDescriptionInDatabase(editableDescription); // Update the description in the database
   };
 
-  // Use Effect to update userDetails after description changes
+  // UPDATE DESCRIPTION IN USER DETAILS
   useEffect(() => {
     if (userDetails) {
       setUserDetails((prevDetails) => ({
@@ -124,6 +125,8 @@ function Profile() {
     }
   }, [editableDescription]);
 
+
+  // FETCH USER DATA
   useEffect(() => {
     const fetchUserData = async () => {
       auth.onAuthStateChanged(async (user) => {
@@ -145,6 +148,7 @@ function Profile() {
     fetchUserData();
   }, []);
 
+  // FETCH USER IMAGES
   useEffect(() => {
     const fetchUserImages = async () => {
       auth.onAuthStateChanged(async (user) => {
@@ -176,6 +180,8 @@ function Profile() {
 
     fetchUserImages();
   }, []);
+
+  // LOGOUT FUNCTION
 
   async function handleLogout() {
     try {
@@ -534,6 +540,7 @@ function Profile() {
         </Modal.Footer>
       </Modal>
 
+      {/* LOGOUT CONFIRMATION MODAL */}
       <Modal
         show={showLogoutConfirmation}
         onHide={handleCloseLogoutConfirmation}
@@ -551,6 +558,8 @@ function Profile() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* IMAGE DETAILS */}
       <Modal show={showPopup} onHide={handleClosePopup}>
         <Modal.Header closeButton>
           <Modal.Title>Image Details</Modal.Title>
@@ -584,6 +593,7 @@ function Profile() {
         </Modal.Body>
       </Modal>
 
+      {/* EDIT DESCRIPTION */}
       <Modal
         show={editingDescription}
         onHide={() => setEditingDescription(false)}
@@ -613,7 +623,7 @@ function Profile() {
         </Modal.Footer>
       </Modal>
 
-      {/* Popup buttons */}
+      {/* EDIT OR DELETE IMAGE */}
       <Modal show={showPopupButtons} onHide={handleClosePopupButtons}>
         <Modal.Body
           style={{

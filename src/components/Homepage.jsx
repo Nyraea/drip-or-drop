@@ -22,12 +22,12 @@ function Homepage() {
       <br />
       <br />
       <div className={`${styles.header}`}>
-        <h1 className={`${styles.text}`}>Drip or Drop, that is the question</h1>
+        <h1 className={`${styles.text}`}>Express yourself one outfit at a time</h1>
       </div>
       <br />
       <div className={`${styles.subheader}`}>
         <h1 className={`${styles.text}`}>
-          Drop your fit, let's see if it's drip
+          Drop your fit, let's see if it's drips
         </h1>
         <br />
         <Link to="/trending" className={`${styles.button}`}>
