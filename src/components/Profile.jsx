@@ -55,7 +55,7 @@ function Profile() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
-  
+
   const handleDeletePost = async () => {
     try {
       const user = auth.currentUser;
@@ -124,7 +124,6 @@ function Profile() {
       }));
     }
   }, [editableDescription]);
-
 
   // FETCH USER DATA
   useEffect(() => {
