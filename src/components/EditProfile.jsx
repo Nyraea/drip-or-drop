@@ -2,7 +2,15 @@ import styles from "../styles/edit.module.scss";
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { auth, db, storage } from "./firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from "react-router-dom";
 import farquad from "../assets/farquad.svg";
@@ -14,6 +22,7 @@ function EditProfile() {
     username: "",
     firstName: "",
     lastName: "",
+    bio: "", // Added bio field
   });
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -81,19 +90,38 @@ function EditProfile() {
     handleClose();
   };
 
+  const checkUsernameExists = async (username) => {
+    const usersRef = collection(db, "Users");
+    const q = query(usersRef, where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = auth.currentUser;
     if (user) {
-      const { username, firstName, lastName } = formData;
+      const { username, firstName, lastName, bio } = formData;
       if (!username || !firstName || !lastName) {
         alert("Please fill in all required fields.");
         return;
       }
+
       setLoading(true);
-      const userDocRef = doc(db, "Users", user.uid);
       try {
+        if (username !== userDetails.username) {
+          const usernameExists = await checkUsernameExists(username);
+          if (usernameExists) {
+            alert(
+              "Username already exists. Please choose a different username."
+            );
+            setLoading(false);
+            return;
+          }
+        }
+
+        const userDocRef = doc(db, "Users", user.uid);
         await setDoc(userDocRef, formData, { merge: true });
         console.log("Profile updated successfully!");
         window.location.href = "/profile";
@@ -108,8 +136,8 @@ function EditProfile() {
 
   return (
     <div className={`${styles.edit_section}`}>
-      <br/>
-      <br/>
+      <br />
+      <br />
       {userDetails ? (
         <>
           <form onSubmit={handleSubmit}>
@@ -167,6 +195,21 @@ function EditProfile() {
                 name="lastName"
                 placeholder={userDetails.lastName}
                 value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="bio" className="form-label">
+                {" "}
+                {/* Added label for bio */}
+                Bio
+              </label>
+              <textarea
+                className={`${styles.input} form-control`}
+                id="bio"
+                name="bio"
+                placeholder={userDetails.bio}
+                value={formData.bio}
                 onChange={handleChange}
               />
             </div>

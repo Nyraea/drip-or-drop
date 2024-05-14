@@ -326,9 +326,7 @@ function Profile() {
               </div>
 
               <div className="">
-                <p className={`${styles.info}`}>
-                  Lorem ipsum solanum toberosum
-                </p>
+                <p className={`${styles.info}`}>{userDetails.bio}</p>
               </div>
             </div>
           </>
