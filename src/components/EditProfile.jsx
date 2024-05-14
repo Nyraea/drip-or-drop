@@ -200,8 +200,6 @@ function EditProfile() {
             </div>
             <div className="mb-3">
               <label htmlFor="bio" className="form-label">
-                {" "}
-                {/* Added label for bio */}
                 Bio
               </label>
               <textarea
