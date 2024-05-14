@@ -1,32 +1,32 @@
 @import "./util.scss";
 
 .edit_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 0 auto;
+  width: 30%;
+  height: 100%;
+  margin-bottom: 70px;
+  .loading {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    margin: 0 auto 0 auto;  
-    width: 30%;
-    height: 100vh;
-
-    .loading {
-      display: flex;
-      justify-content: center;
-    }
+  }
 }
 
 .profile_pic {
-    display: flex;
-    width: 75%;
-    border-radius: 100%;
-    margin: 0 auto 0 auto;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: top;
+  display: flex;
+  width: 75%;
+  border-radius: 100%;
+  margin: 0 auto 0 auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: top;
 
-    &:hover {
-      @include opacityTransition(1, 0.85, opaqueToTranslucent);
-      @include useAnimation(opaqueToTranslucent, 0.5s);
-    }
+  &:hover {
+    @include opacityTransition(1, 0.85, opaqueToTranslucent);
+    @include useAnimation(opaqueToTranslucent, 0.5s);
+  }
 }
 
 .input {
@@ -46,29 +46,29 @@
 }
 
 .actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 75%;
-    height: 25%;
-    margin: 0 auto 0 auto;
-  
-    .button {
-      background-color: black;
-      color: white;
-      text-decoration: none;
-      width: 100%;
-  
-        &:hover {
-          @include colorTransition(black, white, white, black, blackToWhite);
-          @include useAnimation(blackToWhite, 0.5s);
-        }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 75%;
+  height: 25%;
+  margin: 0 auto 0 auto;
+
+  .button {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+
+    &:hover {
+      @include colorTransition(black, white, white, black, blackToWhite);
+      @include useAnimation(blackToWhite, 0.5s);
     }
   }
+}
 
-  .load {
-    margin-top: 10%;
-    display: flex;
-    justify-content: center;
-  }
+.load {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
