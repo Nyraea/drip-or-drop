@@ -334,7 +334,7 @@ function Discover() {
                         >
                           {post.username}
                         </Link>{" "}
-                        {post.caption}
+                        <span className="caption">{post.caption}</span>
                       </p>
                       <p>
                         <a className="gray">
