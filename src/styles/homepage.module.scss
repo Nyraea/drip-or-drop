@@ -7,68 +7,127 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #DFDFDF;
+  background-color: #dfdfdf;
   margin-top: 60px;
-  
 }
 
-    //HEADER
-    .header {
-      display: flex;
-      text-align: center;
-      width: 60%;
+//HEADER
+.header {
+  display: flex;
+  text-align: center;
+  width: 60%;
+  z-index: 1;
 
-      .text {
-        font-family: 'Georama';
-        font-weight: 700;
-        font-size:65px;
-      }
+  .text {
+    font-family: "Georama";
+    font-weight: 700;
+    font-size: 65px;
+  }
+}
+
+//SUBHEADER
+.subheader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 75%;
+  z-index: 1;
+
+  .text {
+    font-family: "Georama";
+    font-weight: 400;
+    font-size: 30px;
+  }
+
+  .button {
+    background-color: black;
+    color: white;
+    padding: 0.5% 5% 0.5% 5%;
+    font-family: "Rochester";
+    font-size: x-large;
+    text-decoration: none;
+    border-radius: 25px;
+    z-index: 1;
+
+    &:hover {
+      @include colorTransition(black, white, white, black, blackToWhite);
+      @include useAnimation(blackToWhite, 0.5s);
     }
+  }
+}
 
-        //SUBHEADER
-        .subheader {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          width: 75%;
+//PHOTOS
+.photos {
+  display: flex;
+  width: 75%;
+  justify-content: space-evenly;
+  z-index: 1;
 
-          .text {
-            font-family: 'Georama';
-            font-weight: 400;
-            font-size: 30px;
-          }
+  .photo_div {
+    display: flex;
+    justify-content: center;
+  }
+  .photo {
+    width: 100%;
+  }
+}
 
-          .button {
-            background-color: black;
-            color: white;
-            padding: 0.5% 5% 0.5% 5%;
-            font-family: 'Rochester';
-            font-size: x-large;
-            text-decoration: none;
-            border-radius: 25px;
-            
-            &:hover {
-              @include colorTransition(black, white, white, black, blackToWhite);
-              @include useAnimation(blackToWhite, 0.5s);
-            }
-          }
-        }
+//animated background
+.cube {
+  position: absolute;
+  top: 80vh;
+  left: 45vw;
+  width: 10px;
+  height: 10px;
+  border: solid 1px darken(#dfdfdf, 8%);
+  transform-origin: top left;
+  transform: scale(0) rotate(0deg) translate(-50%, -50%);
+  animation: cube 12s ease-in forwards infinite;
 
-    //PHOTOS
-    .photos {
-      display: flex;
-      width: 75%;
-      justify-content: space-evenly;
+  &:nth-child(2n) {
+    border-color: lighten(#dfdfdf, 10%);
+  }
 
-      .photo_div {
-        display: flex;
-        justify-content: center;
-        
-      }
-      .photo {
-        width: 100%;
-      }
-    }
+  &:nth-child(2) {
+    animation-delay: 2s;
+    left: 25vw;
+    top: 40vh;
+  }
 
+  &:nth-child(3) {
+    animation-delay: 4s;
+    left: 75vw;
+    top: 50vh;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 6s;
+    left: 90vw;
+    top: 10vh;
+  }
+
+  &:nth-child(5) {
+    animation-delay: 8s;
+    left: 10vw;
+    top: 85vh;
+  }
+
+  &:nth-child(6) {
+    animation-delay: 10s;
+    left: 50vw;
+    top: 10vh;
+  }
+}
+
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
