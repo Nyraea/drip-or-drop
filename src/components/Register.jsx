@@ -52,7 +52,6 @@ function Register() {
           firstName: fname,
           lastName: lname,
           username: username,
-          photo: "",
         });
       }
       console.log("User Registered Successfully!");
@@ -154,7 +153,7 @@ function Register() {
           />
         </div>
 
-        <br/>
+        <br />
 
         {/* SIGN UP BUTTON */}
         <div className="d-grid">

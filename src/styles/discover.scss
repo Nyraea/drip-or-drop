@@ -21,11 +21,11 @@
   }
 }
 .main_section .posts_container .post {
-  background-color: #dfdfdf;
+  background: linear-gradient(45deg, #dbd4d4, #ececea);
   border-radius: 1%;
-  padding: 1% 0.5% 1% 0.5%;
+  padding: 3% 3% 3% 3%;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 @media screen and (max-width: 498px) {
   .main_section .posts_container .post {
