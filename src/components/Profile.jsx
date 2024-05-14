@@ -28,6 +28,7 @@ import farquad from "../assets/farquad.svg";
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);
+  const [imageCount, setImageCount] = useState(0);
   const [userImages, setUserImages] = useState([]);
   const [show, setShow] = useState(false);
   const [showSettingsPopup, setShowSettingsPopup] = useState(false); // State for the settings popup
@@ -42,6 +43,7 @@ function Profile() {
   const [selectedAction, setSelectedAction] = useState("");
   const [editableDescription, setEditableDescription] = useState("");
   const [editingDescription, setEditingDescription] = useState(false);
+  const [totalUpvotes, setTotalUpvotes] = useState(0);
 
   const handleImageClick = (imageUrl, description, tags, id) => {
     setSelectedImage({ imageUrl, description, tags, id });
@@ -162,6 +164,13 @@ function Profile() {
         });
 
         setUserImages(images);
+        setImageCount(images.length);
+
+        const totalUpvotes = images.reduce(
+          (sum, image) => sum + (image.upvote || 0),
+          0
+        );
+        setTotalUpvotes(totalUpvotes);
       });
     };
 
@@ -236,7 +245,7 @@ function Profile() {
             <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
               <h6>total drip</h6>
               <br />
-              <h4>455</h4>
+              <h4>{imageCount}</h4>
             </div>
 
             {/* AVERAGE DRIP*/}
@@ -250,7 +259,7 @@ function Profile() {
             <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
               <h6>drip score</h6>
               <br />
-              <h4>80085</h4>
+              <h4>{totalUpvotes}</h4>
             </div>
           </>
         ) : (
