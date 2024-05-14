@@ -213,23 +213,24 @@ function EditProfile() {
                 onChange={handleChange}
               />
             </div>
+            <br/>
+            <br/>
             <div className={`${styles.actions}`}>
+              {loading ? (
+                <button className={`${styles.save}`}>
+                  <img src={load} alt = "..." className={`${styles.loading}`}/>
+                </button>
+              ) : (              
               <button type="submit" className={`${styles.button}`}>
                 Save Changes
-              </button>
-              <button className={`${styles.button}`}>
-                <Link
-                  to="/profile"
-                  className="text-decoration-none text-light my-1"
-                >
+              </button>)}
+              <br/>
+              <br/>
+                <Link to="/profile" className={`${styles.button} text-center`}>
                   Back
                 </Link>
-              </button>
             </div>
           </form>
-          {loading && (
-            <div className="alert alert-info">Loading changes...</div>
-          )}
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

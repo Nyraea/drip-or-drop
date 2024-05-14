@@ -9,6 +9,7 @@
   background-color: #fff;
   padding: 20px;
   margin-top: 60px;
+  border-bottom: 2px solid black;
 }
 
 //USER PROFILE PICTURE
@@ -74,10 +75,63 @@
   }
 }
 
+//SETTINGS
+.settings_modal {
+
+  .settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 25vh;
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      color: white;
+      border: 2px solid black;
+      text-decoration: none;
+      width: 50%;
+      height: 25%;
+
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    
+    .button {
+      display: flex;
+      width: 50%;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      color: white;
+      border: 2px solid black;
+      text-decoration: none;
+      padding: 2.5% 5% 2.5% 5%;
+
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+    }
+  }
+}
+
 .uploads_title {
-  font-family: "Georama";
+  font-family: "Rochester";
   font-weight: 600;
-  text-decoration: underline;
+
 }
 //USER UPLOADS SECTION
 .uploads {

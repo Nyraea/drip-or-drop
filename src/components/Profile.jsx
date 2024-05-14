@@ -24,6 +24,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import loading from "../assets/loading.gif";
+import close from "../assets/close.svg";
 import farquad from "../assets/farquad.svg";
 
 function Profile() {
@@ -245,17 +246,17 @@ function Profile() {
     <div className="w-100">
       {/* ACCOUNT INFORMATION*/}
       <div className={` ${styles.profile}`}>
-        {userDetails ? (
+        {userDetails  ? (
           <>
             {/* TOTAL DRIP */}
-            <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
               <h6>total drip</h6>
               <br />
               <h4>{imageCount}</h4>
             </div>
 
             {/* DRIP SCORE */}
-            <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
               <h6>drip score</h6>
               <br />
               <h4>{totalUpvotes}</h4>
@@ -264,7 +265,7 @@ function Profile() {
         ) : (
           <>
             {/* TOTAL DRIP SKELETON */}
-            <div className="d-flex flex-column justify-content-center offset-1 col-1 px-2">
+            <div className="d-flex flex-column justify-content-center offset-1 col-2 px-2">
               <Skeleton containerClassName="flex-1" />
               <br />
               <Skeleton
@@ -273,18 +274,8 @@ function Profile() {
               />
             </div>
 
-            {/* AVERAGE DRIP SCORE SKELETON*/}
-            <div className="d-flex flex-column justify-content-center col-2 px-2">
-              <Skeleton containerClassName="flex-1" />
-              <br />
-              <Skeleton
-                containerClassName="flex-1"
-                className={`${styles.sk_average}`}
-              />
-            </div>
-
             {/* DRIP SCORE SKELETON*/}
-            <div className="d-flex flex-column justify-content-center col-1 px-2">
+            <div className="d-flex flex-column justify-content-center col-2 px-2">
               <Skeleton containerClassName="flex-1" />
               <br />
               <Skeleton
@@ -298,7 +289,7 @@ function Profile() {
         {/* PROFILE PIC */}
         <div className={` col-2 center`}>
           <div className="">
-            {userDetails && userDetails.profilePic ? (
+            {userDetails && userDetails.profilePic  ? (
               <a href="" onClick={(event) => event.preventDefault()}>
                 <img
                   src={userDetails.profilePic}
@@ -325,7 +316,7 @@ function Profile() {
         </div>
 
         {/* PROFILE INFORMATION & ACTIONS */}
-        {userDetails ? (
+        {userDetails  ? (
           <>
             <div className="d-flex flex-column justify-content-center col-2">
               {/* PROFILE INFO */}
@@ -362,16 +353,10 @@ function Profile() {
           </>
         )}
 
-        {userDetails ? (
+        {userDetails  ? (
           <>
             {/* UPLOAD & EDIT PROFILE BUTTONS */}
             <div className="d-flex flex-column justify-content-around align-items-center col-2 ">
-              <div className={`${styles.actions}`}>
-                <Link to="/upload" className={`${styles.button}`}>
-                  {" "}
-                  Upload Image{" "}
-                </Link>
-              </div>
               {/* Settings (gear icon) button */}
               <Button variant="outline-secondary" onClick={handleSettings}>
                 <FontAwesomeIcon
@@ -407,8 +392,9 @@ function Profile() {
       {userImages && delayedRender ? (
         <>
           <div className="d-flex justify-content-center mt-3">
-            <h2 className={`${styles.uploads_title}`}>MY DRIPS</h2>
+            <h2 className={`${styles.uploads_title}`}>my drips</h2>
           </div>
+          <br/>
           <div className={`${styles.uploads}`}>
             {/* USER IMAGES MAP */}
             {userImages.map((image) => (
@@ -521,23 +507,34 @@ function Profile() {
       </>
 
       {/* ACCOUNT SETTINGS MODAL */}
-      <Modal show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
+      <Modal className={`${styles.settings_modal}`} show={showSettingsPopup} onHide={handleCloseSettingsPopup}>
+
+        <Modal.Header> <a href = "" onClick={(event) => {event.preventDefault(); handleCloseSettingsPopup()}} className="ms-auto"><img src = {close} alt = "close" className="w-75"/></a></Modal.Header>
+
         <Modal.Body className="d-flex flex-column align-items-center">
-          <Link to="/resetpass" variant="primary">
-            Reset Password
-          </Link>
-          <br></br>
-          <br></br>
-          <Button variant="secondary" onClick={handleAction2}>
-            Log Out
-          </Button>
-          {/* Add more buttons or content as needed */}
+
+          <div className={`${styles.settings}`}>
+
+
+            <Link to="/upload" className={`${styles.button}`}>
+              {" "}
+              upload image{" "}
+            </Link>
+
+            <Link to="/resetpass" className={`${styles.button}`}>
+              reset password
+            </Link>
+
+            <a href = "" onClick={(event) => {
+              event.preventDefault();
+              handleAction2();
+            }} className={`${styles.button}`}>
+              log out
+            </a>
+          </div>
+
         </Modal.Body>
-        <Modal.Footer className="d-flex flex-column align-items-center">
-          <Button variant="secondary" onClick={handleCloseSettingsPopup}>
-            Cancel
-          </Button>
-        </Modal.Footer>
+        
       </Modal>
 
       {/* LOGOUT CONFIRMATION MODAL */}

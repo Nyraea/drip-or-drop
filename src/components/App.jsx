@@ -38,18 +38,18 @@ function App() {
     <Router>
       {user && <Navbar />}
       <div className={styles.canvas}>
-        <div className="main-content">
+        <div className={styles.main_content}>
           <Routes>
             {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
             {user ? (
               <>
-                <Route path="/edit" element={<EditProfile />} />
-                <Route path="/homepage" element={<Homepage />} />
-                <Route path="/discover" element={<Discover />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/images" element={<UserImages />} />
-                <Route path="/upload" element={<ImageUpload />} />
-                <Route path="/resetpass" element={<ResetPassword />} />
+                  <Route path="/edit" element={<EditProfile />} />
+                  <Route path="/homepage" element={<Homepage />} />
+                  <Route path="/discover" element={<Discover />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/images" element={<UserImages />} />
+                  <Route path="/upload" element={<ImageUpload />} />
+                  <Route path="/resetpass" element={<ResetPassword />} />
               </>
             ) : (
               <>
@@ -70,11 +70,13 @@ function App() {
               }
             />
           </Routes>
+          
         </div>
         <ToastContainer />
         {user && <Footer />}
       </div>
     </Router>
+    
   );
 }
 
