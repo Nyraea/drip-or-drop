@@ -232,7 +232,10 @@ function Discover() {
                   <div className="info">
                     <div className="person">
                       <img src={post.profileImageUrl} alt="Profile" />
-                      <Link to={`/profile/${post.username}`}>
+                      <Link
+                        to={`/profile/${post.username}`}
+                        key={post.username}
+                      >
                         {post.username}
                       </Link>
                     </div>
