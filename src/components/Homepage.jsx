@@ -12,6 +12,12 @@ import photo6 from "../assets/photo6.png";
 function Homepage() {
   return (
     <div className={styles.main}>
+      <div className={styles.cube}></div>
+      <div className={styles.cube}></div>
+      <div className={styles.cube}></div>
+      <div className={styles.cube}></div>
+      <div className={styles.cube}></div>
+      <div className={styles.cube}></div>
       <br />
       <br />
       <br />
