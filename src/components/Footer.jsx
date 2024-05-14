@@ -18,13 +18,13 @@ function Footer() {
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Contact</a>
                 </div>
                 <div className= {`${styles.links} col`}>
-                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Work with us</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Collaborate</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Portfolio</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Blog</a>   
                 </div>
                 <div className= {`${styles.links} col`}>
-                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Privacy Policy</a>
-                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Terms of Service</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>Privacy</a>
+                    <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>TOS</a>
                     <a href="/" onClick={(event) => event.preventDefault()} className={`${styles.link}`}>FAQ</a>
                 </div>
 
@@ -34,13 +34,13 @@ function Footer() {
 
             {/* SOCIALS */}
             <div className={`${styles.socials}`}>
-                <img src={twitter} alt="twitter" />
-                <img src={facebook} alt="facebook" />
-                <img src={instagram} alt="instagram" />
+                <img className={`${styles.social}`} src={twitter} alt="twitter" />
+                <img className={`${styles.social}`} src={facebook} alt="facebook" />
+                <img className={`${styles.social}`} src={instagram} alt="instagram" />
             </div>
 
             {/* LOGO */}
-            <div>
+            <div className={`${styles.logo_section}`}>
                 <img src={logo} alt="logo" className={`${styles.logo}`} />
             </div>
             
