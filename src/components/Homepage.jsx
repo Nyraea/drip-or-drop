@@ -37,26 +37,55 @@ function Homepage() {
       <br />
       <br />
       <br />
-      <div className={`${styles.photos} row`}>
-        <div className={`${styles.photo_div} col-2`}>
+
+      {/* LG to XL PHOTOS*/}
+      <div className={`${styles.photos} d-md-none d-lg-flex row`}>
+        <div className={`${styles.photo_div} d-none d-lg-flex col-lg-2 `}>
           <img src={photo1} className={`${styles.photo}`} />
         </div>
-        <div className={`${styles.photo_div} col-2`}>
+        <div className={`${styles.photo_div} d-none col-lg-2 d-lg-flex `}>
           <img src={photo2} className={`${styles.photo}`} />
         </div>
-        <div className={`${styles.photo_div} col-2`}>
+        <div className={`${styles.photo_div} d-none col-lg-2 d-lg-flex `}>
           <img src={photo3} className={`${styles.photo}`} />
         </div>
-        <div className={`${styles.photo_div} col-2`}>
+        <div className={`${styles.photo_div} d-none col-lg-2 d-lg-flex `}>
           <img src={photo4} className={`${styles.photo}`} />
         </div>
-        <div className={`${styles.photo_div} col-2`}>
+        <div className={`${styles.photo_div} d-none col-lg-2 d-lg-flex `}>
           <img src={photo5} className={`${styles.photo}`} />
         </div>
-        <div className={`${styles.photo_div} col-2`}>
+        <div className={`${styles.photo_div} d-none col-lg-2 d-lg-flex `}>
           <img src={photo6} className={`${styles.photo}`} />
         </div>
       </div>
+
+        {/* XS to SM PHOTOS*/}
+        <div className={`${styles.photos} d-none d-md-flex d-lg-none row`}>
+          <div className={`${styles.photo_div} d-none d-md-flex flex-column col-4 `}>
+          <img src={photo5} className={`${styles.photo}`} />
+          </div>
+          <div className={`${styles.photo_div} d-none d-md-flex flex-column col-4 `}>
+            <img src={photo3} className={`${styles.photo}`} />
+          </div>
+          <div className={`${styles.photo_div} d-none d-md-flex flex-column col-4 `}>
+            <img src={photo6} className={`${styles.photo}`} />
+          </div>
+      </div>
+
+      {/* XS to SM PHOTOS*/}
+      <div className={`${styles.photos} d-flex d-md-none row`}>
+        <div className={`${styles.photo_div} d-flex flex-column col-4 `}>
+        <img src={photo5} className={`${styles.photo}`} />
+        </div>
+        <div className={`${styles.photo_div} d-flex flex-column col-4 `}>
+          <img src={photo3} className={`${styles.photo}`} />
+        </div>
+        <div className={`${styles.photo_div} d-flex flex-column col-4 `}>
+          <img src={photo6} className={`${styles.photo}`} />
+        </div>
+      </div>
+
       <br />
       <br />
       <br />
