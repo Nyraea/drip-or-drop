@@ -1,3 +1,5 @@
+@import "./typography.scss";
+
 .main_section {
   margin: 90px auto 0 auto;
   width: 100vh;
@@ -210,9 +212,21 @@
   align-items: center;
   justify-content: end;
 }
+
+.like {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
 .comments .comment .like img {
   width: 16px;
   height: 16px;
+}
+
+.like img {
+  width: 26px;
+  height: 26px;
 }
 .comments .comment .like p {
   margin: 0;
@@ -224,4 +238,39 @@
   justify-content: center;
   align-items: center;
   margin: auto 0 auto 0;
+}
+
+.borderedsquare {
+  padding: 0.5vh 0.5vw 0.5vh 0.7vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+
+  border-radius: 15px;
+  border-color: black;
+  border: 1px solid black;
+}
+
+.image-details {
+  font-family: "Georama";
+
+  h5 {
+    text-decoration: underline;
+  }
+}
+
+.dripdropcontainer {
+  font-size: larger;
+  font-family: "Rochester";
+  display: flex;
+  flex-direction: row;
+
+  .like {
+  }
+
+  .labelcontainer {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

@@ -372,22 +372,39 @@ function Discover() {
                   objectFit: "contain",
                 }} //remove if the image is too small kek
               />
-              <div className={styles.image_details}>
-                <p>
-                  <strong>User:</strong> {selectedImage.username}
-                </p>
-                <p>
-                  <strong>Caption:</strong> {selectedImage.caption}
-                </p>
-                <p>
-                  <strong>Tags:</strong> {selectedImage.tags.join(", ")}
-                </p>
-                <p>
-                  <strong>Likes:</strong> {selectedImage.upvote}
-                </p>
-                <p>
-                  <strong>Dislikes:</strong> {selectedImage.downvote}
-                </p>
+              <div className="image-details">
+                <div className="borderedsquare">
+                  <h5>{selectedImage.username}</h5>
+                  <p>{selectedImage.caption}</p>
+                </div>
+
+                <div className="borderedsquare">
+                  <p>
+                    Tags: <strong>{selectedImage.tags.join(", ")}</strong>
+                  </p>
+                </div>
+
+                <div className="dripdropcontainer">
+                  <div className="labelcontainer">
+                    <div className="like">
+                      <img src="/images/dripclicked.png" alt="drip"></img>
+                    </div>
+                    <p>
+                      <strong>Drip:</strong> {selectedImage.upvote}
+                    </p>
+                  </div>
+                  <div className="labelcontainer">
+                    <div className="like">
+                      <img
+                        src="/images/trashbagclicked.png"
+                        alt="trashbag"
+                      ></img>
+                    </div>
+                    <p>
+                      <strong>Drop:</strong> {selectedImage.downvote}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
