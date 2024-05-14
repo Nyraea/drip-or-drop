@@ -59,30 +59,30 @@ function ImageUpload() {
       console.error("User not logged in");
       return;
     }
-  
+
     // Check if description is empty
     if (description.trim() === "") {
       alert("Please enter a description for the image.");
       return;
     }
-  
+
     // Check if tags array is empty
     if (tags.length === 0) {
       alert("Please add at least one tag for the image.");
       return;
     }
-  
+
     if (images.length === 0) {
       alert("Please upload an image.");
       return;
     }
-  
+
     for (let i = 0; i < images.length; i++) {
       try {
         const imageId = Date.now(); // Generate a unique timestamp for each image
         const imageRef = ref(storage, `images/${user.uid}/${imageId}`); // Create a reference for the image
         await uploadString(imageRef, images[i], "data_url"); // Upload the image
-  
+
         // Create a new document in the "images" collection
         const imageDoc = await addDoc(imagesRef, {
           userId: user.uid,
@@ -92,12 +92,12 @@ function ImageUpload() {
           upvote: 0,
           downvote: 0,
         });
-  
+
         console.log("Image uploaded successfully!", imageDoc.id);
-  
+
         // Show the success message popup
         alert("Image uploaded!");
-  
+
         // Redirect to the profile using useHistory()
         history.push("/profile");
       } catch (error) {
@@ -155,7 +155,7 @@ function ImageUpload() {
 
           {/* ADD TAG BUTTON */}
           <button
-            className={`${styles.actions} ${styles.tags} m-1`}
+            className={`${styles.actions} ${styles.tags} ${styles.upload} m-1`}
             onClick={handleAddTag}
           >
             Add Tag
@@ -197,16 +197,15 @@ function ImageUpload() {
 
         {/* BACK BUTTON */}
         <button className={`${styles.actions} ${styles.upload}`}>
-            <Link to="/profile" className="text-decoration-none text-light my-1">
-              Back
-            </Link>
-          </button>
+          <Link to="/profile" className="text-decoration-none text-light my-1">
+            Back
+          </Link>
+        </button>
       </div>
 
       <br />
       <br />
       <br />
-      
     </div>
   );
 }
