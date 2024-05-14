@@ -250,7 +250,7 @@ const handleImageClick = (imageUrl, description, tags, id) => {
             </div>
 
             {/* DRIP SCORE */}
-            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+            <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
               <h6>drip score</h6>
               <br/>
               <h4>80085</h4>
@@ -296,7 +296,7 @@ const handleImageClick = (imageUrl, description, tags, id) => {
                 </a>
             ) : (
               <a href = "" onClick={(event) => {event.preventDefault(); handleShow();}}>
-                <img src={farquad} alt = "sigma">
+                <img className={`${styles.profile_pic}`} src={farquad} alt = "sigma">
 
                 </img>
               </a>
@@ -404,7 +404,9 @@ const handleImageClick = (imageUrl, description, tags, id) => {
       ))}
       
     </div>
-    
+    <br/>
+    <br/>
+    <br/>
       </>
       ) : (
         <>
@@ -457,6 +459,9 @@ const handleImageClick = (imageUrl, description, tags, id) => {
             </div>
           </div>
         </SkeletonTheme>
+            <br/>
+            <br/>
+            <br/>
       </>
         )}
         

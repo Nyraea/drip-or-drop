@@ -138,6 +138,9 @@ function Trending() {
               </div>
             </div>
           </SkeletonTheme>
+          <br />
+          <br />
+          <br />
         </>
       ) : (
         <>
@@ -159,6 +162,9 @@ function Trending() {
               <Button onClick={() => setPage(page + 1)}>Next</Button>
             )}
           </div>
+          <br />
+          <br />
+          <br />
         </>
       )}
     </div>

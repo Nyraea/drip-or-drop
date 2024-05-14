@@ -1,81 +1,785 @@
 @import "./typography.scss";
 @import "./util.scss";
 
-//Navbar Styling
-.navbar {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    background-color: white;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
-    font-family: 'Georama';
-}
+        //X-SMALL SCREENS
+        @media screen and (max-width: 575px) {
 
-//Main Div Styling
-.main {
-    display: flex;
-    width: 100%;
-    box-shadow: 0px 0px 20px rgb(0, 0, 0);
-    align-items: center;
-    justify-content: center;
-}
+            //Navbar Styling
+            .navbar {
+                display: flex;
+                width: 100%;
+                height: 60px;
+                background-color: white;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+                font-family: 'Georama';
+            }
 
-//Nav Link Columns Styling
-.navcol {
-    display: flex;
-    justify-content: center;
+            //Main Div Styling
+            .main {
+                display: flex;
+                width: 100%;
+                box-shadow: 0px 0px 20px rgb(0, 0, 0);
+                align-items: center;
+                padding: 0px 2.5% 0 2.5%;
+                justify-content: space-between;
+            }
 
-}
+            //Nav Link Columns Styling
+            .navcol {
+                display: none;
+                justify-content: center;
+            }
+            
+            .hr1 {
+                width: 85%;
+                margin: 0px auto 0px auto;
+                height: 2px;
+                background-color: black ;
+            }
 
-//Nav Links Styling
-.link {
-    display: flex;
-    color: black;
-    text-decoration: none;
-    font-family: 'Georama';
+            .hr2 {
+                width: 90%;
+                margin: 0px auto 0px auto;
+                height: 2px;
+                background-color: black ;
+            }
 
-    &:hover {
-        @include weightTransition(400, 600, normalToBold);
-        @include useAnimation(normalToBold, 0.2s);
+        /*  
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdownMenu {
+                position: absolute;
+                top: 100%;
+                background-color: white;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+            
+        .dropdownItem {
+                color: black;
+                padding: 8.5% 15% 8.5% 15%;
+                text-decoration: none;
+                display: block;
+
+                &:hover {
+                    @include colorTransition(white, black, black, white, whiteToBlack);
+                    @include useAnimation(whiteToBlack, 0.5s);
+                }
+
+                .dropdownText {
+                    color: black;
+                    padding: 8.5% 15% 8.5% 15%;
+                    text-decoration: none;
+                    display: block;
+                }
+            } */
+
+            //D||D Logo Styling
+            .logo {
+                display: flex;
+                width: 60%;
+            }
+
+            .toggler {
+                display: flex;
+                justify-content: center;
+            }
+
+            .offcanvas {
+                display: flex;
+                
+                .header {
+                    width: 100%;
+                }
+
+                .body {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                //Nav Links Styling
+                .link {
+                    display: flex;
+                    justify-content: center;
+                    padding: 2% 0 2% 0;
+                    width: 100%;
+                    color: black;
+                    text-decoration: none;
+                    font-family: 'Georama';
+
+                    &:hover {
+                        @include colorTransition(white, black, black, white, whiteToBlack);
+                        @include useAnimation(whiteToBlack, 0.5s);
+                    }
+                }
+
+                .accordion_section {
+                    display: flex;
+                    justify-content: center;
+                    padding: 2% 0 2% 0;
+                    width: 100%;
+                    color: black;
+                    text-decoration: none;
+                    font-family: 'Georama';
+
+                    .accordion {
+
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        
+                        h2 {
+
+                            border-bottom: 1px solid black;
+                            
+                                &:focus {
+                                    box-shadow: none;
+                                    outline: none;
+                                    background-color: white;
+                                    border: none;
+                                }
+                                &:active {
+                                    box-shadow: none;
+                                    outline: none;
+                                }
+                            }
+
+                            h4 {
+                                
+                                margin: 0 0 0 0;
+                                
+                            }
+                        
+                        button {
+                            
+                            display: flex;
+                            justify-content: center;
+                            border-bottom: 1px solid black;
+
+                            &:focus {
+                                box-shadow: none;
+                                outline: none;
+                                background-color: white;
+                                border: none;
+                            }
+                            &:active {
+                                box-shadow: none;
+                                outline: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+//SMALL SCREENS
+@media screen and (min-width: 576px ) and (max-width: 767px) {
+
+    //Navbar Styling
+    .navbar {
+        display: flex;
+        width: 100%;
+        height: 60px;
+        background-color: white;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+        font-family: 'Georama';
     }
-}
 
-.dropdown {
-    position: relative;
-  }
+    //Main Div Styling
+    .main {
+        display: flex;
+        width: 100%;
+        box-shadow: 0px 0px 20px rgb(0, 0, 0);
+        align-items: center;
+        padding: 0px 2.5% 0 2.5%;
+        justify-content: space-between;
+    }
 
-.dropdownMenu {
-    position: absolute;
-    top: 100%;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    //Nav Link Columns Styling
+    .navcol {
+        display: none;
+        justify-content: center;
+    }
     
-  }
-  
-  .dropdownItem {
-    color: black;
-    padding: 8.5% 15% 8.5% 15%;
-    text-decoration: none;
-    display: block;
-
-    &:hover {
-        @include colorTransition(white, black, black, white, whiteToBlack);
-        @include useAnimation(whiteToBlack, 0.5s);
+    .hr1 {
+        width: 85%;
+        margin: 0px auto 0px auto;
+        height: 2px;
+        background-color: black ;
     }
 
-    .dropdownText {
+    .hr2 {
+        width: 90%;
+        margin: 0px auto 0px auto;
+        height: 2px;
+        background-color: black ;
+    }
+
+/*  
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdownMenu {
+        position: absolute;
+        top: 100%;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        
+    }
+    
+   .dropdownItem {
         color: black;
         padding: 8.5% 15% 8.5% 15%;
         text-decoration: none;
         display: block;
-      }
-  }
 
-//D||D Logo Styling
-.logo {
-    display: flex;
-    width: 40%;
-    margin: 0px auto 0px auto;  
+        &:hover {
+            @include colorTransition(white, black, black, white, whiteToBlack);
+            @include useAnimation(whiteToBlack, 0.5s);
+        }
+
+        .dropdownText {
+            color: black;
+            padding: 8.5% 15% 8.5% 15%;
+            text-decoration: none;
+            display: block;
+        }
+    } */
+
+    //D||D Logo Styling
+    .logo {
+        display: flex;
+        width: 60%;
+    }
+
+    .toggler {
+        display: flex;
+        justify-content: center;
+    }
+
+    .offcanvas {
+        display: flex;
+        
+        .header {
+            width: 100%;
+        }
+
+        .body {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        //Nav Links Styling
+        .link {
+            display: flex;
+            justify-content: center;
+            padding: 2% 0 2% 0;
+            width: 100%;
+            color: black;
+            text-decoration: none;
+            font-family: 'Georama';
+
+            &:hover {
+                @include colorTransition(white, black, black, white, whiteToBlack);
+                @include useAnimation(whiteToBlack, 0.5s);
+            }
+        }
+
+        .accordion_section {
+            display: flex;
+            justify-content: center;
+            padding: 2% 0 2% 0;
+            width: 100%;
+            color: black;
+            text-decoration: none;
+            font-family: 'Georama';
+
+            .accordion {
+
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                
+                h2 {
+
+                    border-bottom: 1px solid black;
+                    
+                        &:focus {
+                            box-shadow: none;
+                            outline: none;
+                            background-color: white;
+                            border: none;
+                        }
+                        &:active {
+                            box-shadow: none;
+                            outline: none;
+                        }
+                    }
+
+                    h4 {
+                        
+                        margin: 0 0 0 0;
+                        
+                    }
+                
+                button {
+                    
+                    display: flex;
+                    justify-content: center;
+                    border-bottom: 1px solid black;
+
+                    &:focus {
+                        box-shadow: none;
+                        outline: none;
+                        background-color: white;
+                        border: none;
+                    }
+                    &:active {
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+        //MEDIUM SCREENS
+        @media screen and (min-width: 768px ) and (max-width: 991px) {
+
+            //Navbar Styling
+            .navbar {
+                display: flex;
+                width: 100%;
+                height: 60px;
+                background-color: white;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+                font-family: 'Georama';
+            }
+
+            //Main Div Styling
+            .main {
+                display: flex;
+                width: 100%;
+                box-shadow: 0px 0px 20px rgb(0, 0, 0);
+                align-items: center;
+                padding: 0px 2.5% 0 2.5%;
+                justify-content: space-between;
+            }
+
+            //Nav Link Columns Styling
+            .navcol {
+                display: none;
+                justify-content: center;
+            }
+            
+            .hr1 {
+                width: 85%;
+                margin: 0px auto 0px auto;
+                height: 2px;
+                background-color: black ;
+            }
+
+            .hr2 {
+                width: 90%;
+                margin: 0px auto 0px auto;
+                height: 2px;
+                background-color: black ;
+            }
+
+/*  
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdownMenu {
+                position: absolute;
+                top: 100%;
+                background-color: white;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+            
+           .dropdownItem {
+                color: black;
+                padding: 8.5% 15% 8.5% 15%;
+                text-decoration: none;
+                display: block;
+
+                &:hover {
+                    @include colorTransition(white, black, black, white, whiteToBlack);
+                    @include useAnimation(whiteToBlack, 0.5s);
+                }
+
+                .dropdownText {
+                    color: black;
+                    padding: 8.5% 15% 8.5% 15%;
+                    text-decoration: none;
+                    display: block;
+                }
+            } */
+
+            //D||D Logo Styling
+            .logo {
+                display: flex;
+                width: 60%;
+            }
+
+            .toggler {
+                display: flex;
+                justify-content: center;
+            }
+
+            .offcanvas {
+                display: flex;
+                
+                .header {
+                    width: 100%;
+                }
+
+                .body {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                //Nav Links Styling
+                .link {
+                    display: flex;
+                    justify-content: center;
+                    padding: 2% 0 2% 0;
+                    width: 100%;
+                    color: black;
+                    text-decoration: none;
+                    font-family: 'Georama';
+
+                    &:hover {
+                        @include colorTransition(white, black, black, white, whiteToBlack);
+                        @include useAnimation(whiteToBlack, 0.5s);
+                    }
+                }
+
+                .accordion_section {
+                    display: flex;
+                    justify-content: center;
+                    padding: 2% 0 2% 0;
+                    width: 100%;
+                    color: black;
+                    text-decoration: none;
+                    font-family: 'Georama';
+
+                    .accordion {
+
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        
+                        h2 {
+
+                            border-bottom: 1px solid black;
+                            
+                                &:focus {
+                                    box-shadow: none;
+                                    outline: none;
+                                    background-color: white;
+                                    border: none;
+                                }
+                                &:active {
+                                    box-shadow: none;
+                                    outline: none;
+                                }
+                            }
+
+                            h4 {
+                                
+                                margin: 0 0 0 0;
+                                
+                            }
+                        
+                        button {
+                            
+                            display: flex;
+                            justify-content: center;
+                            border-bottom: 1px solid black;
+
+                            &:focus {
+                                box-shadow: none;
+                                outline: none;
+                                background-color: white;
+                                border: none;
+                            }
+                            &:active {
+                                box-shadow: none;
+                                outline: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+                //LARGE SCREENS
+                @media screen and (min-width: 992px ) and (max-width: 1199px) {
+
+                    //Navbar Styling
+                    .navbar {
+                        display: flex;
+                        width: 100%;
+                        height: 60px;
+                        background-color: white;
+                        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+                        font-family: 'Georama';
+                    }
+
+                    //Main Div Styling
+                    .main {
+                        display: flex;
+                        width: 100%;
+                        box-shadow: 0px 0px 20px rgb(0, 0, 0);
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    //Nav Link Columns Styling
+                    .navcol {
+                        display: flex;
+                        justify-content: center;
+
+                    }
+
+                    //Nav Links Styling
+                    .link {
+                        display: flex;
+                        color: black;
+                        text-decoration: none;
+                        font-family: 'Georama';
+
+                        &:hover {
+                            @include weightTransition(400, 600, normalToBold);
+                            @include useAnimation(normalToBold, 0.2s);
+                        }
+                    }
+
+                    .dropdown {
+                        position: relative;
+                    }
+
+                    .dropdownMenu {
+                        position: absolute;
+                        top: 100%;
+                        background-color: white;
+                        min-width: 160px;
+                        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                        z-index: 1;
+                        
+                    }
+                    
+                    .dropdownItem {
+                        color: black;
+                        padding: 8.5% 15% 8.5% 15%;
+                        text-decoration: none;
+                        display: block;
+
+                        &:hover {
+                            @include colorTransition(white, black, black, white, whiteToBlack);
+                            @include useAnimation(whiteToBlack, 0.5s);
+                        }
+
+                        .dropdownText {
+                            color: black;
+                            padding: 8.5% 15% 8.5% 15%;
+                            text-decoration: none;
+                            display: block;
+                        }
+                    }
+
+                    //D||D Logo Styling
+                    .logo {
+                        display: flex;
+                        width: 60%;
+                        margin: 0px auto 0px auto;  
+                    }
+                }
+
+        //X-LARGE SCREENS
+        @media screen and (min-width: 1200px ) and (max-width: 1399px) {
+
+            //Navbar Styling
+            .navbar {
+                display: flex;
+                width: 100%;
+                height: 60px;
+                background-color: white;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+                font-family: 'Georama';
+            }
+
+            //Main Div Styling
+            .main {
+                display: flex;
+                width: 100%;
+                box-shadow: 0px 0px 20px rgb(0, 0, 0);
+                align-items: center;
+                justify-content: center;
+            }
+
+            //Nav Link Columns Styling
+            .navcol {
+                display: flex;
+                justify-content: center;
+
+            }
+
+            //Nav Links Styling
+            .link {
+                display: flex;
+                color: black;
+                text-decoration: none;
+                font-family: 'Georama';
+
+                &:hover {
+                    @include weightTransition(400, 600, normalToBold);
+                    @include useAnimation(normalToBold, 0.2s);
+                }
+            }
+
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdownMenu {
+                position: absolute;
+                top: 100%;
+                background-color: white;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+            
+            .dropdownItem {
+                color: black;
+                padding: 8.5% 15% 8.5% 15%;
+                text-decoration: none;
+                display: block;
+
+                &:hover {
+                    @include colorTransition(white, black, black, white, whiteToBlack);
+                    @include useAnimation(whiteToBlack, 0.5s);
+                }
+
+                .dropdownText {
+                    color: black;
+                    padding: 8.5% 15% 8.5% 15%;
+                    text-decoration: none;
+                    display: block;
+                }
+            }
+
+            //D||D Logo Styling
+            .logo {
+                display: flex;
+                width: 40%;
+                margin: 0px auto 0px auto;  
+            }
+        }
+
+//XX-LARGE SCREENS
+@media screen and (min-width: 1400px){
+
+    //Navbar Styling
+    .navbar {
+        display: flex;
+        width: 100%;
+        height: 60px;
+        background-color: white;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.096);
+        font-family: 'Georama';
+    }
+
+    //Main Div Styling
+    .main {
+        display: flex;
+        width: 100%;
+        box-shadow: 0px 0px 20px rgb(0, 0, 0);
+        align-items: center;
+        justify-content: center;
+    }
+
+    //Nav Link Columns Styling
+    .navcol {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    //Nav Links Styling
+    .link {
+        display: flex;
+        color: black;
+        text-decoration: none;
+        font-family: 'Georama';
+
+        &:hover {
+            @include weightTransition(400, 600, normalToBold);
+            @include useAnimation(normalToBold, 0.2s);
+        }
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdownMenu {
+        position: absolute;
+        top: 100%;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        
+    }
+    
+    .dropdownItem {
+        color: black;
+        padding: 8.5% 15% 8.5% 15%;
+        text-decoration: none;
+        display: block;
+
+        &:hover {
+            @include colorTransition(white, black, black, white, whiteToBlack);
+            @include useAnimation(whiteToBlack, 0.5s);
+        }
+
+        .dropdownText {
+            color: black;
+            padding: 8.5% 15% 8.5% 15%;
+            text-decoration: none;
+            display: block;
+        }
+    }
+
+    //D||D Logo Styling
+    .logo {
+        display: flex;
+        width: 40%;
+        margin: 0px auto 0px auto;  
+    }
 }
