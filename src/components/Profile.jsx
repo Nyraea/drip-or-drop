@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/profile.module.scss";
+import uploadstyles from "../styles/upload.module.scss";
 import "../styles/global.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
@@ -338,7 +339,7 @@ function Profile() {
         <div className={` col-2 center`}>
           <div className="">
             {userDetails && userDetails.profilePic ? (
-              <a href="" onClick={(event) => event.preventDefault()}>
+              <a>
                 <img
                   src={userDetails.profilePic}
                   className={`${styles.profile_pic}`}
@@ -346,13 +347,7 @@ function Profile() {
                 />
               </a>
             ) : (
-              <a
-                href=""
-                onClick={(event) => {
-                  event.preventDefault();
-                  handleShow();
-                }}
-              >
+              <a>
                 <img
                   className={`${styles.profile_pic}`}
                   src={farquad}
@@ -530,30 +525,6 @@ function Profile() {
         </>
       )}
 
-      {/* CHANGE DP MODAL */}
-      <>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <b>Change Profile Picture</b>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex justify-content-center">
-            <FontAwesomeIcon
-              icon={faUserCircle}
-              style={{ color: "#000000" }}
-              size="10x"
-            />
-          </Modal.Body>
-          <Modal.Footer className={`${styles.actions}`}>
-            <button className={`${styles.button}`}>Upload</button>
-            <button className={`${styles.button}`} onClick={handleClose}>
-              Cancel
-            </button>
-          </Modal.Footer>
-        </Modal>
-      </>
-
       {/* ACCOUNT SETTINGS MODAL */}
       <Modal
         className={`${styles.settings_modal}`}
@@ -711,7 +682,7 @@ function Profile() {
 
               {/* ADD TAG BUTTON */}
               <button
-                className={`${styles.actions} ${styles.tags} ${styles.upload} m-1`}
+                className={`${uploadstyles.actions} ${uploadstyles.tags} ${uploadstyles.upload} m-1`}
                 onClick={handleAddTag}
               >
                 Add Tag
