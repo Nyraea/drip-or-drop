@@ -401,7 +401,7 @@ function Profile() {
       {userImages && delayedRender ? (
         <>
           <div className="d-flex justify-content-center mt-3">
-            <h2 className={`${styles.uploads_title}`}>my drips</h2>
+            <h2 className={`${styles.uploads_title}`}>MY DRIPS</h2>
           </div>
           <div className={`${styles.uploads}`}>
             {/* USER IMAGES MAP */}
