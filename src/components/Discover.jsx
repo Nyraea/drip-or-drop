@@ -327,20 +327,24 @@ function Discover() {
 
                     <div className="post_desc">
                       <p>
-                        <a className="bold" href="">
+                        <Link
+                          to={`/profile/${post.username}`}
+                          key={post.username}
+                          className="bold"
+                        >
                           {post.username}
-                        </a>{" "}
+                        </Link>{" "}
                         {post.caption}
                       </p>
                       <p>
-                        <a className="gray" href="">
+                        <a className="gray">
                           View all {post.comments} comments
                         </a>
                       </p>
                       <input
                         type="text"
-                        placeholder="Add a comment..."
-                        className="rounded-pill px-2"
+                        placeholder="Add a comment... (not a function, YET)"
+                        className="rounded-pill px-2 w-100"
                       />
                     </div>
                   </div>

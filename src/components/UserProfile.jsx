@@ -152,16 +152,6 @@ function UserProfile() {
               />
             </div>
 
-            {/* AVERAGE DRIP SCORE SKELETON*/}
-            <div className="d-flex flex-column justify-content-center col-2 px-2">
-              <Skeleton containerClassName="flex-1" />
-              <br />
-              <Skeleton
-                containerClassName="flex-1"
-                className={`${styles.sk_average}`}
-              />
-            </div>
-
             {/* DRIP SCORE SKELETON*/}
             <div className="d-flex flex-column justify-content-center col-1 px-2">
               <Skeleton containerClassName="flex-1" />
@@ -240,8 +230,9 @@ function UserProfile() {
       {userImages && delayedRender ? (
         <>
           <div className="d-flex justify-content-center mt-3">
-            <h2 className={`${styles.uploads_title}`}>MY DRIPS</h2>
+            <h2 className={`${styles.uploads_title}`}>my drips</h2>
           </div>
+          <br />
           <div className={`${styles.uploads}`}>
             {/* USER IMAGES MAP */}
             {userImages.map((image) => (
