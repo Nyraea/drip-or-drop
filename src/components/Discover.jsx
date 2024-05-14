@@ -336,7 +336,7 @@ function Discover() {
                         </Link>{" "}
                         <span className="caption">{post.caption}</span>
                       </p>
-                      <p>
+                      {/* <p>
                         <a className="gray">
                           View all {post.comments} comments
                         </a>
@@ -345,7 +345,7 @@ function Discover() {
                         type="text"
                         placeholder="Add a comment... (not a function, YET)"
                         className="rounded-pill px-2 w-100"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
