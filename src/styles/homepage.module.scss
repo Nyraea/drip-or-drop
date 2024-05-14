@@ -1,5 +1,313 @@
 @import "./util.scss";
 
+//X-SMALL SCREENS
+@media screen and (max-width: 575px) {
+
+//MAIN DIV
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vh;
+  height: 100%;
+  background-color: #dfdfdf;
+  margin-top: 60px;
+}
+
+//HEADER
+.header {
+  display: flex;
+  text-align: center;
+  width: 60%;
+  z-index: 1;
+
+  .text {
+    font-family: "Georama";
+    font-weight: 700;
+    font-size: 45px;
+  }
+}
+
+//SUBHEADER
+.subheader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 75%;
+  z-index: 1;
+
+  .text {
+    font-family: "Georama";
+    font-weight: 400;
+    font-size: 25px;
+  }
+
+  .button {
+    background-color: black;
+    color: white;
+    padding: 0.5% 5% 0.5% 5%;
+    font-family: "Rochester";
+    font-size: x-large;
+    text-decoration: none;
+    border-radius: 25px;
+    z-index: 1;
+
+    &:hover {
+      @include colorTransition(black, white, white, black, blackToWhite);
+      @include useAnimation(blackToWhite, 0.5s);
+    }
+  }
+}
+
+}
+
+        //SMALL SCREENS
+        @media screen and (min-width: 576px ) and (max-width: 767px) {
+
+          //MAIN DIV
+          .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #dfdfdf;
+            margin-top: 60px;
+          }
+
+          //HEADER
+          .header {
+            display: flex;
+            text-align: center;
+            width: 60%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 700;
+              font-size: 55px;
+            }
+          }
+
+          //SUBHEADER
+          .subheader {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 75%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 400;
+              font-size: 30px;
+            }
+
+            .button {
+              background-color: black;
+              color: white;
+              padding: 0.5% 5% 0.5% 5%;
+              font-family: "Rochester";
+              font-size: x-large;
+              text-decoration: none;
+              border-radius: 25px;
+              z-index: 1;
+
+              &:hover {
+                @include colorTransition(black, white, white, black, blackToWhite);
+                @include useAnimation(blackToWhite, 0.5s);
+              }
+            }
+          }
+          //PHOTOS
+          .photos {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-evenly;
+            
+            z-index: 1;
+
+            .photo_div {
+              display: flex;
+              justify-content: center;
+            }
+
+            .photo {
+              width: 100%;
+            }
+          }
+                      
+        }
+
+              //MEDIUM SCREENS
+              @media screen and (min-width: 768px ) and (max-width: 991px) {
+                //MAIN DIV
+                .main {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  width: 100%;
+                  height: 100%;
+                  background-color: #dfdfdf;
+                  margin-top: 60px;
+                }
+
+                //HEADER
+                .header {
+                  display: flex;
+                  text-align: center;
+                  width: 60%;
+                  z-index: 1;
+
+                  .text {
+                    font-family: "Georama";
+                    font-weight: 700;
+                    font-size: 55px;
+                  }
+                }
+
+                //SUBHEADER
+                .subheader {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  text-align: center;
+                  width: 75%;
+                  z-index: 1;
+
+                  .text {
+                    font-family: "Georama";
+                    font-weight: 400;
+                    font-size: 30px;
+                  }
+
+                  .button {
+                    background-color: black;
+                    color: white;
+                    padding: 0.5% 5% 0.5% 5%;
+                    font-family: "Rochester";
+                    font-size: x-large;
+                    text-decoration: none;
+                    border-radius: 25px;
+                    z-index: 1;
+
+                    &:hover {
+                      @include colorTransition(black, white, white, black, blackToWhite);
+                      @include useAnimation(blackToWhite, 0.5s);
+                    }
+                  }
+                }
+
+                //PHOTOS
+                .photos {
+                  display: flex;
+                  width: 100%;
+                  height: 100%;
+                  justify-content: space-evenly;
+                  
+                  z-index: 1;
+
+                  .photo_div {
+                    display: flex;
+                    justify-content: center;
+                  }
+
+                  .photo {
+                    width: 100%;
+                    object-fit: cover;
+                  }
+                }
+              }
+
+        //LARGE SCREENS
+        @media screen and (min-width: 992px ) and (max-width: 1199px) {
+          //MAIN DIV
+          .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #dfdfdf;
+            margin-top: 60px;
+          }
+
+          //HEADER
+          .header {
+            display: flex;
+            text-align: center;
+            width: 60%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 700;
+              font-size: 65px;
+            }
+          }
+
+          //SUBHEADER
+          .subheader {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 75%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 400;
+              font-size: 30px;
+            }
+
+            .button {
+              background-color: black;
+              color: white;
+              padding: 0.5% 5% 0.5% 5%;
+              font-family: "Rochester";
+              font-size: x-large;
+              text-decoration: none;
+              border-radius: 25px;
+              z-index: 1;
+
+              &:hover {
+                @include colorTransition(black, white, white, black, blackToWhite);
+                @include useAnimation(blackToWhite, 0.5s);
+              }
+            }
+          }
+          
+          //PHOTOS
+          .photos {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-evenly;
+            z-index: 1;
+
+            .photo_div {
+              display: flex;
+              justify-content: center;
+            }
+
+            .photo {
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+
+        }
+
+//X-LARGE SCREENS
+@media screen and (min-width: 1200px ) and (max-width: 1399px) {
 //MAIN DIV
 .main {
   display: flex;
@@ -57,11 +365,11 @@
     }
   }
 }
-
 //PHOTOS
 .photos {
   display: flex;
-  width: 75%;
+  width: 100%;
+  height: 100%;
   justify-content: space-evenly;
   z-index: 1;
 
@@ -69,10 +377,93 @@
     display: flex;
     justify-content: center;
   }
+
   .photo {
     width: 100%;
+    object-fit: cover;
   }
 }
+}
+
+        //XX-LARGE SCREENS
+        @media screen and (min-width: 1400px){
+          //MAIN DIV
+          .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #dfdfdf;
+            margin-top: 60px;
+          }
+
+          //HEADER
+          .header {
+            display: flex;
+            text-align: center;
+            width: 60%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 700;
+              font-size: 65px;
+            }
+          }
+
+          //SUBHEADER
+          .subheader {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 75%;
+            z-index: 1;
+
+            .text {
+              font-family: "Georama";
+              font-weight: 400;
+              font-size: 30px;
+            }
+
+            .button {
+              background-color: black;
+              color: white;
+              padding: 0.5% 5% 0.5% 5%;
+              font-family: "Rochester";
+              font-size: x-large;
+              text-decoration: none;
+              border-radius: 25px;
+              z-index: 1;
+
+              &:hover {
+                @include colorTransition(black, white, white, black, blackToWhite);
+                @include useAnimation(blackToWhite, 0.5s);
+              }
+            }
+          }
+
+          //PHOTOS
+          .photos {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-evenly;
+            z-index: 1;
+
+            .photo_div {
+              display: flex;
+              justify-content: center;
+            }
+
+            .photo {
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+        }
 
 //animated background
 .cube {
