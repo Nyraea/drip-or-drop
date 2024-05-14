@@ -2,34 +2,36 @@
 
 //EXTRA SMALL SCREEN
 @media screen and (max-width: 575px) {
-
   .footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: black;
     color: white;
+    width: 100%;
+    background-color: black;
+    color: white;
   }
-  
+
   .links_section {
     display: flex;
     justify-content: center;
     width: 75%;
     margin: 2.5% 0 0 0;
-  
+
     .links {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-  
+
       .link {
         text-decoration: none;
         color: white;
         margin: 2.5% 0 2.5% 0;
         padding: 0 5% 0 5%;
         border-radius: 25%;
-  
+
         &:hover {
           @include colorTransition(black, white, white, black, blackToWhite);
           @include useAnimation(blackToWhite, 0.5s);
@@ -37,13 +39,13 @@
       }
     }
   }
-  
+
   .hrule {
     width: 75%;
     border: 1px solid white;
     margin: 3.5% 0 3.5% 0;
   }
-  
+
   .socials {
     display: flex;
     width: 50%;
@@ -54,89 +56,21 @@
       width: 15%;
     }
   }
-  
+
   .logo_section {
     display: flex;
     justify-content: center;
     width: 100%;
     margin: 2.5% 0 15% 0;
-    
+
     .logo {
       width: 40%;
-    
     }
   }
-  
 }
 
 //SMALL AND MEDIUM SCREENS
-    @media screen and (min-width: 576px) and (max-width: 991px) {
-
-      .footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: black;
-        color: white;
-      }
-      
-      .links_section {
-        display: flex;
-        justify-content: center;
-        width: 75%;
-        margin: 2.5% 0 0 0;
-      
-        .links {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-      
-          .link {
-            text-decoration: none;
-            color: white;
-            margin: 2.5% 0 2.5% 0;
-            padding: 0 5% 0 5%;
-            border-radius: 25%;
-      
-            &:hover {
-              @include colorTransition(black, white, white, black, blackToWhite);
-              @include useAnimation(blackToWhite, 0.5s);
-            }
-          }
-        }
-      }
-      
-      .hrule {
-        width: 75%;
-        border: 1px solid white;
-        margin: 3.5% 0 3.5% 0;
-      }
-      
-      .socials {
-        display: flex;
-        width: 50%;
-        justify-content: space-evenly;
-        margin-bottom: 5%;
-      }
-      
-      .logo_section {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 2.5% 0 10% 0;
-        
-        .logo {
-          width: 35%;
-        
-        }
-      
-    }
-}
-
-//LARGE SCREENS & LARGER
-@media screen and (min-width: 992px) {
-
+@media screen and (min-width: 576px) and (max-width: 991px) {
   .footer {
     display: flex;
     flex-direction: column;
@@ -144,26 +78,26 @@
     background-color: black;
     color: white;
   }
-  
+
   .links_section {
     display: flex;
     justify-content: center;
     width: 75%;
     margin: 2.5% 0 0 0;
-  
+
     .links {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-  
+
       .link {
         text-decoration: none;
         color: white;
         margin: 2.5% 0 2.5% 0;
         padding: 0 5% 0 5%;
         border-radius: 25%;
-  
+
         &:hover {
           @include colorTransition(black, white, white, black, blackToWhite);
           @include useAnimation(blackToWhite, 0.5s);
@@ -171,30 +105,90 @@
       }
     }
   }
-  
+
   .hrule {
     width: 75%;
     border: 1px solid white;
     margin: 3.5% 0 3.5% 0;
   }
-  
+
+  .socials {
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+    margin-bottom: 5%;
+  }
+
+  .logo_section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 2.5% 0 10% 0;
+
+    .logo {
+      width: 35%;
+    }
+  }
+}
+
+//LARGE SCREENS & LARGER
+@media screen and (min-width: 992px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    color: white;
+  }
+
+  .links_section {
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    margin: 2.5% 0 0 0;
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .link {
+        text-decoration: none;
+        color: white;
+        margin: 2.5% 0 2.5% 0;
+        padding: 0 5% 0 5%;
+        border-radius: 25%;
+
+        &:hover {
+          @include colorTransition(black, white, white, black, blackToWhite);
+          @include useAnimation(blackToWhite, 0.5s);
+        }
+      }
+    }
+  }
+
+  .hrule {
+    width: 75%;
+    border: 1px solid white;
+    margin: 3.5% 0 3.5% 0;
+  }
+
   .socials {
     display: flex;
     width: 75%;
     justify-content: space-evenly;
     margin-bottom: 5%;
   }
-  
+
   .logo_section {
     display: flex;
     justify-content: center;
     width: 100%;
     margin: 2.5% 0 7.5% 0;
-    
+
     .logo {
       width: 25%;
-      
     }
   }
-  
 }

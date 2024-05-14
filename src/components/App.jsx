@@ -25,7 +25,6 @@ import Discover from "./Discover";
 import EditProfile from "./EditProfile";
 import Footer from "./Footer";
 
-
 function App() {
   const [user, setUser] = useState();
   useEffect(() => {
@@ -38,36 +37,38 @@ function App() {
     <Router>
       {user && <Navbar />}
       <div className={styles.canvas}>
-        <Routes>
-          {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
-          {user ? (
-            <>
-              <Route path="/edit" element={<EditProfile />} />
-              <Route path="/homepage" element={<Homepage />} />
-              <Route path="/discover" element={<Discover />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/images" element={<UserImages />} />
-              <Route path="/upload" element={<ImageUpload />} />
-            </>
-          ) : (
-            <>
-              {/*ELSE RESTRICT TO LOGIN OR REGISTER*/}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
-            </>
-          )}
+        <div className="main-content">
+          <Routes>
+            {/*IF LOGIN SUCCESSFUL, GRANT ACCESS TO PROTECTED ROUTES*/}
+            {user ? (
+              <>
+                <Route path="/edit" element={<EditProfile />} />
+                <Route path="/homepage" element={<Homepage />} />
+                <Route path="/discover" element={<Discover />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/images" element={<UserImages />} />
+                <Route path="/upload" element={<ImageUpload />} />
+              </>
+            ) : (
+              <>
+                {/*ELSE RESTRICT TO LOGIN OR REGISTER*/}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<SignUp />} />
+              </>
+            )}
 
-          {/*UNPROTECTED TRENDING PAGE*/}
-          <Route path="/trending" element={<Trending />} />
+            {/*UNPROTECTED TRENDING PAGE*/}
+            <Route path="/trending" element={<Trending />} />
 
-          {/*REDIRECT TO HOMEPAGE IF USER IS LOGGED IN*/}
-          <Route
-            path="*"
-            element={
-              user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
-            }
-          />
-        </Routes>
+            {/*REDIRECT TO HOMEPAGE IF USER IS LOGGED IN*/}
+            <Route
+              path="*"
+              element={
+                user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
+              }
+            />
+          </Routes>
+        </div>
         <ToastContainer />
         {user && <Footer />}
       </div>
