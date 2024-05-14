@@ -1,21 +1,10 @@
 import styles from "../styles/edit.module.scss";
-
 import React, { useState, useEffect } from "react";
-import Modal from 'react-bootstrap/Modal';
-import { auth, db } from "./firebase";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import Modal from "react-bootstrap/Modal";
+import { auth, db, storage } from "./firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Link } from "react-router-dom";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import farquad from "../assets/farquad.svg";
 import load from "../assets/loading.gif";
 
@@ -26,8 +15,10 @@ function EditProfile() {
     firstName: "",
     lastName: "",
   });
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const [show, setShow] = useState(false); //MODAL STATE
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [image, setImage] = useState(null);
+  const [profilePic, setProfilePic] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,29 +34,14 @@ function EditProfile() {
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setUserDetails(docSnap.data());
+          const userData = docSnap.data();
+          setUserDetails(userData);
+          setFormData(userData);
+          setProfilePic(userData.profilePic || farquad);
         } else {
           console.log("User document does not exist");
         }
       });
-    };
-
-    fetchUserData();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const docRef = doc(db, "Users", user.uid);
-        const docSnap = await docRef.get();
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setFormData(userData);
-        } else {
-          console.log("User document does not exist");
-        }
-      }
     };
 
     fetchUserData();
@@ -79,6 +55,32 @@ function EditProfile() {
     }));
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!image) return;
+
+    setLoading(true);
+    const storageRef = ref(
+      storage,
+      `profilePictures/${auth.currentUser.uid}/${image.name}`
+    );
+    await uploadBytes(storageRef, image);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    setProfilePic(downloadURL);
+
+    const userDocRef = doc(db, "Users", auth.currentUser.uid);
+    await setDoc(userDocRef, { profilePic: downloadURL }, { merge: true });
+
+    setLoading(false);
+    handleClose();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -89,141 +91,131 @@ function EditProfile() {
         alert("Please fill in all required fields.");
         return;
       }
-      setLoading(true); // Set loading to true when saving changes
+      setLoading(true);
       const userDocRef = doc(db, "Users", user.uid);
       try {
         await setDoc(userDocRef, formData, { merge: true });
         console.log("Profile updated successfully!");
-        // Redirect to profile page
         window.location.href = "/profile";
       } catch (error) {
         console.error("Error updating profile:", error.message);
       } finally {
-        setLoading(false); // Set loading back to false after changes are saved
-        alert("Changes saved successfully!"); // Alert when changes are saved
+        setLoading(false);
+        alert("Changes saved successfully!");
       }
     }
   };
 
-
-
   return (
-
-    //MAIN DIV
     <div className={`${styles.edit_section}`}>
-
       {userDetails ? (
         <>
-      {/* FORM */}
-      <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <div className="">
+              <a
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleShow();
+                }}
+              >
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className={`${styles.profile_pic}`}
+                />
+              </a>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Username
+              </label>
+              <input
+                type="text"
+                className={`${styles.input} form-control`}
+                id="username"
+                name="username"
+                placeholder={userDetails.username}
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="firstName" className="form-label">
+                First Name
+              </label>
+              <input
+                type="text"
+                className={`${styles.input} form-control`}
+                id="firstName"
+                name="firstName"
+                placeholder={userDetails.firstName}
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="lastName" className="form-label">
+                Last Name
+              </label>
+              <input
+                type="text"
+                className={`${styles.input} form-control`}
+                id="lastName"
+                name="lastName"
+                placeholder={userDetails.lastName}
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={`${styles.actions}`}>
+              <button type="submit" className={`${styles.button}`}>
+                Save Changes
+              </button>
+              <button className={`${styles.button}`}>
+                <Link
+                  to="/profile"
+                  className="text-decoration-none text-light my-1"
+                >
+                  Back
+                </Link>
+              </button>
+            </div>
+          </form>
+          {loading && (
+            <div className="alert alert-info">Loading changes...</div>
+          )}
 
-        {/* PROFILE PICTURE */}
-        <div className="">
-          <a href = "" onClick={(event) => {event.preventDefault(); handleShow();}}>
-            <img src={farquad} alt = "sigma" className={`${styles.profile_pic}`}>
-
-            </img>
-          </a>
-        </div>
-
-        {/* USERNAME */}
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className={`${styles.input} form-control`}
-            id="username"
-            name="username"
-            placeholder={userDetails.username}
-            value={formData.username}
-            onChange={handleChange}
-          />
-
-          {/* FIRST NAME */}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
-            First Name
-          </label>
-          <input
-            type="text"
-            className={`${styles.input} form-control`}
-            id="firstName"
-            name="firstName"
-            placeholder={userDetails.firstName}
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* LAST NAME */}
-        <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
-            Last Name
-          </label>
-          <input
-            type="text"
-            className={`${styles.input} form-control`}
-            id="lastName"
-            name="lastName"
-            placeholder={userDetails.lastName}
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-        </div>
-
-          {/* SAVE CHANGES */}
-        <div className={`${styles.actions}`}>
-          <button type="submit" className={`${styles.button}`}>
-            Save Changes
-          </button>
-
-        {/* BACK BUTTON */}
-          <button className={`${styles.button}`}>
-            <Link to="/profile" className="text-decoration-none text-light my-1">
-              Back
-            </Link>
-          </button>
-        </div>
-      </form>
-      {loading && <div className="alert alert-info">Loading changes...</div>}
-
-      {/* CHANGE DP MODAL */}
-      <>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title><b>Change Profile Picture</b></Modal.Title>
+              <Modal.Title>
+                <b>Change Profile Picture</b>
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center">
-              
-              <img src={farquad} alt = "sigma"/>
-
+              <div>
+                <input type="file" onChange={handleImageChange} />
+              </div>
             </Modal.Body>
             <Modal.Footer className={`${styles.actions}`}>
-            <button className={`${styles.button}`}>
-                Upload 
+              <button className={`${styles.button}`} onClick={handleUpload}>
+                Upload
               </button>
               <button className={`${styles.button}`} onClick={handleClose}>
-                Cancel 
+                Cancel
               </button>
             </Modal.Footer>
           </Modal>
         </>
-        </>
       ) : (
-        <>
         <div className={`${styles.loading}`}>
           <img src={load} alt="loading" className={`${styles.load}`} />
         </div>
-        </>
       )}
       <br />
       <br />
       <br />
     </div>
-    
   );
 }
 
