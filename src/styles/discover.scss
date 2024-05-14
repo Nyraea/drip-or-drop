@@ -1,12 +1,12 @@
 .main_section {
   margin: 90px auto 0 auto;
-  width: auto;
+  width: 100vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
 }
-@media screen and (max-width: 498px) {
+@media screen and (min-width: 498px) {
   .main_section {
     justify-content: center;
     width: 90vw;

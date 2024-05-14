@@ -1,8 +1,8 @@
 @import "./typography.scss";
 @import "./util.scss";
 
-        //X-SMALL SCREENS
-        @media screen and (max-width: 575px) {
+        //X-SMALL SCREENS 
+        @media screen and (max-width: 576px) {
 
             //Navbar Styling
             .navbar {
@@ -180,7 +180,7 @@
         }
 
 //SMALL SCREENS
-@media screen and (min-width: 576px ) and (max-width: 767px) {
+@media screen and (min-width: 576px ) and (max-width: 768px) {
 
     //Navbar Styling
     .navbar {
@@ -358,7 +358,7 @@
 }
 
         //MEDIUM SCREENS
-        @media screen and (min-width: 768px ) and (max-width: 991px) {
+        @media screen and (min-width: 768px ) and (max-width: 992px) {
 
             //Navbar Styling
             .navbar {
@@ -536,7 +536,7 @@
         }
 
                 //LARGE SCREENS
-                @media screen and (min-width: 992px ) and (max-width: 1199px) {
+                @media screen and (min-width: 992px ) and (max-width: 1200px) {
 
                     //Navbar Styling
                     .navbar {
@@ -619,7 +619,7 @@
                 }
 
         //X-LARGE SCREENS
-        @media screen and (min-width: 1200px ) and (max-width: 1399px) {
+        @media screen and (min-width: 1200px ) and (max-width: 1400px) {
 
             //Navbar Styling
             .navbar {

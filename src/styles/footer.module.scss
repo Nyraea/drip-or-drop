@@ -1,7 +1,7 @@
 @import "./util.scss";
 
 //EXTRA SMALL SCREEN
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 576px) {
   .footer {
     display: flex;
     flex-direction: column;
@@ -69,7 +69,7 @@
 }
 
 //SMALL AND MEDIUM SCREENS
-@media screen and (min-width: 576px) and (max-width: 991px) {
+@media screen and (min-width: 576px) and (max-width: 992px) {
   .footer {
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
   .links_section {
     display: flex;
     justify-content: center;
-    width: 75%;
+    width: 85%;
     margin: 2.5% 0 0 0;
 
     .links {
