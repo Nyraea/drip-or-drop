@@ -517,8 +517,7 @@ const handleImageClick = (imageUrl, description, tags) => {
           </Button>
         </Modal.Footer>
       </Modal>
-        {/* Image Popup */}
-<Modal show={showPopup} onHide={handleClosePopup}>
+      <Modal show={showPopup} onHide={handleClosePopup}>
   <Modal.Header closeButton>
     <Modal.Title>Image Details</Modal.Title>
     {/* Move the pencil icon here */}
@@ -529,35 +528,35 @@ const handleImageClick = (imageUrl, description, tags) => {
     />
   </Modal.Header>
   <Modal.Body>
-  {selectedImage && (
-    <div className={`${styles.upload_container}`}>
-      <img
-        src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
-          selectedImage.imageUrl
-        )}?alt=media`}
-        alt={selectedImage.description}
-        className={`${styles.upload}`}
-      />
-      {editingDescription ? (
-        <input
-          type="text"
-          value={editableDescription}
-          onChange={(e) => setEditableDescription(e.target.value)}
+    {selectedImage && (
+      <div className={`${styles.upload_container}`}>
+        <img
+          src={`https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
+            selectedImage.imageUrl
+          )}?alt=media`}
+          alt={selectedImage.description}
+          className={`${styles.upload}`}
+          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} // Ensure the whole image is visible
         />
-      ) : (
-        <p>Description: {selectedImage.description}</p>
-      )}
-      {/* Tags */}
-      {selectedTags && <p>Tags: {selectedTags.join(", ")}</p>}
-      {editingDescription && (
-        <Button variant="primary" onClick={handleSaveDescription}>
-          Save
-        </Button>
-      )}
-    </div>
-  )}
-</Modal.Body>
+        {editingDescription ? (
+          <input
+            type="text"
+            value={editableDescription}
+            onChange={(e) => setEditableDescription(e.target.value)}
+          />
+        ) : (
+          <p>Description: {selectedImage.description} Tags: {selectedImage.tags}</p>
+        )}
+        {editingDescription && (
+          <Button variant="primary" onClick={handleSaveDescription}>
+            Save
+          </Button>
+        )}
+      </div>
+    )}
+  </Modal.Body>
 </Modal>
+.
 
 {/* Popup buttons */}
 <Modal show={showPopupButtons} onHide={handleClosePopupButtons}>

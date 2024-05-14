@@ -1,6 +1,8 @@
 import "../styles/discover.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "../styles/profile.module.scss";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import {
@@ -11,10 +13,10 @@ import {
   where,
   getDocs,
   updateDoc,
-  setDoc, // Import setDoc from Firestore
+  setDoc,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 
 import loading from "../assets/loading.gif";
 
@@ -26,6 +28,14 @@ function Discover() {
   });
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageClick = (image) => {
+    console.log("Image clicked:", image);
+    setSelectedImage(image);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const fetchUserLikes = async () => {
@@ -79,7 +89,6 @@ function Discover() {
       )
     );
 
-    // Update userLikes
     const updatedLikedPosts = userLikes.likedPosts.includes(postId)
       ? userLikes.likedPosts.filter((id) => id !== postId)
       : [...userLikes.likedPosts, postId];
@@ -100,7 +109,6 @@ function Discover() {
   };
 
   const toggleDislike = async (postId) => {
-    // Update local state
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.postId === postId
@@ -109,7 +117,6 @@ function Discover() {
       )
     );
 
-    // Update userLikes
     const updatedDislikedPosts = userLikes.dislikedPosts.includes(postId)
       ? userLikes.dislikedPosts.filter((id) => id !== postId)
       : [...userLikes.dislikedPosts, postId];
@@ -210,6 +217,7 @@ function Discover() {
     return () => clearTimeout(timer);
   }, []);
 
+
   return (
     <div className="main_section">
       {posts ? (
@@ -250,7 +258,10 @@ function Discover() {
                         </div>
                       </div>
                     ) : (
-                      <button className="image">
+                      <button
+                        className="image"
+                        onClick={() => handleImageClick(post)}
+                      >
                         <img src={post.imageUrl} alt="Post" />
                       </button>
                     )}
@@ -329,12 +340,31 @@ function Discover() {
           )}
         </div>
       ) : (
-        // Skeleton Loading
         <div className="w-100">
           <Skeleton containerClassName="flex-1" />
-          eggs
         </div>
       )}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Body>
+          {selectedImage && (
+            <div className={`${styles.upload_container}`}>
+              <img
+                src={selectedImage.imageUrl}
+                alt={selectedImage.description}
+                className={`${styles.upload}`}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} //remove if the image is too small kek
+              />
+              <div className={styles.image_details}>
+                <p><strong>User:</strong> {selectedImage.username}</p>
+                <p><strong>Caption:</strong> {selectedImage.caption}</p>
+                <p><strong>Tags:</strong> {selectedImage.tags.join(", ")}</p>
+                <p><strong>Likes:</strong> {selectedImage.upvote}</p>
+                <p><strong>Dislikes:</strong> {selectedImage.downvote}</p>
+              </div>
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
