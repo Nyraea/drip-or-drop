@@ -87,7 +87,7 @@ function Trending() {
           Pants
         </div>
       </div>
-      { loading ? (
+      {loading ? (
         <>
           <SkeletonTheme height={350} width={250}>
             <div className="d-flex row justify-content-center w-100 px-5 mt-4 g-2">
