@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "../styles/login.module.scss";
+
+import styles from "../styles/resetpassword.module.scss";
 
 import React, { useState } from "react";
 import {
@@ -66,9 +67,9 @@ const ResetPassword = () => {
   };
 
   return (
-    <div>
+    <div className={styles.main}>
       <h2>Reset Password</h2>
-      <form onSubmit={handleSubmit}>
+      <form className={`${styles.main}`} onSubmit={handleSubmit}>
         <label>Current Password:</label>
         <input
           type="password"
@@ -87,7 +88,9 @@ const ResetPassword = () => {
           value={confirmPassword}
           onChange={handleChangeConfirmPassword}
         />
-        <button type="submit">Reset Password</button>
+        <button className={`${styles.resetbtn}`} type="submit">
+          Reset Password
+        </button>
       </form>
       {successMessage && <p>{successMessage}</p>}
       {errorMessage && <p>{errorMessage}</p>}
