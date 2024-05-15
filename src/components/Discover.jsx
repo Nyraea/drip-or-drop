@@ -284,12 +284,17 @@ function Discover() {
         <Modal.Body>Are you sure you want to remove the NSFW blur?</Modal.Body>
         <Modal.Footer>
           <button
-            className="btn btn-secondary"
+            className={`${styles.buttonmodal}`}
             onClick={() => setShowConfirmationModal(false)}
+            style={{ width: "80px" }}
           >
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handleConfirmRemoveNSFW}>
+          <button
+            className={`${styles.buttonmodal}`}
+            onClick={handleConfirmRemoveNSFW}
+            style={{ width: "150px" }}
+          >
             Yes, Remove Blur
           </button>
         </Modal.Footer>
