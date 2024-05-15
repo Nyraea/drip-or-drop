@@ -95,7 +95,7 @@ function Navbar() {
               onMouseLeave={() => setDropdownOpen(false)}
             >
               <p className={styles.dropdownText}>
-                you have no notifications, you should kill yourself <b>NOW</b>
+                you have no notifications, for <b>now</b>
               </p>
             </div>
           )}
@@ -127,11 +127,14 @@ function Navbar() {
 
         {/* LOGOUT */}
         <div className={`col-lg-1 ${styles.navcol}`}>
-          <a href="" className={` ${styles.link}`} 
-          onClick={(event) => {
-                  event.preventDefault();              
-                  handleLogout();
-                }}>
+          <a
+            href=""
+            className={` ${styles.link}`}
+            onClick={(event) => {
+              event.preventDefault();
+              handleLogout();
+            }}
+          >
             logout
           </a>
         </div>
@@ -204,7 +207,7 @@ function Navbar() {
                 href=""
                 className={` ${styles.link}`}
                 onClick={(event) => {
-                  event.preventDefault();              
+                  event.preventDefault();
                   handleLogout();
                 }}
               >
