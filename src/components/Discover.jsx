@@ -279,9 +279,12 @@ function Discover() {
         onHide={() => setShowConfirmationModal(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Removal of NSFW Blur</Modal.Title>
+          <Modal.Title>Show Picture?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to remove the NSFW blur?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to view the picture? It may contain sensitive
+          photos
+        </Modal.Body>
         <Modal.Footer>
           <button
             className={`${styles.buttonmodal}`}
@@ -295,7 +298,7 @@ function Discover() {
             onClick={handleConfirmRemoveNSFW}
             style={{ width: "150px" }}
           >
-            Yes, Remove Blur
+            Yes, Show
           </button>
         </Modal.Footer>
       </Modal>
