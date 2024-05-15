@@ -20,6 +20,35 @@ import Skeleton from "react-loading-skeleton";
 
 import loading from "../assets/loading.gif";
 
+function formatTimestamp(timestamp) {
+  const now = new Date();
+  const postDate = new Date(timestamp);
+  const diffInSeconds = Math.floor((now - postDate) / 1000);
+
+  const minute = 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+  const week = day * 7;
+  const month = day * 30;
+  const year = day * 365;
+
+  if (diffInSeconds < minute) {
+    return `${diffInSeconds}s`;
+  } else if (diffInSeconds < hour) {
+    return `${Math.floor(diffInSeconds / minute)}m`;
+  } else if (diffInSeconds < day) {
+    return `${Math.floor(diffInSeconds / hour)}h`;
+  } else if (diffInSeconds < week) {
+    return `${Math.floor(diffInSeconds / day)}d`;
+  } else if (diffInSeconds < month) {
+    return `${Math.floor(diffInSeconds / week)}w`;
+  } else if (diffInSeconds < year) {
+    return `${Math.floor(diffInSeconds / month)}mo`;
+  } else {
+    return `${Math.floor(diffInSeconds / year)}y`;
+  }
+}
+
 function Discover() {
   const [user, setUser] = useState(null);
   const [userLikes, setUserLikes] = useState({
@@ -190,12 +219,18 @@ function Discover() {
                 isDisliked: userLikes.dislikedPosts.includes(imageDoc.id),
                 upvote: imageData.upvote || 0,
                 downvote: imageData.downvote || 0,
+                timestamp: imageData.timestamp,
               };
 
               fetchedPosts.push(post);
             }
           });
         }
+
+        // Sort posts by timestamp in descending order
+        fetchedPosts.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
 
         setPosts(fetchedPosts);
         setIsLoading(false);
@@ -240,7 +275,7 @@ function Discover() {
                       </Link>
                     </div>
                     <div className="more">
-                      <img src="/images/show_more.png" alt="Show more" />
+                      {formatTimestamp(post.timestamp)}
                     </div>
                   </div>
 
