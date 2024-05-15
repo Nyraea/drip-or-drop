@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadString } from "firebase/storage";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function ImageUpload() {
   const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -15,6 +15,7 @@ function ImageUpload() {
   const [tagInputValue, setTagInputValue] = useState("");
   const storage = getStorage();
   const imagesRef = collection(db, "images");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const auth = getAuth();
@@ -101,7 +102,7 @@ function ImageUpload() {
         alert("Image uploaded!");
 
         // Redirect to the profile using useHistory()
-        history.push("/profile");
+        navigate("/profile");
       } catch (error) {
         console.error("Error uploading image:", error.message);
       }
