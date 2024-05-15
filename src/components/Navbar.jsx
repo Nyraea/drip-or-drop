@@ -94,7 +94,9 @@ function Navbar() {
               className={`${styles.dropdownMenu} p-2`}
               onMouseLeave={() => setDropdownOpen(false)}
             >
-              <p className={styles.dropdownText}> you have no notifications</p>
+              <p className={styles.dropdownText}>
+                you have no notifications, for <b>now</b>
+              </p>
             </div>
           )}
         </div>
