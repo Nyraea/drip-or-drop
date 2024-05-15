@@ -59,11 +59,31 @@ function Discover() {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const handleImageClick = (image) => {
     console.log("Image clicked:", image);
     setSelectedImage(image);
+    if (image.isNSFW) {
+      setShowConfirmationModal(true);
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const handleConfirmRemoveNSFW = () => {
+    setShowConfirmationModal(false);
     setShowModal(true);
+  };
+
+  const handleImageTextClick = (image) => {
+    console.log("Image text clicked:", image);
+    setSelectedImage(image);
+    if (image.isNSFW) {
+      setShowConfirmationModal(true);
+    } else {
+      setShowModal(true);
+    }
   };
 
   useEffect(() => {
@@ -254,6 +274,26 @@ function Discover() {
 
   return (
     <div className="main_section">
+      <Modal
+        show={showConfirmationModal}
+        onHide={() => setShowConfirmationModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Removal of NSFW Blur</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to remove the NSFW blur?</Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowConfirmationModal(false)}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-primary" onClick={handleConfirmRemoveNSFW}>
+            Yes, Remove Blur
+          </button>
+        </Modal.Footer>
+      </Modal>
       {posts ? (
         <div className="posts_container">
           {isLoading ? (
@@ -287,7 +327,10 @@ function Discover() {
                           alt="Post"
                           className="image-nsfw"
                         />
-                        <div className="image-text">
+                        <div
+                          className="image-text"
+                          onClick={() => handleImageTextClick(post)}
+                        >
                           <strong>Sensitive Content</strong>
                           <br />
                           This photo contains sensitive content which people may
