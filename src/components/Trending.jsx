@@ -29,19 +29,23 @@ function Trending() {
   };
 
   const fetchFirebaseImages = async (queryText) => {
+    const normalizedQueryText = queryText.toLowerCase();
     const imagesRef = collection(db, "images");
-    const q = query(imagesRef, where("tags", "array-contains", queryText));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => {
-      const imageData = doc.data();
-      return {
-        ...imageData,
+    const querySnapshot = await getDocs(imagesRef);
+    return querySnapshot.docs
+      .map((doc) => doc.data())
+      .filter((imageData) =>
+        imageData.tags.some((tag) =>
+          tag.toLowerCase().includes(normalizedQueryText)
+        )
+      )
+      .map((filteredImage) => ({
+        ...filteredImage,
         imageUrl:
           `https://firebasestorage.googleapis.com/v0/b/drip-or-drop-dev.appspot.com/o/${encodeURIComponent(
-            imageData.imageUrl
+            filteredImage.imageUrl
           )}?alt=media` || "/images/default_profile.jpg",
-      };
-    });
+      }));
   };
 
   const fetchImages = useCallback(async () => {
