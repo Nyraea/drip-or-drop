@@ -1,91 +1,518 @@
 @import "./util.scss";
 
-.edit_section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto 0 auto;
-  width: 30%;
-  height: 100%;
-  margin-bottom: 70px;
-  .loading {
+// X-SMALL
+@media screen and (max-width: 576px) { 
+  
+  .edit_section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-  }
-}
-
-.profile_pic {
-  display: flex;
-  width: 75%;
-  border-radius: 100%;
-  margin: 0 auto 0 auto;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  object-position: top;
-
-  &:hover {
-    @include opacityTransition(1, 0.85, opaqueToTranslucent);
-    @include useAnimation(opaqueToTranslucent, 0.5s);
-  }
-}
-
-.input {
-  border-color: black;
-  border-radius: 0;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-width: 2px;
-
-  &:focus {
-    box-shadow: none;
-    border-color: black;
-    @include borderTransition(2px, 4px, borderGrow);
-    @include useAnimation(borderGrow, 0.1s);
-  }
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 75%;
-  margin: 0 auto 0 auto;
-
-  .button {
-    background-color: black;
-    color: white;
-    text-decoration: none;
-    width: 100%;
-    padding: 2.5% 0 2.5% 0;
-    border: 2px solid black;
-
-    &:hover {
-      @include colorTransition(black, white, white, black, blackToWhite);
-      @include useAnimation(blackToWhite, 0.5s);
-    }
-
-  }
-
-  .save {
-    display: flex;
-    background-color: white;
-    color: black;
-    justify-content: center;
-    text-decoration: none;
-    width: 100%;
-    padding: 2.5% 0 2.5% 0;
-    border: 2px solid black;
-
+    margin: 0 auto 0 auto;
+    width: 90%;
+    height: 100%;
+    margin-bottom: 70px;
     .loading {
-      width: 10%;
+      display: flex;
+      justify-content: center;
     }
+  }
+  
+  .profile_pic {
+    display: flex;
+    width: 75%;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+  
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
+  }
+  
+  .label {
+    font-weight: 600;
+  }
+
+  .input_section {
+
+    margin: 15% 0 15% 0;
+
+    .input {
+      border-color: black;
+      border-radius: 0;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-width: 2px;
+    
+      &:focus {
+        box-shadow: none;
+        border-color: black;
+        @include borderTransition(2px, 4px, borderGrow);
+        @include useAnimation(borderGrow, 0.1s);
+      }
+    }
+
+  }
+
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      padding: 3.5% 0 3.5% 0;
+      border: 2px solid black;
+  
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+  
+    }
+  
+    .save {
+      display: flex;
+      background-color: white;
+      color: black;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      .loading {
+        width: 10%;
+      }
+    }
+  }
+  
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
   }
 }
 
-.load {
-  margin-top: 10%;
-  display: flex;
-  justify-content: center;
+// SMALL
+@media screen and (min-width: 576px) and (max-width: 768px) { 
+
+  .edit_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto 0 auto;
+    width: 90%;
+    height: 100%;
+    margin-bottom: 70px;
+    .loading {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .profile_pic {
+    display: flex;
+    width: 75%;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+  
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
+  }
+  
+  .label {
+    font-weight: 600;
+  }
+
+  .input_section {
+
+    margin: 15% 0 15% 0;
+
+    .input {
+      border-color: black;
+      border-radius: 0;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-width: 2px;
+    
+      &:focus {
+        box-shadow: none;
+        border-color: black;
+        @include borderTransition(2px, 4px, borderGrow);
+        @include useAnimation(borderGrow, 0.1s);
+      }
+    }
+
+  }
+
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      padding: 3.5% 0 3.5% 0;
+      border: 2px solid black;
+  
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+  
+    }
+  
+    .save {
+      display: flex;
+      background-color: white;
+      color: black;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      .loading {
+        width: 10%;
+      }
+    }
+  }
+  
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+  }
+  
 }
+
+// MEDIUM
+@media screen and (min-width: 768px) and (max-width: 992px) { 
+
+  .edit_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto 0 auto;
+    width: 75%;
+    height: 100%;
+    margin-bottom: 70px;
+    .loading {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .profile_pic {
+    display: flex;
+    width: 40%;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+  
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
+  }
+  
+  .label {
+    font-weight: 600;
+  }
+
+  .input_section {
+
+    margin: 10% 0 10% 0;
+
+    .input {
+      border-color: black;
+      border-radius: 0;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-width: 2px;
+    
+      &:focus {
+        box-shadow: none;
+        border-color: black;
+        @include borderTransition(2px, 4px, borderGrow);
+        @include useAnimation(borderGrow, 0.1s);
+      }
+    }
+
+  }
+
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+  
+    }
+  
+    .save {
+      display: flex;
+      background-color: white;
+      color: black;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      .loading {
+        width: 10%;
+      }
+    }
+  }
+  
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+  }
+  
+}
+
+// LARGE
+@media screen and (min-width: 992px) and (max-width: 1200px) { 
+
+  .edit_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto 0 auto;
+    width: 75%;
+    height: 100%;
+    margin-bottom: 70px;
+    .loading {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .profile_pic {
+    display: flex;
+    width: 25%;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+  
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
+  }
+  
+  .label {
+    font-weight: 600;
+  }
+
+  .input_section {
+
+    margin: 5% 0 5% 0;
+
+    .input {
+      border-color: black;
+      border-radius: 0;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-width: 2px;
+    
+      &:focus {
+        box-shadow: none;
+        border-color: black;
+        @include borderTransition(2px, 4px, borderGrow);
+        @include useAnimation(borderGrow, 0.1s);
+      }
+    }
+
+  }
+
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+  
+    }
+  
+    .save {
+      display: flex;
+      background-color: white;
+      color: black;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      .loading {
+        width: 10%;
+      }
+    }
+  }
+  
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+// X-LARGE
+@media screen and (min-width: 1200px) { 
+  .edit_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto 0 auto;
+    width: 30%;
+    height: 100%;
+    margin-bottom: 70px;
+    .loading {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .profile_pic {
+    display: flex;
+    width: 75%;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+  
+    &:hover {
+      @include opacityTransition(1, 0.85, opaqueToTranslucent);
+      @include useAnimation(opaqueToTranslucent, 0.5s);
+    }
+  }
+  
+  .input {
+    border-color: black;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-width: 2px;
+  
+    &:focus {
+      box-shadow: none;
+      border-color: black;
+      @include borderTransition(2px, 4px, borderGrow);
+      @include useAnimation(borderGrow, 0.1s);
+    }
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: 0 auto 0 auto;
+  
+    .button {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      &:hover {
+        @include colorTransition(black, white, white, black, blackToWhite);
+        @include useAnimation(blackToWhite, 0.5s);
+      }
+  
+    }
+  
+    .save {
+      display: flex;
+      background-color: white;
+      color: black;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      padding: 2.5% 0 2.5% 0;
+      border: 2px solid black;
+  
+      .loading {
+        width: 10%;
+      }
+    }
+  }
+  
+  .load {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+  }
+}
+

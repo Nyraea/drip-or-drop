@@ -156,9 +156,13 @@ function EditProfile() {
                 />
               </a>
             </div>
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
+
+            <br />
+            <br />
+
+            <div className={`${styles.input_section} mb-3`}>
+              <label htmlFor="username" className={`${styles.label} form-label`}>
+                Username 
               </label>
               <input
                 type="text"
@@ -170,10 +174,12 @@ function EditProfile() {
                 onChange={handleChange}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="firstName" className="form-label">
-                First Name
+            <div className={`${styles.input_section} mb-3`}>
+          
+              <label htmlFor="firstName" className={`${styles.label} form-label`}>
+                First Name 
               </label>
+
               <input
                 type="text"
                 className={`${styles.input} form-control`}
@@ -183,11 +189,15 @@ function EditProfile() {
                 value={formData.firstName}
                 onChange={handleChange}
               />
+
             </div>
-            <div className="mb-3">
-              <label htmlFor="lastName" className="form-label">
-                Last Name
+
+            <div className={`${styles.input_section} mb-3`}>
+
+              <label htmlFor="lastName" className={`${styles.label} form-label`}>
+                Last Name 
               </label>
+
               <input
                 type="text"
                 className={`${styles.input} form-control`}
@@ -197,11 +207,15 @@ function EditProfile() {
                 value={formData.lastName}
                 onChange={handleChange}
               />
+
             </div>
-            <div className="mb-3">
-              <label htmlFor="bio" className="form-label">
-                Bio
+
+            <div className={`${styles.input_section} mb-3`}>
+
+              <label htmlFor="bio" className={`${styles.label} form-label`}>
+                Bio 
               </label>
+
               <textarea
                 className={`${styles.input} form-control`}
                 id="bio"
@@ -210,9 +224,12 @@ function EditProfile() {
                 value={formData.bio}
                 onChange={handleChange}
               />
+
             </div>
-            <br />
-            <br />
+
+            <br/>
+            <br/>
+
             <div className={`${styles.actions}`}>
               {loading ? (
                 <button className={`${styles.save}`}>
