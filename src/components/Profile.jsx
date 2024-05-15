@@ -592,7 +592,9 @@ function Profile() {
       {/* IMAGE DETAILS */}
       <Modal show={showPopup} onHide={handleClosePopup}>
         <Modal.Header closeButton>
-          <Modal.Title>Image Details</Modal.Title>
+          <Modal.Title>
+            <h3>Dripscription</h3>
+          </Modal.Title>
           {/* Move the pencil icon here */}
           <FontAwesomeIcon
             icon={faEllipsisV}
@@ -616,8 +618,12 @@ function Profile() {
                 }}
                 // Ensure the whole image is visible
               />
-              <p>Description: {selectedDescription}</p>
-              <p>Tags: {selectedTags.join(", ")}</p>
+              <div className="borderedsquare">
+                <p>{selectedDescription}</p>
+              </div>
+              <div className="borderedsquare">
+                <p>Tags: {selectedTags.join(", ")}</p>{" "}
+              </div>
             </div>
           )}
         </Modal.Body>
@@ -640,17 +646,23 @@ function Profile() {
             className="form-control"
           />
         </Modal.Body>
-        <Modal.Footer>
+
+        <div className="button-container">
           <Button
+            className={`${styles.buttonmodal}`}
             variant="secondary"
             onClick={() => setEditingDescription(false)}
           >
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSaveDescription}>
+          <Button
+            className={`${styles.buttonmodal}`}
+            variant="primary"
+            onClick={handleSaveDescription}
+          >
             Save
           </Button>
-        </Modal.Footer>
+        </div>
       </Modal>
 
       {/* EDIT TAGS */}
@@ -682,7 +694,7 @@ function Profile() {
 
               {/* ADD TAG BUTTON */}
               <button
-                className={`${uploadstyles.actions} ${uploadstyles.tags} ${uploadstyles.upload} m-1`}
+                className={`${uploadstyles.actions} ${uploadstyles.tags} ${uploadstyles.upload} ${styles.buttonmodal} m-1`}
                 onClick={handleAddTag}
               >
                 Add Tag
@@ -691,10 +703,20 @@ function Profile() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setEditingTags(false)}>
+          <Button
+            className={`${styles.buttonmodal}`}
+            variant="secondary"
+            onClick={() => setEditingTags(false)}
+            style={{ width: "100px" }}
+          >
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSaveTags}>
+          <Button
+            className={`${styles.buttonmodal}`}
+            variant="primary"
+            onClick={handleSaveTags}
+            style={{ width: "100px" }}
+          >
             Save
           </Button>
         </Modal.Footer>
@@ -719,6 +741,7 @@ function Profile() {
             }}
           >
             <Button
+              className={`${styles.buttonmodal}`}
               variant="primary"
               onClick={handleEditDescription}
               style={{ width: "100%" }}
@@ -727,6 +750,7 @@ function Profile() {
             </Button>
             <br />
             <Button
+              className={`${styles.buttonmodal}`}
               variant="primary"
               onClick={handleEditTags}
               style={{ width: "100%" }}
@@ -735,6 +759,7 @@ function Profile() {
             </Button>
             <br />
             <Button
+              className={`${styles.buttonmodal}`}
               variant="primary"
               onClick={DeleteAction}
               style={{ width: "100%" }}
