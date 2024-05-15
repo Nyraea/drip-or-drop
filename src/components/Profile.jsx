@@ -49,6 +49,7 @@ function Profile() {
   const [editableDescription, setEditableDescription] = useState("");
   const [editingDescription, setEditingDescription] = useState(false);
   const [totalUpvotes, setTotalUpvotes] = useState(0);
+  const [totalDownvotes, setTotalDownvotes] = useState(0);
 
   const handleImageClick = (imageUrl, description, tags, id) => {
     setSelectedImage({ imageUrl, description, tags, id });
@@ -225,11 +226,22 @@ function Profile() {
           0
         );
         setTotalUpvotes(totalUpvotes);
+
+        const totalDownvotes = images.reduce(
+          (sum, image) => sum + (image.downvote || 0),
+          0
+        );
+        setTotalDownvotes(totalDownvotes);
       });
     };
 
     fetchUserImages();
   }, []);
+
+  const averageDrip = (
+    ((totalUpvotes - totalDownvotes) / (totalUpvotes + totalDownvotes || 1)) *
+    5
+  ).toFixed(2);
 
   // LOGOUT FUNCTION
 
@@ -304,11 +316,18 @@ function Profile() {
               <h4>{imageCount}</h4>
             </div>
 
-            {/* DRIP SCORE */}
+            {/* TOTAL DRIP UPVOTE */}
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+              <h6>drip upvotes</h6>
+              <br />
+              <h4>{totalUpvotes}</h4>
+            </div>
+
+            {/* AVERAGE DRIP*/}
             <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
               <h6>drip score</h6>
               <br />
-              <h4>{totalUpvotes}</h4>
+              <h4>{averageDrip}</h4>
             </div>
           </>
         ) : (

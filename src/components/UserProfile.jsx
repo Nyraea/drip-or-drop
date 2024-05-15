@@ -22,6 +22,7 @@ function UserProfile() {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [totalUpvotes, setTotalUpvotes] = useState(0);
+  const [totalDownvotes, setTotalDownvotes] = useState(0);
   const { username } = useParams();
 
   const handleImageClick = (imageUrl, description, tags, id) => {
@@ -99,6 +100,12 @@ function UserProfile() {
           0
         );
         setTotalUpvotes(totalUpvotes);
+
+        const totalDownvotes = images.reduce(
+          (sum, image) => sum + (image.downvote || 0),
+          0
+        );
+        setTotalDownvotes(totalDownvotes);
       } catch (error) {
         console.error("Error fetching user images:", error.message);
         // Handle the error accordingly
@@ -107,6 +114,11 @@ function UserProfile() {
 
     fetchUserImages();
   }, [username]);
+
+  const averageDrip = (
+    ((totalUpvotes - totalDownvotes) / (totalUpvotes + totalDownvotes || 1)) *
+    5
+  ).toFixed(2);
 
   // DELAY UPLOADS RENDER BY 1.75 SECONDS
   const [delayedRender, setDelayedRender] = useState(false);
@@ -133,11 +145,18 @@ function UserProfile() {
               <h4>{imageCount}</h4>
             </div>
 
-            {/* DRIP SCORE */}
-            <div className="d-flex flex-column justify-content-center align-items-center col-1 px-2">
-              <h6>drip score</h6>
+            {/* TOTAL DRIP UPVOTE */}
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+              <h6>drip upvotes</h6>
               <br />
               <h4>{totalUpvotes}</h4>
+            </div>
+
+            {/* AVERAGE DRIP*/}
+            <div className="d-flex flex-column justify-content-center align-items-center col-2 px-2">
+              <h6>drip score</h6>
+              <br />
+              <h4>{averageDrip}</h4>
             </div>
           </>
         ) : (
@@ -322,7 +341,9 @@ function UserProfile() {
       {/* IMAGE DETAILS */}
       <Modal show={showPopup} onHide={handleClosePopup}>
         <Modal.Header closeButton>
-          <Modal.Title>Image Details</Modal.Title>
+          <Modal.Title>
+            <h3>Dripscription</h3>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedImage && (
@@ -340,8 +361,12 @@ function UserProfile() {
                 }}
                 // Ensure the whole image is visible
               />
-              <p>Description: {selectedDescription}</p>
-              <p>Tags: {selectedTags.join(", ")}</p>
+              <div className="borderedsquare">
+                <p>{selectedDescription}</p>
+              </div>
+              <div className="borderedsquare">
+                <p>Tags: {selectedTags.join(", ")}</p>{" "}
+              </div>
             </div>
           )}
         </Modal.Body>
