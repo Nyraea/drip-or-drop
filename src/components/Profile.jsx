@@ -479,6 +479,8 @@ function Profile() {
                 <div className={`${styles.upload_details}`}>
                   <p>Description: {image.description}</p>
                   <p>Tags: {image.tags.join(", ")}</p>
+                  <span>Upvotes: {image.upvote || 0}</span>{" "}
+                  <span>Downvotes: {image.downvote || 0}</span>
                 </div>
               </div>
             ))}
